@@ -1,0 +1,66 @@
+[tool.ruff]
+exclude = [".eggs",".git",".git-rewrite",".mypy_cache",".pytype",".ruff_cache",".tox","__pypackages__","_build","build","dist","env","**/pyptoject.toml"]
+
+line-length = 120
+indent-width = 4
+target-version = "py39"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = ["F401"]
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+# magic-trailing-comma = "preview"
+line-ending = "auto"
+
+[tool.ruff.isort]
+known-first-party = ["core", "gui", "services", "ui", "utils"]
+known-third-party = []
+known-local-folder = []
+extra-standard-library = ["requests"]
+order-by-type = true
+
+
+[tool.mypy]
+mypy_path = "src"
+python_version = "3.9"
+ignore_missing_imports = true
+exclude = [ '^env\.']
+
+[tool.flake8]
+max-line-length = 120
+exclude = "env,.venv,.mypy_cache,.pytest_cache,*/test,plugin_upload.py,"
+# ignore = "PT013,PT018,W503"
+
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = true
+ignore-module = false
+ignore-nested-functions = false
+ignore-nested-classes = true
+ignore-setters = true
+fail-under = 85
+exclude = ["env", "docs", "*/test/*", "*/help/*", "*/ui/*", "src/resources.py"]
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+verbose = 1
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = true
+#generate-badge = "."
+#badge-format = "svg"

@@ -1,0 +1,226 @@
+/* GENERAL === */
+
+
+/* Colores
+kan   F53F61 4C1C50
+fb5058
+f03861
+
+
+
+SCROLLBARS
+b8b8b8
+*/
+
+
+QDialog {
+    background-color: #ffffff;
+    padding: 0 0 0 0;
+}
+
+QWidget {
+    font: 12px "Montserrat";
+    padding: 0 0 0 0;
+    background-color: whitesmoke;
+    color: #17202a;
+}
+
+QLabel {
+    color: #17202a;
+    background-color: transparent;
+}
+
+QLabel:disabled {
+    color: #888888;
+}
+
+
+QLineEdit {
+    color: #91908e;
+    background-color: #f5f5f5;
+}
+
+QLineEdit {
+    color: #17202a;
+    background-color: #ffffff;
+}
+
+QLineEdit:read-only {
+    color: #17202a;
+    background-color: #dddddd;
+}
+
+QLineEdit:disabled {
+    color: #888888;
+    background-color: #dddddd;
+}
+
+QPushButton {
+    background-color: #ffffff;
+    color: #17202a;
+}
+
+QDateEdit::drop-down{
+    height:16px;
+    width:16px;
+    image:url(':/resources/icons/calendar-2.svg');
+    _border: 2px solid darkgray;
+    _padding: 2px;
+    margin: 2px;
+}
+
+QDateEdit{
+    border: 1px solid darkgray;
+    background-color: white;
+}
+
+
+/* SCROLLBARS */
+
+QScrollBar {
+    border: 0px solid #E2E0E0;
+    background: @COLOR_MAIN_LIGHT;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar:vertical {
+    width: 10px;
+    height: 100px;
+}
+
+QScrollBar:horizontal {
+    width: 100px;
+    height: 10px;
+}
+
+QScrollBar::handle {
+    background-color: @COLOR_MAIN_DARK;
+    border-radius: 3px;
+    border: 1px solid #E2E0E0;
+}
+
+QScrollBar::handle:vertical {
+    min-height: 0px;
+}
+
+QScrollBar::handle:horizontal {
+    min-width: 0px;
+}
+
+QScrollBar::add-line {
+    subcontrol-origin: margin;
+    border: 1px solid #E2E0E0;
+}
+
+QScrollBar::add-line:vertical {
+    height: 0px;
+    subcontrol-position: bottom;
+}
+
+QScrollBar::add-line:horizontal {
+    width: 0px;
+    subcontrol-position: right;
+}
+
+QScrollBar::sub-line:vertical {
+    subcontrol-origin: margin;
+    border: 1px solid #E2E0E0;
+}
+
+QScrollBar::sub-line:vertical {
+    height: 0 px;
+    subcontrol-position: top;
+}
+
+QScrollBar::sub-line:horizontal {
+    width: 0 px;
+    subcontrol-position: rigth;
+}
+
+
+/* TABLES */
+
+QTableWidget {
+    background-color: #ffffff;
+    color: #17202a;
+    border: 1px solid #929292;
+}
+
+QTableWidget QHeaderView {
+    text-align: left;
+}
+
+QTableWidget QHeaderView::section {
+    background-color: @COLOR_MAIN_LIGHT;
+    color: #17202a;
+    text-align: left;
+    border-bottom-style: solid;
+    border-bottom-color: #c4c4c4;
+    padding: 1px;
+}
+
+
+QTableView::item {
+    background-color: #ffffff;
+}
+
+QTableView::item:alternate {
+    background-color: #f5f5f5;
+}
+
+QTableWidget::item:selected {
+    background-color: @COLOR_MAIN_DARK;
+    color: #ffffff;
+}
+
+QTableWidget QHeaderView::section:horizontal {
+    border-top: 1px solid #fffff8;
+}
+
+QTableWidget QHeaderView::section:vertical {
+    border-left: 1px solid #fffff8;
+}
+
+/* Custom  */
+
+QLabel {
+    color: @COLOR_TEXT_DEFAULT;
+    background-color: transparent;
+}
+
+QDockWidget {
+    font-size: @FONT_SIZE_DEFAULT;
+    background-color: @COLOR_BACKGROUND_DEFAULT;
+    color: @COLOR_TEXT_DEFAULT;
+}
+
+QDockWidget #frame_header {
+    background-color: @COLOR_MAIN_LIGHT;
+}
+
+QDockWidget #frame_footer,
+QDockWidget #frame_filters,
+QDockWidget #frame_catalog,
+QDockWidget #frame_header_filters {
+    background-color: @COLOR_BACKGROUND_DEFAULT;
+}
+
+QDockWidget #lbl_logo {
+    image: url(:/resources/brand/logo_mini.png);
+}
+
+QDockWidget #lbl_app_title {
+    background-color: transparent;
+    color: @COLOR_TEXT_DEFAULT;
+    font-weight: 500;
+}
+
+#__lbl_languange {
+    font-size: @FONT_SIZE_SMALL;
+}
+
+QDockWidget #lbl_search_area,
+QDockWidget #lbl_catalogs,
+QDockWidget #lbl_filters {
+    font-weight: 500;
+}

@@ -1,0 +1,22 @@
+<RCC>
+  <qresource>
+    <file>resources/icons/sort-ascending.svg</file>
+    <file>resources/icons/sort-descending.svg</file>
+    <file>resources/icons/calendar-2.svg</file>
+    <file>resources/icons/help.svg</file>
+    <file>resources/icons/cloud.svg</file>
+    <file>resources/icons/calendar.svg</file>
+    <file>resources/icons/triangle.svg</file>
+    <file>resources/icons/view.svg</file>
+    <file>resources/icons/download.svg</file>
+    <file>resources/icons/info.svg</file>
+    <file>resources/icons/up.svg</file>
+    <file>resources/icons/down.svg</file>
+    <file>resources/icons/refresh.svg</file>
+    <file>resources/icons/settings.svg</file>
+    <file>resources/icons/logout.svg</file>
+    <file>icon.png</file>
+    <file>resources/brand/logo_mini.png</file>
+    <file>resources/image_not_found.png</file>
+  </qresource>
+</RCC>
