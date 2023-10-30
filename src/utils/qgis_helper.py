@@ -229,12 +229,11 @@ def create_layer(layer_name, group_name):
     return results_layer
 
 
-def add_feature_to_layer(feature_data, feature_id, layer):
+def add_feature_to_layer(coordinates, feature_id, layer):
     """Add feature to layer."""
 
     pr = layer.dataProvider()
-    coordinates = feature_data['geometry']['coordinates']
-    points = [QgsPointXY(point[0], point[1]) for point in coordinates[0]]
+    points = [QgsPointXY(point[0], point[1]) for point in coordinates]
     polygon = QgsGeometry.fromPolygonXY([points])
 
     feature = QgsFeature()

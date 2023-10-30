@@ -110,8 +110,6 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
                     continue
 
                 collection['provider'] = provider
-                collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
-                collection['min_resolution'] = collection['resolutionValue'].get('minimum')
                 collection['selected'] = any(
                     col['provider'] == provider and col['name'] == collection['name']
                     for col in self.selected_collections

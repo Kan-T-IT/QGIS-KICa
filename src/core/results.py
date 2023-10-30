@@ -10,57 +10,6 @@ from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
 from utils.general import get_plugin_dir
 
 
-def create_results_layers(provider_name, host, feature_data, layer_name, group_name, footprints_layer):
-    """Create results layers."""
-
-    crs = 'EPSG:4326'  # qgis_helper.get_current_crs()
-    footprints_layer = qgis_helper.get_or_create_footprints_layer(layer_name, group_name)
-    footprints_layer = qgis_helper.add_feature_to_layer(
-        feature_data, feature_data['properties']['id'], footprints_layer
-    )
-
-    settings = PluginSettings()
-    max_features_results = int(settings.max_features_results or 100)
-    features_counter = 0
-    for feature in footprints_layer.getFeatures():
-        if len(feature.attributes()) == 0:
-            continue
-
-        if features_counter >= max_features_results:
-            break
-
-        image_id = feature.attributes()[0]
-        quick_look_layer_name = image_id
-        quick_look_layers = qgis_helper.get_layer_by_name(quick_look_layer_name)
-        if quick_look_layers:
-            continue
-
-        image_response = catalogs.get_quicklook(provider_name, host, image_id)
-
-        temp_directory = f'{get_plugin_dir()}/temp'
-        if not os.path.isdir(temp_directory):
-            os.makedirs(temp_directory)
-
-        image_path = f'{temp_directory}/{image_id}.jpg'
-        file = open(image_path, 'wb')
-        file.write(image_response)
-        file.close()
-        sleep(0.2)
-
-        qgis_helper.create_quicklook_layer(
-            layer_name=quick_look_layer_name,
-            group_name=group_name,
-            feature=feature,
-            layer_type='Polygon',
-            crs=crs,
-            image_path=image_path,
-        )
-
-        features_counter += 1
-
-    return layer_name
-
-
 def create_quicklook(provider_name, host, image_id, layer_name):
     """Create results layers."""
 

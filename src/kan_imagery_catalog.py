@@ -28,11 +28,12 @@ try:
 except:  # noqa: E722    # pylint: disable=bare-except
     pass
 
-from core.settings import PluginSettings
 from kan_imagery_catalog_dock import KANImageryCatalogDock
 
 # Initialize Qt resources from file resources.py
 from resources import *  # noqa: F403, F401  # pylint: disable=wildcard-import
+
+from core.settings import PluginSettings
 from utils.general import get_plugin_dir
 
 
@@ -51,7 +52,7 @@ class KANImageryCatalog:
         self.iface = iface
 
         # initialize plugin directory
-        self.plugin_dir = get_plugin_dir()  # os.path.dirname(__file__)
+        self.plugin_dir = get_plugin_dir()
 
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
@@ -238,39 +239,11 @@ class KANImageryCatalog:
                 # Create the dockwidget (after translation) and keep reference
                 self.dockwidget = KANImageryCatalogDock()
 
-            # if self.frm_settings is None:
-            #     self.frm_settings = FormSettings()
-
-            # if self.frm_collection_settings is None:
-            #     self.frm_collection_settings = FormDefaultCollections()
-
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closing_plugin.connect(self.onClosePlugin)
-            # self.dockwidget.open_settings_signal.connect(self.open_settings)
-            # self.dockwidget.open_collection_settings_signal.connect(self.open_collection_settings)
 
             # show the dockwidget
             # TODO: fix to allow choice of dock location
             self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
 
             self.dockwidget.show()
-
-    # def open_settings(self):
-    #     """Open the settings dialog."""
-    #     # frm = FormSettings(parent=, closing_plugin=None) #self.onClosePlugin)
-    #     # frm = FormSettings()
-    #     # self.frm_settings.show()
-    #     # self.frm_settings.setWindowFlags(Qt.WindowStaysOnTopHint)
-    #     result = self.frm_settings.exec_()
-    #     if result:
-    #         pass
-
-    # def open_collection_settings(self):
-    #     # frm = FormDefaultCollections()
-    #     # # frm = FormDefaultCollections(parent=self, closing_plugin=None) #self.onClosePlugin)
-    #     # if frm.exec() == QDialog.accepted:
-    #     # self.frm_collection_settings.show()
-    #     # self.frm_collection_settings.setWindowFlags(Qt.WindowStaysOnTopHint)
-    #     result = self.frm_collection_settings.exec_()
-    #     if result:
-    #         pass

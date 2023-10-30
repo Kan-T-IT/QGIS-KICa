@@ -1,22 +1,46 @@
 """ Collections module. """
 
-from services import up42
 
-# from utils.exceptions import ProviderError
+from core.settings import PluginSettings
+from services import sentinel_hub, up42
+from utils.exceptions import ProviderError
 
 
 def get_collections(provider: str, search_params: dict = None) -> dict:
     """Get collections from a specific provider."""
 
+    settings = PluginSettings()
+    provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
+
     if provider == 'up42':
-        return up42.get_collections()  # search_params=search_params)
+        collections = up42.get_collections()
 
-    # if provider == 'planet':
-    #     raise ProviderError('This provider is not available.')
+        for collection in collections:
+            collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
+            collection['min_resolution'] = collection['resolutionValue'].get('minimum')
 
-    # if provider == 'sentinel_hub':
-    #     raise ProviderError('This provider is not available.')
+        return collections
 
-    # raise ProviderError('Provider not found')
+    if provider == 'sentinel_hub':
+        token = sentinel_hub.get_token(
+            client_id=provider_settings['client_id'],
+            client_secret=provider_settings['client_secret'],
+        )
+        collections = sentinel_hub.get_collections(token=token)
 
-    return []
+        for collection in collections:
+            collection['name'] = collection['id']
+            collection['hostName'] = ''
+
+            for provider in collection['providers']:
+                if 'host' in provider['roles']:
+                    collection['hostName'] = provider['name']
+                    break
+
+            collection['provider'] = provider
+            collection['sensor_type'] = collection['summaries'].get('instrument')
+            collection['min_resolution'] = ''
+
+        return collections
+
+    raise ProviderError('Provider not found')
