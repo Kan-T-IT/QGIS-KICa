@@ -165,3 +165,5 @@ src/test/
 env
 .vscode
 interrogate_*
+samples.py
+README_new.md
