@@ -85,8 +85,8 @@ class Ui_frm_default_collections(object):
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem2, 0, 1, 1, 1)
         self.btn_remove_selected = QtWidgets.QPushButton(self.frame)
-        self.btn_remove_selected.setMinimumSize(QtCore.QSize(100, 30))
-        self.btn_remove_selected.setMaximumSize(QtCore.QSize(100, 30))
+        self.btn_remove_selected.setMinimumSize(QtCore.QSize(150, 30))
+        self.btn_remove_selected.setMaximumSize(QtCore.QSize(150, 30))
         self.btn_remove_selected.setObjectName("btn_remove_selected")
         self.gridLayout_3.addWidget(self.btn_remove_selected, 0, 2, 1, 1)
         self.tbl_selected_collections = QtWidgets.QTableWidget(self.frame)
@@ -127,11 +127,11 @@ class Ui_frm_default_collections(object):
     def retranslateUi(self, frm_default_collections):
         _translate = QtCore.QCoreApplication.translate
         frm_default_collections.setWindowTitle(_translate("frm_default_collections", "Settings"))
-        self.label_2.setText(_translate("frm_default_collections", "Buscar por nombre/descripción:"))
-        self.btn_filter_results.setText(_translate("frm_default_collections", "Filtrar"))
-        self.label_3.setText(_translate("frm_default_collections", "Colecciones seleccionadas"))
-        self.btn_remove_selected.setText(_translate("frm_default_collections", "Eliminar"))
-        self.btn_add_selected.setText(_translate("frm_default_collections", "Agregar seleccionadas"))
+        self.label_2.setText(_translate("frm_default_collections", "Search by name/description:"))
+        self.btn_filter_results.setText(_translate("frm_default_collections", "Filter"))
+        self.label_3.setText(_translate("frm_default_collections", "Selected collections"))
+        self.btn_remove_selected.setText(_translate("frm_default_collections", "Delete selected"))
+        self.btn_add_selected.setText(_translate("frm_default_collections", "Add selected"))
 
 
 if __name__ == "__main__":

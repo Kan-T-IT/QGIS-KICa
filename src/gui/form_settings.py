@@ -15,7 +15,7 @@ class FormSettings(FormBase, Ui_frm_settings):
     def __init__(self, parent=None, closing_plugin=None):
         super().__init__(parent=parent, accept_btn=True, closing_plugin=closing_plugin)
 
-        self.setWindowTitle('Configuración de la aplicación')
+        self.setWindowTitle('Plugin settings')
 
         int_validator = QIntValidator()
         self.txt_default_back_days.setValidator(int_validator)
@@ -38,9 +38,9 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.btn_download_dir.setGraphicsEffect(forms.get_shadow_effect())
 
         languages = [
-            {'key': 'spanish', 'value': 'Español'},
+            # {'key': 'spanish', 'value': 'Español'},
             # {'key': 'portuguese', 'value': 'Portugûese'},
-            # {'key': 'english', 'value': 'English'},
+            {'key': 'english', 'value': 'English'},
         ]
 
         forms.load_combobox(self.cbo_language, 'key', 'value', languages)
@@ -73,7 +73,7 @@ class FormSettings(FormBase, Ui_frm_settings):
     def update_cloud_coverage_label(self):
         """Update cloud coverage label text."""
 
-        self.lbl_cloud_coverage.setText(f'Nubosidad máxima por defecto ({self.slider_cloud_coverage.value()} %)  ')
+        self.lbl_cloud_coverage.setText(f'Default max cloud coverage ({self.slider_cloud_coverage.value()} %)  ')
 
     def btn_accept_clicked(self):
         """Event handler for accept button click."""
@@ -128,7 +128,7 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.up42_is_valid = providers.check_credentials('up42', {'project_id': project_id, 'api_key': api_key})
 
         self.lbl_up42_check_credentials.setText(
-            'Las credenciales son válidas.' if self.up42_is_valid else 'Verifique las credenciales ingresadas.'
+            'The credentials are valid.' if self.up42_is_valid else 'Verify the credentials entered.'
         )
 
     def btn_sentinelhub_check_credentials_clicked(self):
@@ -141,5 +141,5 @@ class FormSettings(FormBase, Ui_frm_settings):
         )
 
         self.lbl_sentinelhub_check_credentials.setText(
-            'Las credenciales son válidas.' if self.sentinelhub_is_valid else 'Verifique las credenciales ingresadas.'
+            'The credentials are valid.' if self.sentinelhub_is_valid else 'Verify the credentials entered.'
         )

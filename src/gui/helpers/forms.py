@@ -144,12 +144,12 @@ def load_table_data(  # noqa: C901
     """Load table with provided data, headers and columns."""
 
     if not isinstance(data, list):
-        raise PluginError('El parámetro data debe ser una lista')
+        raise PluginError('The data parameter must be a list')
 
     row_count = len(data)
 
     if len(headers) != len(columns):
-        message = f"La cantidad de columnas para '{obj_table.objectName()}' no coincide con los encabezados"
+        message = f"Number of columns for '{obj_table.objectName()}' does not match headers."
         raise PluginError(message)
 
     if not headers:
@@ -230,7 +230,7 @@ def load_table_data(  # noqa: C901
                 # Is not allowed to save the dictionary in a column that is checkable or custom,
                 # in this case an additional empty column can be added as index 0 and hide it.
                 raise PluginError(
-                    'El método cargar_tabla no admite guardar el diccionario de datos en una celda con un ítem personalizado.'  # noqa: E501
+                    'The load_table method does not support set a dictionary in a custom item cell.'  # noqa: E501
                 )
 
             if not item_custom and not is_checkable:

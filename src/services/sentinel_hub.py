@@ -9,7 +9,7 @@ REQUEST_TIMEOUT = 120
 
 def get_token(client_id, client_secret):
     if not client_id or not client_secret:
-        raise AuthorizationError('No se han configurado las credenciales de SentinelHub')
+        raise AuthorizationError('SentinelHub credentials have not been configured.')
 
     url = 'https://services.sentinel-hub.com/oauth/token'
 
@@ -32,7 +32,7 @@ def get_token(client_id, client_secret):
                 return data.get('access_token')
 
     except requests.exceptions.HTTPError as ex:
-        raise AuthorizationError(f'Error al obtener el token.\n {ex}') from ex
+        raise AuthorizationError(f'There was an error getting the token.\n {ex}') from ex
 
 
 @lru_cache(maxsize=None)
@@ -68,13 +68,13 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
         if response.status_code == 200:
             return response.json()
         if response.status_code == 542:
-            raise AuthorizationError(f'El catálogo de {host_name} que intenta obtener es privado.')
+            raise AuthorizationError(f'The {host_name} catalog you are trying to get is private.')
         if response.status_code == 404:
-            raise HostError(f'No fue posible obtener el catálogo de {host_name} solicitado.')
+            raise HostError(f'It was not possible to get the requested {host_name} catalog.')
 
         response.raise_for_status()
     except requests.exceptions.HTTPError as ex:
-        raise HostError(f'Error al obtener catalogos del host {host_name}.\n {ex}') from ex
+        raise HostError(f'Error getting catalogs from host {host_name}.\n {ex}') from ex
 
     return {}
 

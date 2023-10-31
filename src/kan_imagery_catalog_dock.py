@@ -82,20 +82,16 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.chk_search_by_dataframe.setChecked(True)
         self.chk_search_by_dataframe_update()
 
-        self.lbl_search_area_tooltip.setToolTip(
-            "Dataframe o capas del proyecto (sólo capas del tipo 'single polygon')."
-        )
-        self.lbl_catalogs_tooltip.setToolTip(
-            'Define los catálogos de cada proveedor que se utilizarán para las búsquedas.'
-        )
-        self.lbl_filters_tooltip.setToolTip('Realiza la búsqueda según los filtros indicados.')
+        self.lbl_search_area_tooltip.setToolTip("Dataframe or project layers (only 'single polygon' type layers).")
+        self.lbl_catalogs_tooltip.setToolTip('Defines the catalogs of each supplier that will be used for searches.')
+        self.lbl_filters_tooltip.setToolTip('Perform the search according to the indicated filters.')
         # self.cbo_sort_by.setStyleSheet("QComboBox{border : 0px;}")
 
         sort_by = [
-            {'key': 'angle', 'value': 'Ángulo'},
-            {'key': 'date', 'value': 'Fecha'},
-            {'key': 'cloud_coverage', 'value': 'Nubosidad'},
-            {'key': 'name', 'value': 'Nombre'},
+            {'key': 'angle', 'value': 'Angle'},
+            {'key': 'date', 'value': 'Date'},
+            {'key': 'cloud_coverage', 'value': 'Cloud coverage'},
+            {'key': 'name', 'value': 'Name'},
         ]
 
         forms.load_combobox(self.cbo_sort_by, 'key', 'value', sort_by)
@@ -129,7 +125,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     def update_cloud_coverage_label(self):
         """Event handler for slider 'slider_cloud_coverage'."""
 
-        self.lbl_cloud_coverage.setText(f'Nubosidad máxima ({self.slider_cloud_coverage.value()} %)')
+        self.lbl_cloud_coverage.setText(f'Max cloud coverage ({self.slider_cloud_coverage.value()} %)')
 
     def chk_search_by_dataframe_update(self):
         """Event handler for checkbox 'chk_search_by_dataframe'."""
@@ -217,14 +213,14 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         if not valid_providers:
             qgis_helper.warning_message(
-                'Atención',
-                'Debe configurar algún proveedor desde la ventana de configuración.',
+                'Warning',
+                'There are no providers defined in the plugin settings.',
             )
             return
 
         self.frame_catalog.setDisabled(True)
         self.btn_settings.setDisabled(True)
-        self.btn_get_data.setText('Obteniendo resultados...')
+        self.btn_get_data.setText('Getting results...')
 
         self.lst_data.clear()
 
@@ -240,7 +236,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         try:
             if not self.chk_search_by_dataframe.isChecked() and not self.cbo_layer.currentText():
-                raise DataNotFoundError('El proyecto no tiene capas disponibles para la búsqueda.')
+                raise DataNotFoundError('The project has no layers available to use as a reference for searching.')
 
             layer_name = '' if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentText()
 
@@ -251,16 +247,16 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 date_to=date_to,
                 max_catalog_results=max_catalog_results,
             )
-            qgis_helper.success_message('', 'La búsqueda de catálogos ha finalizado.')
+            qgis_helper.success_message('', 'The catalog search has ended.')
 
         except SettingsError as ex:
-            qgis_helper.warning_message('Atención', str(ex))
+            qgis_helper.warning_message('Warning', str(ex))
 
         except DataNotFoundError as ex:
-            qgis_helper.info_message('Atención', str(ex))
+            qgis_helper.info_message('Warning', str(ex))
 
         except AuthorizationError as ex:
-            qgis_helper.warning_message('Atención', str(ex))
+            qgis_helper.warning_message('Warning', str(ex))
 
         except HostError as ex:
             qgis_helper.error_message('Error', str(ex))
@@ -285,7 +281,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         limit_features = self.settings.max_features_results
 
         if not (isinstance(self.settings.selected_collections, list)) or len(self.settings.selected_collections) == 0:
-            raise SettingsError('No hay catálogos seleccionados')
+            raise SettingsError('There are no catalogs selected.')
 
         catalog_counter = 0
 
@@ -328,7 +324,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     max_cloud_coverage=cloud_coverage,
                 )
             except AuthorizationError as ex:
-                qgis_helper.info_message('Atención', str(ex))
+                qgis_helper.info_message('Warning', str(ex))
                 continue
 
             except HostError as ex:
@@ -374,7 +370,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 QApplication.processEvents()
 
             catalog_counter += 1
-        qgis_helper.success_message('', 'La búsqueda de catálogos ha finalizado.')
+        qgis_helper.success_message('', 'The catalog search has ended.')
 
     def add_item_to_results(
         self,

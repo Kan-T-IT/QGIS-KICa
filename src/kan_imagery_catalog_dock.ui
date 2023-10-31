@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>342</width>
+    <width>364</width>
     <height>605</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>338</width>
+    <width>364</width>
     <height>572</height>
    </size>
   </property>
@@ -193,7 +193,7 @@
              <item row="0" column="0">
               <widget class="QLabel" name="lbl_search_area">
                <property name="text">
-                <string>Área de búsqueda</string>
+                <string>Search area</string>
                </property>
               </widget>
              </item>
@@ -304,7 +304,7 @@
                 <item row="0" column="0" colspan="2">
                  <widget class="QCheckBox" name="chk_search_by_dataframe">
                   <property name="text">
-                   <string>Usar área visible en pantalla</string>
+                   <string>Use visible area</string>
                   </property>
                  </widget>
                 </item>
@@ -386,7 +386,7 @@
              <item row="0" column="0">
               <widget class="QLabel" name="lbl_catalogs">
                <property name="text">
-                <string>Selección de catálogos</string>
+                <string>Catalog selection</string>
                </property>
               </widget>
              </item>
@@ -509,7 +509,7 @@
                    </size>
                   </property>
                   <property name="text">
-                   <string>Seleccionar</string>
+                   <string>Select</string>
                   </property>
                  </widget>
                 </item>
@@ -555,7 +555,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="lbl_filters">
                <property name="text">
-                <string>Filtros</string>
+                <string>Filters</string>
                </property>
               </widget>
              </item>
@@ -662,7 +662,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Desde</string>
+                   <string>Date from</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -698,7 +698,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Hasta</string>
+                   <string>Date to</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -1017,7 +1017,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Nubosidad máxima</string>
+                   <string>Max cloud coverage</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -1030,7 +1030,7 @@
                 <item row="2" column="2">
                  <widget class="QLabel" name="label">
                   <property name="text">
-                   <string>Límite por catálogo</string>
+                   <string>Catalog max results</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -1168,7 +1168,7 @@
                 <string />
                </property>
                <property name="text">
-                <string>Buscar</string>
+                <string>Search</string>
                </property>
               </widget>
              </item>
@@ -1178,7 +1178,7 @@
                 <enum>Qt::RightToLeft</enum>
                </property>
                <property name="text">
-                <string>Ordenar por fecha</string>
+                <string>Sort by date</string>
                </property>
                <property name="icon">
                 <iconset resource="resources.qrc">
