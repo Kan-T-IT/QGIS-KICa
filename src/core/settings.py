@@ -68,6 +68,16 @@ class PluginSettings:
         last_cleaning_date = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S.%f')
         qgis_helper.save_setting('last_cleaning_date', last_cleaning_date)
 
+    def get_active_providers(self) -> list:
+        """Get active providers."""
+
+        active_providers = []
+        for provider, settings in self.provider_settings.items():
+            if settings.get('valid', False):
+                active_providers.append(provider)
+
+        return active_providers
+
     @property
     def provider_settings(self) -> dict:
         self._provider_settings = qgis_helper.read_json_setting('provider_settings', '{}')

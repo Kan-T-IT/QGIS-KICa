@@ -58,9 +58,9 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.sentinelhub_settings = self.settings.provider_settings.get('sentinel_hub', {})
         self.planet_settings = self.settings.provider_settings.get('planet', {})
 
-        self.up42_is_valid = self.up42_settings.get('is_valid')
-        self.sentinelhub_is_valid = self.sentinelhub_settings.get('is_valid')
-        self.planet_is_valid = self.planet_settings.get('is_valid')
+        self.up42_is_valid = self.up42_settings.get('valid', False)
+        self.sentinelhub_is_valid = self.sentinelhub_settings.get('valid', False)
+        self.planet_is_valid = self.planet_settings.get('valid', False)
 
         self.txt_up42_api_key.setText(self.up42_settings.get('api_key'))
         self.txt_up42_project_id.setText(self.up42_settings.get('project_id'))

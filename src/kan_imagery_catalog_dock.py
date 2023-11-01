@@ -205,13 +205,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         """Event handler for button 'btn_get_data'."""
 
         # Check if there are providers configured...
-        valid_providers = False
-        for _, value in self.settings.provider_settings.items():
-            valid_providers = value['valid']
-            if valid_providers:
-                break
-
-        if not valid_providers:
+        if not self.settings.get_active_providers():
             qgis_helper.warning_message(
                 'Warning',
                 'There are no providers defined in the plugin settings.',
@@ -288,7 +282,13 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         # Group collections by host
         dict_collections = {}
         collection_aux = {}
+
+        active_providers = self.settings.get_active_providers()
+
         for collection in self.settings.selected_collections:
+            if collection['provider'] not in active_providers:
+                continue
+
             # Save collection name and title to use in results list
             collection_aux[collection['name']] = collection['title']
             host_name = collection['hostName']
@@ -322,6 +322,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     host_name=host,
                     search_params=search_params,
                     max_cloud_coverage=cloud_coverage,
+                    collection_names=collection_aux,
                 )
             except AuthorizationError as ex:
                 qgis_helper.info_message('Warning', str(ex))

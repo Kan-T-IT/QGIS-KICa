@@ -72,9 +72,6 @@ def set_elided_text_to_label(label, text):
     metrix = QFontMetrics(label.font())
     width = label.width() - 2
 
-    # print(f"set_elided_text_to_label-> metrix.width(text): {metrix.width(text)}")
-    # print(f"set_elided_text_to_label-> width: {width}")
-
     aux_margin = 30
     clipped_text = text
     if metrix.width(text) - aux_margin > width:

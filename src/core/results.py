@@ -19,7 +19,6 @@ def create_quicklook(provider_name, host, image_id, layer_name):
 
     feature_for_quicklook = None
     for _feature in footprints_layer.getFeatures():
-        print(f'_feature: {_feature.attributes()}')
         if len(_feature.attributes()) > 0 and _feature.attributes()[0] == image_id:
             feature_for_quicklook = _feature
             break

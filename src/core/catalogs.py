@@ -19,7 +19,9 @@ def get_custom_query(provider: str, max_cloud_coverage: int) -> dict:
     return query
 
 
-def get_catalog(provider: str, host_name: str, search_params: dict, max_cloud_coverage: int) -> dict:
+def get_catalog(
+    provider: str, host_name: str, search_params: dict, max_cloud_coverage: int, collection_names: list
+) -> dict:
     """Get catalog data from a specific provider."""
 
     settings = PluginSettings()
@@ -42,9 +44,9 @@ def get_catalog(provider: str, host_name: str, search_params: dict, max_cloud_co
             catalog['aux_date'] = catalog['properties']['acquisitionDate']
             catalog['aux_angle'] = float(catalog['properties']['providerProperties'].get('incidenceAngle', 0))
             catalog['aux_cloud_coverage'] = catalog['properties']['cloudCoverage']
-            catalog['aux_collection_name'] = ''  # collection_aux.get(catalog['properties']['collection'])
+            catalog['aux_collection_name'] = collection_names.get(catalog['properties']['collection'])
             catalog['aux_image_id'] = catalog['properties']['id']
-            catalog['aux_coordinates'] = catalog['properties']['coordinates'][0]
+            catalog['aux_coordinates'] = catalog['geometry']['coordinates'][0]
 
         return catalogs['features']
 
