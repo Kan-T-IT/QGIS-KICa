@@ -24,7 +24,7 @@ try:
     )
     from qgis.utils import iface
 except:  # noqa: E722    pylint: disable=bare-except
-    print('No se pudieron importar las librerías de QGIS')
+    print('QGIS libraries could not be imported.')
 
 
 def get_bounding_box_canvas():
@@ -32,7 +32,7 @@ def get_bounding_box_canvas():
 
     active_layer = iface.activeLayer()
     if not active_layer:
-        raise DataNotFoundError('Debe tener al menos una capa activa')
+        raise DataNotFoundError('Must have at least one active layer.')
 
     bbox = iface.mapCanvas().extent()
     xmin = bbox.xMinimum()
@@ -48,7 +48,7 @@ def get_bounding_box_selected_feature(layer_name):
 
     layers = QgsProject.instance().mapLayersByName(layer_name)
     if not layers:
-        raise DataNotFoundError('Error', 'No se encontró la capa especificada.')
+        raise DataNotFoundError('Error', 'The specified layer was not found.')
 
     layer = layers[0]
     if layer.selectedFeatureCount() > 0:
@@ -61,7 +61,7 @@ def get_bounding_box_selected_feature(layer_name):
 
         return {'x_min': xmin, 'y_min': ymin, 'x_max': xmax, 'y_max': ymax}
 
-    raise DataNotFoundError('No hay objetos seleccionados en la capa especificada.')
+    raise DataNotFoundError('There are no features selected on the specified layer.')
 
 
 def get_single_polygon_layers():
@@ -229,12 +229,11 @@ def create_layer(layer_name, group_name):
     return results_layer
 
 
-def add_feature_to_layer(feature_data, feature_id, layer):
+def add_feature_to_layer(coordinates, feature_id, layer):
     """Add feature to layer."""
 
     pr = layer.dataProvider()
-    coordinates = feature_data['geometry']['coordinates']
-    points = [QgsPointXY(point[0], point[1]) for point in coordinates[0]]
+    points = [QgsPointXY(point[0], point[1]) for point in coordinates]
     polygon = QgsGeometry.fromPolygonXY([points])
 
     feature = QgsFeature()

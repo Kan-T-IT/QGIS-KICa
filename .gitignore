@@ -158,10 +158,13 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-.ruff_cache/
+src/.coverage
 src/help
 src/i18n/
 src/test/
 env
+.ruff_cache/
 .vscode
 interrogate_*
+samples.py
+README_new.md

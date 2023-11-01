@@ -16,7 +16,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
     def __init__(self, parent=None, closing_plugin=None):
         super().__init__(parent=parent, accept_btn=True, closing_plugin=closing_plugin)
 
-        self.setWindowTitle('Selección de catálogos')
+        self.setWindowTitle('Catalog selection')
 
         self.btn_accept.clicked.connect(self.btn_accept_clicked)
         self.btn_filter_results.clicked.connect(self.btn_filter_results_clicked)
@@ -76,12 +76,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         """Event handler for filter results button click."""
 
         self.frame_content.setDisabled(True)
-        self.btn_filter_results.setText('Consultando colecciones...')
+        self.btn_filter_results.setText('Getting collections...')
 
         if len(self.providers) == 0:
             qgis_helper.warning_message(
-                'Atención',
-                'Debe definir las credenciales válidas de al menos un proveedor en la ventana de configuración.',
+                'Warning', 'You must set valid credentials for at least one provider in the plugin settings.'
             )
             return
 
@@ -110,8 +109,6 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
                     continue
 
                 collection['provider'] = provider
-                collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
-                collection['min_resolution'] = collection['resolutionValue'].get('minimum')
                 collection['selected'] = any(
                     col['provider'] == provider and col['name'] == collection['name']
                     for col in self.selected_collections
@@ -121,7 +118,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
 
         self.load_filtered_collections(results)
 
-        self.btn_filter_results.setText('Filtrar')
+        self.btn_filter_results.setText('Filter results')
         self.frame_content.setDisabled(False)
 
     def load_filtered_collections(self, data):
@@ -130,11 +127,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         headers = [
             '',
             '',
-            'Proveedor',
-            'Nombre',
-            'Tipo',
-            'Resolución',
-            'Descripción',
+            'Provider',
+            'Name',
+            'Type',
+            'Resolution',
+            'Description',
         ]
         columns = [
             '',
@@ -163,11 +160,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         headers = [
             '',
             '',
-            'Proveedor',
-            'Nombre',
-            'Tipo',
-            'Resolución',
-            'Descripción',
+            'Provider',
+            'Name',
+            'Type',
+            'Resolution',
+            'Description',
         ]
         columns = [
             '',

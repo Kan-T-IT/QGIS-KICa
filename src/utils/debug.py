@@ -4,7 +4,7 @@ def pyqt_set_trace():
     from PyQt5.QtCore import pyqtRemoveInputHook
 
     pyqtRemoveInputHook()
-    print("Utilizando la función de debug personalizada...")
+    print('Using custom debug function...')
 
     try:
         import pudb
@@ -14,5 +14,5 @@ def pyqt_set_trace():
         pdb.set_trace()
 
 
-# Usar esta variable de entorno para que breakpoint() llame a la función personalizada de debug
+# Use this environment variable to have breakpoint() call the custom debug function
 # export PYTHONBREAKPOINT="kan_imagery_catalog.utils.debug.pyqt_set_trace"

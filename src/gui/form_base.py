@@ -49,21 +49,21 @@ class FormBase(QDialog):
         self.layout_control.addSpacerItem(spacerItem)
 
         if accept_btn:
-            self.btn_accept = QPushButton('Aceptar')
+            self.btn_accept = QPushButton('Accept')
             self.btn_accept.setObjectName('btn_accept')
             self.btn_accept.setFixedSize(default_widget_size)
             self.layout_control.addWidget(self.btn_accept)
             self.btn_accept.setGraphicsEffect(forms.get_shadow_effect())
 
         if cancel_btn:
-            self.btn_cancel = QPushButton('Cancelar')
+            self.btn_cancel = QPushButton('Cancel')
             self.btn_cancel.setObjectName('btn_cancel')
             self.btn_cancel.setFixedSize(default_widget_size)
             self.layout_control.addWidget(self.btn_cancel)
             self.btn_cancel.setGraphicsEffect(forms.get_shadow_effect())
 
         if close_btn:
-            self.btn_close = QPushButton('Salir')
+            self.btn_close = QPushButton('Close')
             self.btn_close.setObjectName('btn_close')
             self.btn_close.setFixedSize(default_widget_size)
             self.layout_control.addWidget(self.btn_close)

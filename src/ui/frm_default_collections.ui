@@ -113,7 +113,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Buscar por nombre/descripción:</string>
+            <string>Search by name/description:</string>
            </property>
           </widget>
          </item>
@@ -169,7 +169,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Filtrar</string>
+               <string>Filter</string>
               </property>
              </widget>
             </item>
@@ -247,7 +247,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Colecciones seleccionadas</string>
+            <string>Selected collections</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -271,18 +271,18 @@
           <widget class="QPushButton" name="btn_remove_selected">
            <property name="minimumSize">
             <size>
-             <width>100</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>100</width>
+             <width>150</width>
              <height>30</height>
             </size>
            </property>
            <property name="text">
-            <string>Eliminar</string>
+            <string>Delete selected</string>
            </property>
           </widget>
          </item>
@@ -353,7 +353,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Agregar seleccionadas</string>
+            <string>Add selected</string>
            </property>
           </widget>
          </item>
