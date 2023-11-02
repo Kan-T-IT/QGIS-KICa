@@ -74,6 +74,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.btn_select_catalogs.setGraphicsEffect(forms.get_shadow_effect())
         self.btn_get_data.setGraphicsEffect(forms.get_shadow_effect())
+        self.btn_get_data.setText('Search')
 
         int_validator = QIntValidator()
         self.txt_max_catalog_results.setValidator(int_validator)
@@ -228,6 +229,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             max_catalog_results = self.settings.max_catalog_results
             self.txt_max_catalog_results.setText(str(max_catalog_results))
 
+        QApplication.processEvents()
+
         try:
             if not self.chk_search_by_dataframe.isChecked() and not self.cbo_layer.currentText():
                 raise DataNotFoundError('The project has no layers available to use as a reference for searching.')
@@ -261,7 +264,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         finally:
             self.frame_catalog.setDisabled(False)
             self.btn_settings.setDisabled(False)
-            self.btn_get_data.setText('Buscar')
+            self.btn_get_data.setText('Search')
 
     def get_results(self, layer_name, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
