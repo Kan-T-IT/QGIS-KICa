@@ -14,7 +14,7 @@ def get_custom_query(provider: str, max_cloud_coverage: int) -> dict:
         query = {'cloudCoverage': {'LTE': max_cloud_coverage}}
 
     if provider == 'sentinel_hub':
-        query = {}
+        query = f'eo:cloud_cover<{max_cloud_coverage}'
 
     return query
 
@@ -57,7 +57,8 @@ def get_catalog(
         )
 
         if custom_query:
-            search_params['query'] = custom_query
+            search_params['filter'] = custom_query
+
         catalogs = sentinel_hub.get_catalog(token=token, host_name=host_name, search_params=search_params)
         for catalog in catalogs['features']:
             catalog['aux_date'] = catalog['properties']['datetime']

@@ -310,11 +310,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 'collections': collections,
                 'bbox': [dict_bbox['x_min'], dict_bbox['y_min'], dict_bbox['x_max'], dict_bbox['y_max']],
                 'datetime': datetime_params,
-                # 'query': {'cloudCoverage': {'LTE': cloud_coverage}},
                 'limit': limit_features,
             }
-
-            print(f'search_params: {search_params}')
 
             try:
                 catalogs = get_catalog(
@@ -336,12 +333,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             for catalog in catalogs:  # ['features']:
                 if features_counter >= limit_features:
                     break
-
-                # item_date = catalog['properties']['acquisitionDate']
-                # item_angle = float(catalog['properties']['providerProperties'].get('incidenceAngle', 0))
-                # item_cloud_coverage = catalog['properties']['cloudCoverage']
-                # collection_name = collection_aux.get(catalog['properties']['collection'])
-                # image_id=catalog['properties']['id'],
 
                 item_date = catalog['aux_date']
                 item_angle = catalog['aux_angle']

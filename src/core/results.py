@@ -12,9 +12,6 @@ from utils.general import get_plugin_dir
 
 def create_quicklook(provider_name, host, image_id, layer_name):
     """Create results layers."""
-
-    # crs = qgis_helper.get_current_crs()
-    crs = 'EPSG:4326'
     footprints_layer = qgis_helper.get_or_create_footprints_layer(RESULTS_LAYER_NAME, RESULTS_GROUP_NAME)
 
     feature_for_quicklook = None
@@ -43,8 +40,6 @@ def create_quicklook(provider_name, host, image_id, layer_name):
         layer_name=layer_name,
         group_name=RESULTS_GROUP_NAME,
         feature=feature_for_quicklook,
-        layer_type='Polygon',
-        crs=crs,
         image_path=image_path,
     )
 
