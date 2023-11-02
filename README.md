@@ -1,80 +1,121 @@
-# KAN Imagery Catalog - QGIS Plugin (Satellite Image Catalog Viewer)
----------------------------------------------------------------------
+# KICa - KAN Imagery Catalog 
+
+## QGIS Plugin - Remote Sensors Catalogue 
+
 
 *  QGIS Minimum Version: 3.22
 
-*  Docs: [kan_imagery_catalog.pdf](kan_imagery_catalog.pdf)
+*  [Code Documentation](kan_imagery_catalog.pdf)
 
-*  Plugin Installer: [kan_imagery_catalog.zip](dist/kan_imagery_catalog.zip)
+*  [Download Plugin Release](https://github.com/Kan-T-IT/QGIS-KICa/releases)
+
+## Contributing
+
+This plugins is a project that integrates different platforms to access from QGIS and one can collaborate, either on Bugs or Pull Requests. 
 
 
 ### Development Environment Configuration
-Project Repository: https://github.com/Kan-T-IT/QGIS-imagery-catalogue
 
-Prerequisites:
+As a first point, it is important to be able to configure the development environment, which we will describe below: 
+
+
+#### Pre-requisites Recommended
+
 * Operating System: Linux
 * Python 3.9
 * QGIS 3.22 or higher
 * PyQt5
+* QT Designer
+
+
+#### Steps to install PyQt5 on linux
 
     `sudo apt install qtcreator pyqt5-dev-tools`
 
     `sudo apt install python3-pyqt5`
 
-* QT Designer
+#### Steps to install QT Designer on linux
 
     `sudo apt install qttools5-dev-tools`
 
     `sudo apt install qttools5-dev`
 
 
+### How to work with Project
 
-### To work with the project, follow these steps:
+To collaborate on this QGIS plugin project, please follow these steps:
 
-Clone the project:
-`git clone https://github.com/Kan-T-IT/QGIS-imagery-catalogue.git`
+1. Clone the project repository:
+   ```
+   git clone https://github.com/Kan-T-IT/QGIS-KICa.git
+   ```
 
-Enter the project directory:
-`cd qgis-imagery-catalogue`
+2. Navigate to the project directory:
+   ```
+   cd qgis-imagery-catalogue
+   ```
 
-Create a Python virtual environment:
-`python3 -m venv env`
+3. Create a Python virtual environment:
+   ```
+   python3 -m venv env
+   ```
 
-Activate it:
-`source env/bin/activate`
+4. Activate the virtual environment:
+   ```
+   source env/bin/activate
+   ```
 
-Install dependencies from the requirements.txt file:
-`pip install -r requirements.txt`
+5. Install the project dependencies from the `requirements.txt` file:
+   ```
+   pip install -r requirements.txt
+   ```
 
-Update the path to the QGIS plugin directory (destination of the compiled plugin):
+6. Update the path to the QGIS plugin directory (the destination for the compiled plugin):
 
-From QGIS, go to `Settings/User Profiles/Open Active Profile Folder`,
-and within that directory, go to `python/plugins`. Update this path in the `deploy.sh` file (**PLUGIN_DIR** variable) and in `src/pb_tool.cfg` (key **plugin_path**).
+   - In QGIS, access the user profile settings by going to `Settings/User Profiles/Open Active Profile Folder`.
+   - Within the profile directory, navigate to the `python/plugins` folder.
 
-The **deploy.sh** script handles everything necessary to generate the plugin files:
-* Compiles template files
-* Compiles the resource file
-* Copies the resulting files to the local plugin directory
+   Update this path in two specific locations:
 
-Important: The file requires execution permissions, so assign them first:
-`chmod +x deploy.sh`
+   - In the `deploy.sh` file, modify the **PLUGIN_DIR** variable.
+   - In the `src/pb_tool.cfg` file, update the **plugin_path** key.
+
+The `deploy.sh` script automates the necessary tasks to generate the plugin files, including:
+
+- Compiling template files
+- Compiling the resource file
+- Copying the resulting files to the local plugin directory
+
+**Important:** Ensure that the `deploy.sh` script has execution permissions. If not, assign them using the following command:
+   ```
+   chmod +x deploy.sh
+   ```
 
 
-### Project Documentation
-To update the project documentation, execute the following command from the project's root:
+## Project Code Documentation
 
-`make docs`
+To update the project's code documentation, perform the following steps from the project's root directory:
 
-If you want to force compilation:
+1. Generate the documentation:
+   ```
+   make docs
+   ```
 
-`make -B docs`
+2. If you wish to force a recompilation of the documentation, use the following command:
+   ```
+   make -B docs
+   ```
 
-**IMPORTANT:** When updating the documentation, it is advisable to run `deploy.sh` to update the PDF file in the project's root.
+**Important:** When updating the documentation, it is recommended to also run the `deploy.sh` script to ensure that the PDF file in the project's root is updated.
 
-To view the documentation in HTML version, execute from the project's root:
+To access the documentation in HTML format, follow these steps:
 
-`python3 -m http.server 8000 -d docs/build/html/`
+1. Start an HTTP server from the project's root directory:
+   ```
+   python3 -m http.server 8000 -d docs/build/html/
+   ```
 
-And access it from the browser:
-
-`http://127.0.0.1:8000`
+2. Open your web browser and navigate to the following address:
+   ```
+   http://127.0.0.1:8000
+   ```
