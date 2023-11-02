@@ -1,0 +1,104 @@
+:py:mod:`src.kan_imagery_catalog_dock`
+======================================
+
+.. py:module:: src.kan_imagery_catalog_dock
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   src.kan_imagery_catalog_dock.KANImageryCatalogDock
+
+
+
+
+.. py:class:: KANImageryCatalogDock(parent=None)
+
+
+   Bases: :py:obj:`PyQt5.QtWidgets.QDockWidget`, :py:obj:`FORM_CLASS`
+
+   KANImageryCatalogDock Dockwidget class.
+
+   .. py:attribute:: closing_plugin
+
+      
+
+   .. py:method:: closeEvent(event)
+
+      Run close plugin event.
+
+
+   .. py:method:: txt_max_catalog_results_text_changed()
+
+      Event handler for textbox 'txt_max_catalog_results'.
+
+
+   .. py:method:: update_cloud_coverage_label()
+
+      Event handler for slider 'slider_cloud_coverage'.
+
+
+   .. py:method:: chk_search_by_dataframe_update()
+
+      Event handler for checkbox 'chk_search_by_dataframe'.
+
+
+   .. py:method:: btn_update_layers_list_clicked()
+
+      Event handler for button 'btn_update_layers_list'.
+
+
+   .. py:method:: btn_settings_clicked()
+
+      Event handler for button 'btn_settings'.
+
+
+   .. py:method:: btn_select_catalogs_clicked()
+
+      Event handler for button 'btn_select_catalogs'.
+
+
+   .. py:method:: btn_sort_results_clicked()
+
+      Event handler for button 'btn_sort_results'.
+
+
+   .. py:method:: btn_show_hide_search_area_clicked()
+
+      Event handler for button 'btn_show_hide_search_area'.
+
+
+   .. py:method:: btn_show_hide_catalogs_clicked()
+
+      Event handler for button 'btn_show_hide_catalogs'.
+
+
+   .. py:method:: btn_show_hide_filters_clicked()
+
+      Event handler for button 'btn_show_hide_filters'.
+
+
+   .. py:method:: btn_get_data_clicked()
+
+      Event handler for button 'btn_get_data'.
+
+
+   .. py:method:: get_results(layer_name, cloud_coverage, date_from, date_to, max_catalog_results)
+
+      Get results from selected catalogs with selected filters.
+
+
+   .. py:method:: add_item_to_results(provider_name, host_name, collection_name, feature_data, acquisition_date, incidence_angle, cloud_coverage, image_id, feature_index)
+
+      Add item to results list.
+
+
+   .. py:method:: add_feature_to_footprints_layer(feature_data, footprint_id)
+
+
+

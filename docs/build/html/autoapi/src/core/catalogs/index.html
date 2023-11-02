@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.core.catalogs &mdash; KAN Imagery Catalog v0.1.3 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/hacks.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/fonts.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=cdbf2762"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="src.core.collections" href="../collections/index.html" />
+    <link rel="prev" title="src.core" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            KAN Imagery Catalog
+              <img src="../../../../_static/logo_kan.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.core</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.gui</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../services/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.services</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ui/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.ui</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">KAN Imagery Catalog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src</span></code></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.core</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.core.catalogs</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/src/core/catalogs/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.core.catalogs">
+<span id="src-core-catalogs"></span><h1><a class="reference internal" href="#module-src.core.catalogs" title="src.core.catalogs"><code class="xref py py-mod docutils literal notranslate"><span class="pre">src.core.catalogs</span></code></a><a class="headerlink" href="#module-src.core.catalogs" title="Link to this heading"></a></h1>
+<p>Catalogs module.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.core.catalogs.get_catalog" title="src.core.catalogs.get_catalog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_catalog</span></code></a>(→ dict)</p></td>
+<td><p>Get catalog data from a specific provider.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.core.catalogs.get_catalogs_from_collection" title="src.core.catalogs.get_catalogs_from_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_catalogs_from_collection</span></code></a>(→ list)</p></td>
+<td><p>Get catalog list from a specific provider.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.core.catalogs.get_thumbnail" title="src.core.catalogs.get_thumbnail"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_thumbnail</span></code></a>(→ dict)</p></td>
+<td><p>Get catalog thumbnail from a specific provider.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.core.catalogs.get_quicklook" title="src.core.catalogs.get_quicklook"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_quicklook</span></code></a>(→ dict)</p></td>
+<td><p>Get catalog quicklook from a specific provider.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.core.catalogs.get_download" title="src.core.catalogs.get_download"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_download</span></code></a>(→ dict)</p></td>
+<td><p>Get catalog download from a specific provider.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.core.catalogs.get_download_url" title="src.core.catalogs.get_download_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_download_url</span></code></a>(provider)</p></td>
+<td><p>Get catalog download url from a specific provider.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.catalogs.get_catalog">
+<span class="sig-prename descclassname"><span class="pre">src.core.catalogs.</span></span><span class="sig-name descname"><span class="pre">get_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#src.core.catalogs.get_catalog" title="Link to this definition"></a></dt>
+<dd><p>Get catalog data from a specific provider.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.catalogs.get_catalogs_from_collection">
+<span class="sig-prename descclassname"><span class="pre">src.core.catalogs.</span></span><span class="sig-name descname"><span class="pre">get_catalogs_from_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#src.core.catalogs.get_catalogs_from_collection" title="Link to this definition"></a></dt>
+<dd><p>Get catalog list from a specific provider.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.catalogs.get_thumbnail">
+<span class="sig-prename descclassname"><span class="pre">src.core.catalogs.</span></span><span class="sig-name descname"><span class="pre">get_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#src.core.catalogs.get_thumbnail" title="Link to this definition"></a></dt>
+<dd><p>Get catalog thumbnail from a specific provider.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.catalogs.get_quicklook">
+<span class="sig-prename descclassname"><span class="pre">src.core.catalogs.</span></span><span class="sig-name descname"><span class="pre">get_quicklook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#src.core.catalogs.get_quicklook" title="Link to this definition"></a></dt>
+<dd><p>Get catalog quicklook from a specific provider.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.catalogs.get_download">
+<span class="sig-prename descclassname"><span class="pre">src.core.catalogs.</span></span><span class="sig-name descname"><span class="pre">get_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#src.core.catalogs.get_download" title="Link to this definition"></a></dt>
+<dd><p>Get catalog download from a specific provider.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.catalogs.get_download_url">
+<span class="sig-prename descclassname"><span class="pre">src.core.catalogs.</span></span><span class="sig-name descname"><span class="pre">get_download_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.core.catalogs.get_download_url" title="Link to this definition"></a></dt>
+<dd><p>Get catalog download url from a specific provider.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="src.core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../collections/index.html" class="btn btn-neutral float-right" title="src.core.collections" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

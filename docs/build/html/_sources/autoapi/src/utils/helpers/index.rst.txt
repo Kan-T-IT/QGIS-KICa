@@ -1,0 +1,22 @@
+:py:mod:`src.utils.helpers`
+===========================
+
+.. py:module:: src.utils.helpers
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   src.utils.helpers.open_url
+
+
+
+.. py:function:: open_url(url: str, params: Optional[dict] = None) -> bool
+
+

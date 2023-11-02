@@ -1,0 +1,152 @@
+:py:mod:`src.utils.constants`
+=============================
+
+.. py:module:: src.utils.constants
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   src.utils.constants.CustomEnum
+   src.utils.constants.StyleVariables
+   src.utils.constants.MessageType
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   src.utils.constants.DEBUG_MODE
+   src.utils.constants.RESULTS_GROUP_NAME
+   src.utils.constants.RESULTS_LAYER_NAME
+
+
+.. py:data:: DEBUG_MODE
+   :value: True
+
+   
+
+.. py:data:: RESULTS_GROUP_NAME
+   :value: 'kan_imagery_catalog_preview'
+
+   
+
+.. py:data:: RESULTS_LAYER_NAME
+   :value: 'kan_imagery_catalog_footprints'
+
+   
+
+.. py:class:: CustomEnum
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:method:: __repr__() -> str
+
+      Return repr(self).
+
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+   .. py:method:: __eq__(other)
+
+      Return self==value.
+
+
+   .. py:method:: listar()
+      :classmethod:
+
+
+   .. py:method:: to_dict() -> dict
+      :classmethod:
+
+
+   .. py:method:: to_key_value_list() -> list
+      :classmethod:
+
+
+
+.. py:class:: StyleVariables
+
+
+   Bases: :py:obj:`CustomEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: FONT_SIZE_DEFAULT
+      :value: '12px'
+
+      
+
+   .. py:attribute:: FONT_SIZE_SMALL
+      :value: '8px'
+
+      
+
+   .. py:attribute:: COLOR_MAIN_DARK
+      :value: '#6597AF'
+
+      
+
+   .. py:attribute:: COLOR_MAIN_LIGHT
+      :value: '#F5F5F5'
+
+      
+
+   .. py:attribute:: COLOR_TEXT_DEFAULT
+      :value: '#2D2D2D'
+
+      
+
+   .. py:attribute:: COLOR_TEXT_LIGHT
+      :value: '#E8E8E8'
+
+      
+
+   .. py:attribute:: COLOR_BACKGROUND_DEFAULT
+      :value: '#E8E8E8'
+
+      
+
+
+.. py:class:: MessageType
+
+
+   .. py:attribute:: INFO
+      :value: 0
+
+      
+
+   .. py:attribute:: WARNING
+      :value: 1
+
+      
+
+   .. py:attribute:: CRITICAL
+      :value: 2
+
+      
+
+   .. py:attribute:: SUCCESS
+      :value: 3
+
+      
+
+

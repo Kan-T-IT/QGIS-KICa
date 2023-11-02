@@ -1,0 +1,43 @@
+:py:mod:`src.ui.frm_settings`
+=============================
+
+.. py:module:: src.ui.frm_settings
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   src.ui.frm_settings.Ui_frm_settings
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   src.ui.frm_settings.app
+
+
+.. py:class:: Ui_frm_settings
+
+
+   Bases: :py:obj:`object`
+
+   .. py:method:: setupUi(frm_settings)
+
+
+   .. py:method:: retranslateUi(frm_settings)
+
+
+
+.. py:data:: app
+
+   
+

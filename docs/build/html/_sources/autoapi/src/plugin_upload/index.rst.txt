@@ -1,0 +1,88 @@
+:py:mod:`src.plugin_upload`
+===========================
+
+.. py:module:: src.plugin_upload
+
+.. autoapi-nested-parse::
+
+   This script uploads a plugin package to the plugin repository.
+   Authors: A. Pasotti, V. Picavet
+   git sha              : $TemplateVCSFormat
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   src.plugin_upload.main
+   src.plugin_upload.hide_password
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   src.plugin_upload.PROTOCOL
+   src.plugin_upload.SERVER
+   src.plugin_upload.PORT
+   src.plugin_upload.ENDPOINT
+   src.plugin_upload.VERBOSE
+   src.plugin_upload.parser
+
+
+.. py:data:: PROTOCOL
+   :value: 'https'
+
+   
+
+.. py:data:: SERVER
+   :value: 'plugins.qgis.org'
+
+   
+
+.. py:data:: PORT
+   :value: '443'
+
+   
+
+.. py:data:: ENDPOINT
+   :value: '/plugins/RPC2/'
+
+   
+
+.. py:data:: VERBOSE
+   :value: False
+
+   
+
+.. py:function:: main(parameters, arguments)
+
+   Main entry point.
+
+   :param parameters: Command line parameters.
+   :param arguments: Command line arguments.
+
+
+.. py:function:: hide_password(url, start=6)
+
+   Returns the http url with password part replaced with '*'.
+
+   :param url: URL to upload the plugin to.
+   :type url: str
+
+   :param start: Position of start of password.
+   :type start: int
+
+
+.. py:data:: parser
+
+   
+

@@ -1,0 +1,35 @@
+:py:mod:`src.core.results`
+==========================
+
+.. py:module:: src.core.results
+
+.. autoapi-nested-parse::
+
+   This module contains the functions to create the results layers.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   src.core.results.create_results_layers
+   src.core.results.create_quicklook
+
+
+
+.. py:function:: create_results_layers(provider_name, host, feature_data, layer_name, group_name, footprints_layer)
+
+   Create results layers.
+
+
+.. py:function:: create_quicklook(provider_name, host, image_id, layer_name)
+
+   Create results layers.
+
+

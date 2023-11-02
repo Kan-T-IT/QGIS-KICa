@@ -1,0 +1,19 @@
+:py:mod:`src.core`
+==================
+
+.. py:module:: src.core
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   catalogs/index.rst
+   collections/index.rst
+   providers/index.rst
+   results/index.rst
+   settings/index.rst
+
+

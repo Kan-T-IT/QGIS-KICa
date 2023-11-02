@@ -1,0 +1,62 @@
+:py:mod:`src.utils.exceptions`
+==============================
+
+.. py:module:: src.utils.exceptions
+
+.. autoapi-nested-parse::
+
+   Custom exceptions module.
+
+
+
+Module Contents
+---------------
+
+.. py:exception:: PluginError(message='', message_type=MessageType.CRITICAL)
+
+
+   Bases: :py:obj:`Exception`
+
+   Base class for custom exceptions.
+
+
+.. py:exception:: ProviderError(message='Error to get results from provider.')
+
+
+   Bases: :py:obj:`PluginError`
+
+   Custom exception for provider related errors.
+
+
+.. py:exception:: HostError(message='Error to get results from host.')
+
+
+   Bases: :py:obj:`PluginError`
+
+   Custom exception for host related errors.
+
+
+.. py:exception:: AuthorizationError(message='Error to get results from authorization.')
+
+
+   Bases: :py:obj:`PluginError`
+
+   Custom exception for authorization related errors.
+
+
+.. py:exception:: SettingsError(message='Please check the plugin settings.')
+
+
+   Bases: :py:obj:`PluginError`
+
+   Custom exception for settings related errors.
+
+
+.. py:exception:: DataNotFoundError(message='No data found.')
+
+
+   Bases: :py:obj:`PluginError`
+
+   Custom exception for data related errors.
+
+
