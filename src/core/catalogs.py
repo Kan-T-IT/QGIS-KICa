@@ -126,11 +126,8 @@ def get_quicklook(provider: str, host_name: str, image_id: str) -> dict:
         )
         return up42.get_quicklook(token=token, host_name=host_name, image_id=image_id)
 
-    if provider == 'planet':
-        raise ProviderError('This provider is not available.')
-
     if provider == 'sentinel_hub':
-        raise ProviderError('This provider is not available.')
+        raise ProviderError('It is not possible to obtain a preview from this provider.')
 
     raise ProviderError('Provider not found')
 
@@ -164,10 +161,7 @@ def get_download_url(provider: str):
     if provider == 'up42':
         return up42.DOWNLOAD_URL
 
-    if provider == 'planet':
-        return 'https://www.planet.com/'
-
     if provider == 'sentinel_hub':
-        return 'https://www.sentinel-hub.com/'
+        return sentinel_hub.DOWNLOAD_URL
 
     raise ProviderError('Provider not found')

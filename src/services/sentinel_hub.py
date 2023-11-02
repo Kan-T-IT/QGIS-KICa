@@ -5,6 +5,7 @@ from functools import lru_cache
 from utils.exceptions import AuthorizationError, HostError
 
 REQUEST_TIMEOUT = 120
+DOWNLOAD_URL = 'https://www.sentinel-hub.com/'
 
 
 def get_token(client_id, client_secret):
