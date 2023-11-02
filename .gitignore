@@ -168,3 +168,4 @@ env
 interrogate_*
 samples.py
 README_new.md
+dist/
