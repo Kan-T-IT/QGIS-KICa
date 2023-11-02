@@ -1,0 +1,131 @@
+:py:mod:`src.utils.qgis_helper`
+===============================
+
+.. py:module:: src.utils.qgis_helper
+
+.. autoapi-nested-parse::
+
+   QGIS helper functions module.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   src.utils.qgis_helper.get_bounding_box_canvas
+   src.utils.qgis_helper.get_bounding_box_selected_feature
+   src.utils.qgis_helper.get_single_polygon_layers
+   src.utils.qgis_helper.save_setting
+   src.utils.qgis_helper.read_setting
+   src.utils.qgis_helper.save_json_setting
+   src.utils.qgis_helper.read_json_setting
+   src.utils.qgis_helper.error_message
+   src.utils.qgis_helper.warning_message
+   src.utils.qgis_helper.info_message
+   src.utils.qgis_helper.success_message
+   src.utils.qgis_helper.get_or_create_group
+   src.utils.qgis_helper.get_layer_by_name
+   src.utils.qgis_helper.get_or_create_footprints_layer
+   src.utils.qgis_helper.get_current_crs
+   src.utils.qgis_helper.create_layer
+   src.utils.qgis_helper.add_feature_to_layer
+   src.utils.qgis_helper.create_quicklook_layer
+
+
+
+.. py:function:: get_bounding_box_canvas()
+
+   Get bounding box from canvas.
+
+
+.. py:function:: get_bounding_box_selected_feature(layer_name)
+
+   Get bounding box from selected feature.
+
+
+.. py:function:: get_single_polygon_layers()
+
+   Get single polygon layers from current project.
+
+
+.. py:function:: save_setting(setting_name, value)
+
+   Save setting.
+
+
+.. py:function:: read_setting(setting_name, default_value=None)
+
+   Read setting.
+
+
+.. py:function:: save_json_setting(setting_name, value)
+
+   Save json setting.
+
+
+.. py:function:: read_json_setting(setting_name, default_value=None)
+
+   Read json setting.
+
+
+.. py:function:: error_message(title, text)
+
+   Show error message.
+
+
+.. py:function:: warning_message(title, text)
+
+   Show warning message.
+
+
+.. py:function:: info_message(title, text)
+
+   Show info message.
+
+
+.. py:function:: success_message(title, text)
+
+   Show success message.
+
+
+.. py:function:: get_or_create_group(group_name)
+
+   Get or create group.
+
+
+.. py:function:: get_layer_by_name(layer_name)
+
+   Get layer by name.
+
+
+.. py:function:: get_or_create_footprints_layer(layer_name, group_name)
+
+   Get or create footprints layer.
+
+
+.. py:function:: get_current_crs()
+
+   Get crs from active layer.
+
+
+.. py:function:: create_layer(layer_name, group_name)
+
+   Create a layer.
+
+
+.. py:function:: add_feature_to_layer(feature_data, feature_id, layer)
+
+   Add feature to layer.
+
+
+.. py:function:: create_quicklook_layer(layer_name, group_name, feature, crs, layer_type='Polygon', image_path=None)
+
+   Create a layer with a quicklook image.
+
+

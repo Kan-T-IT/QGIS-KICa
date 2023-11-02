@@ -1,0 +1,31 @@
+:py:mod:`src.gui.form_base`
+===========================
+
+.. py:module:: src.gui.form_base
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   src.gui.form_base.FormBase
+
+
+
+
+.. py:class:: FormBase(parent=None, accept_btn=False, cancel_btn=False, close_btn=True, closing_plugin=None)
+
+
+   Bases: :py:obj:`PyQt5.QtWidgets.QDialog`
+
+   .. py:method:: set_control_buttons(accept_btn, cancel_btn, close_btn)
+
+
+   .. py:method:: btn_close_click()
+
+
+

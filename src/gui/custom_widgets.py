@@ -1,14 +1,15 @@
 """ Custom widgets module. """
 
-from core import catalogs, results
-from gui.form_catalog_info import FormCatalogInfo
-from gui.helpers import forms
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget
+
+from core import catalogs, results
+from gui.form_catalog_info import FormCatalogInfo
+from gui.helpers import forms
 from ui.custom_widget_list_item import Ui_CustomWidgetListItem
 from utils import qgis_helper
-from utils.exceptions import HostError
+from utils.exceptions import HostError, PluginError
 from utils.helpers import open_url
 
 
@@ -121,5 +122,5 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
                 image_id=self.image_id,
                 layer_name=f'{self.image_id}_{self.feature_index}',
             )
-        except HostError as ex:
-            qgis_helper.error_message('Error', str(ex))
+        except PluginError as ex:
+            qgis_helper.error_message('Could not get a preview', str(ex))

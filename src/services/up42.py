@@ -17,7 +17,7 @@ def get_token(project_id: str, api_key: str) -> str:
     url = 'https://api.up42.com/oauth/token'
 
     if not project_id or not api_key:
-        raise AuthorizationError('No se han configurado las credenciales de UP42')
+        raise AuthorizationError('UP42 credentials have not been configured.')
 
     encoded_value = encode_base64(f'{project_id}:{api_key}')
     headers = {
@@ -38,7 +38,7 @@ def get_token(project_id: str, api_key: str) -> str:
                 return data.get('accessToken')
 
     except requests.exceptions.HTTPError as ex:
-        raise AuthorizationError(f'Error al obtener el token.\n {ex}') from ex
+        raise AuthorizationError(f'There was an error getting the token.\n {ex}') from ex
 
 
 @lru_cache(maxsize=None)
@@ -71,16 +71,14 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
 
         if response.status_code == 200:
             return response.json()
-
         if response.status_code == 542:
-            raise AuthorizationError(f'El catálogo de {host_name} que intenta obtener es privado.')
-
+            raise AuthorizationError(f'The {host_name} catalog you are trying to get is private.')
         if response.status_code == 404:
-            raise HostError(f'No fue posible obtener el catálogo de {host_name} solicitado.')
+            raise HostError(f'It was not possible to get the requested {host_name} catalog.')
 
         response.raise_for_status()
     except requests.exceptions.HTTPError as ex:
-        raise HostError(f'Error al obtener catalogos del host {host_name}.\n {ex}') from ex
+        raise HostError(f'Error getting catalogs from host {host_name}.\n {ex}') from ex
 
 
 @lru_cache(maxsize=None)
@@ -122,4 +120,4 @@ def get_quicklook(token: str, host_name: str, image_id: str):
         return results
 
     except requests.exceptions.HTTPError as ex:
-        raise HostError(f'Error al obtener la vista rápida de la imagen {image_id}.\n {ex}') from ex
+        raise HostError(f'Error getting quicklook {image_id}.\n {ex}') from ex

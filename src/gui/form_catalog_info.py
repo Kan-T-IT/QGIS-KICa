@@ -15,12 +15,12 @@ class FormCatalogInfo(FormBase, Ui_frm_catalog_info):
         super().__init__(parent=parent, closing_plugin=closing_plugin)
         self.setAttribute(Qt.WA_DeleteOnClose)
 
-        self.setWindowTitle('Información de la vista seleccionada.')
+        self.setWindowTitle('Information about the selected view.')
 
         data = self.normalize_dict_data(data['properties'])
         table_data = []
         for key, value in data.items():
-            table_data.append({'clave': key, 'valor': value})
+            table_data.append({'key': key, 'value': value})
 
         self.load_data(table_data)
 
@@ -40,8 +40,8 @@ class FormCatalogInfo(FormBase, Ui_frm_catalog_info):
     def load_data(self, data):
         """Load data in table."""
 
-        headers = ['', 'Clave', 'Valor']
-        columns = ['', 'clave', 'valor']
+        headers = ['', 'Key', 'Value']
+        columns = ['', 'key', 'value']
 
         forms.load_table_data(
             obj_table=self.tbl_catalog_info,

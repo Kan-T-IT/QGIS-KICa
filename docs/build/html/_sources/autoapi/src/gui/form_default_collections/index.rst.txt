@@ -1,0 +1,62 @@
+:py:mod:`src.gui.form_default_collections`
+==========================================
+
+.. py:module:: src.gui.form_default_collections
+
+.. autoapi-nested-parse::
+
+   Collection selection form module.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   src.gui.form_default_collections.FormDefaultCollections
+
+
+
+
+.. py:class:: FormDefaultCollections(parent=None, closing_plugin=None)
+
+
+   Bases: :py:obj:`gui.form_base.FormBase`, :py:obj:`ui.frm_default_collections.Ui_frm_default_collections`
+
+   Collection selection form class.
+
+   .. py:method:: btn_accept_clicked()
+
+      Event handler for accept button click.
+
+
+   .. py:method:: btn_add_selected_clicked()
+
+      Event handler for add selected button click.
+
+
+   .. py:method:: btn_remove_selected_clicked()
+
+      Event handler for remove selected button click.
+
+
+   .. py:method:: btn_filter_results_clicked()
+
+      Event handler for filter results button click.
+
+
+   .. py:method:: load_filtered_collections(data)
+
+      Load filtered collections in table.
+
+
+   .. py:method:: load_selected_collections()
+
+      Load selected collections in table.
+
+
+

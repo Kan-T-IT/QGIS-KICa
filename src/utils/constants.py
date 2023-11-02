@@ -5,6 +5,9 @@ DEBUG_MODE = True
 RESULTS_GROUP_NAME = 'kan_imagery_catalog_preview'
 RESULTS_LAYER_NAME = 'kan_imagery_catalog_footprints'
 
+DEFAULT_CRS_SOURCE = 'EPSG:4326'
+DEFAULT_CRS_TARGET = 'EPSG:3857'
+
 
 class CustomEnum(Enum):
     def __repr__(self) -> str:

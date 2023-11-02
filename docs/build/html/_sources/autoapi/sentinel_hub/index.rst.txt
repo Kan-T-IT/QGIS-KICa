@@ -1,0 +1,35 @@
+:py:mod:`sentinel_hub`
+======================
+
+.. py:module:: sentinel_hub
+
+.. autoapi-nested-parse::
+
+   Module for Sentinel Hub API calls
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   sentinel_hub.get_token
+   sentinel_hub.get_token_info
+
+
+
+.. py:function:: get_token(client_id, client_secret)
+
+   Get token from Sentinel Hub API
+
+
+.. py:function:: get_token_info(client_id)
+
+   Get token info from Sentinel Hub API
+
+

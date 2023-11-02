@@ -1,0 +1,59 @@
+:py:mod:`src.core.catalogs`
+===========================
+
+.. py:module:: src.core.catalogs
+
+.. autoapi-nested-parse::
+
+   Catalogs module.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   src.core.catalogs.get_catalog
+   src.core.catalogs.get_catalogs_from_collection
+   src.core.catalogs.get_thumbnail
+   src.core.catalogs.get_quicklook
+   src.core.catalogs.get_download
+   src.core.catalogs.get_download_url
+
+
+
+.. py:function:: get_catalog(provider: str, host_name: str, search_params: dict) -> dict
+
+   Get catalog data from a specific provider.
+
+
+.. py:function:: get_catalogs_from_collection(collections: list, provider: str, search_params: dict) -> list
+
+   Get catalog list from a specific provider.
+
+
+.. py:function:: get_thumbnail(provider: str, host_name: str, image_id: str) -> dict
+
+   Get catalog thumbnail from a specific provider.
+
+
+.. py:function:: get_quicklook(provider: str, host_name: str, image_id: str) -> dict
+
+   Get catalog quicklook from a specific provider.
+
+
+.. py:function:: get_download(provider: str, host_name: str, search_params: dict) -> dict
+
+   Get catalog download from a specific provider.
+
+
+.. py:function:: get_download_url(provider: str)
+
+   Get catalog download url from a specific provider.
+
+

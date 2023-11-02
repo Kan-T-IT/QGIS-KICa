@@ -15,7 +15,7 @@ class FormSettings(FormBase, Ui_frm_settings):
     def __init__(self, parent=None, closing_plugin=None):
         super().__init__(parent=parent, accept_btn=True, closing_plugin=closing_plugin)
 
-        self.setWindowTitle('Configuración de la aplicación')
+        self.setWindowTitle('Plugin settings')
 
         int_validator = QIntValidator()
         self.txt_default_back_days.setValidator(int_validator)
@@ -32,12 +32,15 @@ class FormSettings(FormBase, Ui_frm_settings):
 
         self.btn_up42_check_credentials.clicked.connect(self.btn_up42_check_credentials_clicked)
         self.btn_up42_check_credentials.setGraphicsEffect(forms.get_shadow_effect())
+
+        self.btn_sentinelhub_check_credentials.clicked.connect(self.btn_sentinelhub_check_credentials_clicked)
+        self.btn_sentinelhub_check_credentials.setGraphicsEffect(forms.get_shadow_effect())
         self.btn_download_dir.setGraphicsEffect(forms.get_shadow_effect())
 
         languages = [
-            {'key': 'spanish', 'value': 'Español'},
+            # {'key': 'spanish', 'value': 'Español'},
             # {'key': 'portuguese', 'value': 'Portugûese'},
-            # {'key': 'english', 'value': 'English'},
+            {'key': 'english', 'value': 'English'},
         ]
 
         forms.load_combobox(self.cbo_language, 'key', 'value', languages)
@@ -52,21 +55,25 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.txt_download_path.setText(self.settings.download_path)
 
         self.up42_settings = self.settings.provider_settings.get('up42', {})
-        self.sentinel_settings = self.settings.provider_settings.get('sentinel', {})
+        self.sentinelhub_settings = self.settings.provider_settings.get('sentinel_hub', {})
         self.planet_settings = self.settings.provider_settings.get('planet', {})
 
-        self.up42_is_valid = self.up42_settings.get('is_valid')
-        self.sentinelhub_is_valid = self.sentinel_settings.get('is_valid')
-        self.planet_is_valid = self.planet_settings.get('is_valid')
+        self.up42_is_valid = self.up42_settings.get('valid', False)
+        self.sentinelhub_is_valid = self.sentinelhub_settings.get('valid', False)
+        self.planet_is_valid = self.planet_settings.get('valid', False)
 
         self.txt_up42_api_key.setText(self.up42_settings.get('api_key'))
         self.txt_up42_project_id.setText(self.up42_settings.get('project_id'))
         self.lbl_up42_check_credentials.setText('')
 
+        self.txt_sentinelhub_client_id.setText(self.sentinelhub_settings.get('client_id'))
+        self.txt_sentinelhub_client_secret.setText(self.sentinelhub_settings.get('client_secret'))
+        self.lbl_sentinelhub_check_credentials.setText('')
+
     def update_cloud_coverage_label(self):
         """Update cloud coverage label text."""
 
-        self.lbl_cloud_coverage.setText(f'Nubosidad máxima por defecto ({self.slider_cloud_coverage.value()} %)  ')
+        self.lbl_cloud_coverage.setText(f'Default max cloud coverage ({self.slider_cloud_coverage.value()} %)  ')
 
     def btn_accept_clicked(self):
         """Event handler for accept button click."""
@@ -86,6 +93,12 @@ class FormSettings(FormBase, Ui_frm_settings):
             'api_key': self.txt_up42_api_key.text(),
             'project_id': self.txt_up42_project_id.text(),
             'valid': self.up42_is_valid,
+        }
+
+        provider_settings['sentinel_hub'] = {
+            'client_id': self.txt_sentinelhub_client_id.text(),
+            'client_secret': self.txt_sentinelhub_client_secret.text(),
+            'valid': self.sentinelhub_is_valid,
         }
 
         self.settings.provider_settings = provider_settings
@@ -115,5 +128,18 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.up42_is_valid = providers.check_credentials('up42', {'project_id': project_id, 'api_key': api_key})
 
         self.lbl_up42_check_credentials.setText(
-            'Las credenciales son válidas.' if self.up42_is_valid else 'Verifique las credenciales ingresadas.'
+            'The credentials are valid.' if self.up42_is_valid else 'Verify the credentials entered.'
+        )
+
+    def btn_sentinelhub_check_credentials_clicked(self):
+        """Event handler for check credentials button click."""
+
+        client_id = self.txt_sentinelhub_client_id.text()
+        client_secret = self.txt_sentinelhub_client_secret.text()
+        self.sentinelhub_is_valid = providers.check_credentials(
+            'sentinel_hub', {'client_id': client_id, 'client_secret': client_secret}
+        )
+
+        self.lbl_sentinelhub_check_credentials.setText(
+            'The credentials are valid.' if self.sentinelhub_is_valid else 'Verify the credentials entered.'
         )

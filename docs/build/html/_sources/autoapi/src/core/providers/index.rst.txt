@@ -1,0 +1,29 @@
+:py:mod:`src.core.providers`
+============================
+
+.. py:module:: src.core.providers
+
+.. autoapi-nested-parse::
+
+   Providers module.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   src.core.providers.check_credentials
+
+
+
+.. py:function:: check_credentials(provider: str, credentials: dict) -> bool
+
+   Check credentials from a specific provider.
+
+
