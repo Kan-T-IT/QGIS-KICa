@@ -5,9 +5,14 @@
 
 *  QGIS Minimum Version: 3.22
 
-*  [Code Documentation](kan_imagery_catalog.pdf)
+*  [Code Documentation](https://kan-t-it.github.io/QGIS-KICa/)
+
+*  [Plugins Documentation](https://kan-t-it.github.io/QGIS-KICa-Doc/)
 
 *  [Download Plugin Release](https://github.com/Kan-T-IT/QGIS-KICa/releases)
+
+*  [QGIS Plugins Repository](https://plugins.qgis.org/plugins/kan_imagery_catalog/)
+
 
 ## Contributing
 
