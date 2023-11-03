@@ -385,7 +385,9 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         thumbnail = get_thumbnail(
             provider=provider_name,
             host_name=host_name,
+            collection_name=collection_name,
             image_id=image_id,
+            feature_data=feature_data,
         )
 
         custom_item = CustomWidgetListItem(

@@ -161,8 +161,6 @@ def get_or_create_group(group_name):
     results_group = None
     for child in root.children():
         # Use of casefold is to avoid problems with special characters specially on windows
-        if child.name().casefold() == group_name.casefold():
-
         if isinstance(child, QgsLayerTreeGroup) and child.name().casefold() == group_name.casefold():
             results_group = child
             break
@@ -213,7 +211,7 @@ def get_or_create_footprints_layer(layer_name, group_name):
 
         QgsProject.instance().addMapLayer(footprints_layer, False)
         results_group.addLayer(footprints_layer)
-
+        
     return footprints_layer
 
 
@@ -264,6 +262,7 @@ def create_quicklook_layer(
     symbol_layer.setDataDefinedProperty(QgsSymbolLayer.PropertyWidth, data_defined)
 
     symbol.appendSymbolLayer(symbol_layer)
+    symbol.setClipFeaturesToExtent(False)
     new_layer.renderer().setSymbol(symbol)
     new_layer.triggerRepaint()
 

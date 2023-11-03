@@ -8,6 +8,7 @@ from gui.form_base import FormBase
 from gui.helpers import forms
 from ui.frm_default_collections import Ui_frm_default_collections
 from utils import qgis_helper
+from utils.exceptions import ProviderError
 
 
 class FormDefaultCollections(FormBase, Ui_frm_default_collections):
@@ -29,10 +30,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
 
         self.settings = PluginSettings()
         self.selected_collections = self.settings.selected_collections or []
-        self.providers = []
-        for provider_name, provider_settings in self.settings.provider_settings.items():
-            if provider_settings['valid']:
-                self.providers.append(provider_name)
+        self.providers = self.settings.get_active_providers()
 
         self.btn_filter_results_clicked()
         self.load_selected_collections()
@@ -88,7 +86,13 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
 
         results = []
         for provider in self.providers:
-            data = get_collections(provider, {})
+
+            try:
+                data = get_collections(provider, {})
+            except ProviderError as ex:
+                qgis_helper.warning_message('Warning', f"{provider}: {ex.message}")
+                continue
+
             for collection in data:
                 is_selected = False
                 for selected_collection in self.selected_collections:
@@ -104,7 +108,8 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
 
                 if (
                     search_text != ''
-                    and search_text.lower() not in collection['title'].lower() + collection['hostName'].lower()
+                    and search_text.lower()
+                    not in provider.lower() + collection['title'].lower() + collection['hostName'].lower()
                 ):
                     continue
 
