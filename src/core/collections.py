@@ -2,7 +2,7 @@
 
 
 from core.settings import PluginSettings
-from services import sentinel_hub, up42
+from services import sentinel_hub, up42, microsoft
 from utils.exceptions import ProviderError
 
 
@@ -11,6 +11,20 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
 
     settings = PluginSettings()
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
+
+
+    if provider == 'microsoft':
+        collections = microsoft.get_collections()
+
+        print(f'microsoft-collections: {len(collections)}')
+        for collection in collections:
+            collection['name'] = collection['id']
+            collection['hostName'] = collection['providers'][0]['name']
+        #     collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
+        #     collection['min_resolution'] = collection['resolutionValue'].get('minimum')
+
+        return collections
+
 
     if provider == 'up42':
         collections = up42.get_collections()

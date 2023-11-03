@@ -121,6 +121,7 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
                 host=self.host,
                 image_id=self.image_id,
                 layer_name=f'{self.image_id}_{self.feature_index}',
+                feature_data=self.feature_data,
             )
         except PluginError as ex:
             qgis_helper.error_message('Could not get a preview', str(ex))

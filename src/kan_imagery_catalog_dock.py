@@ -38,6 +38,7 @@ from utils.exceptions import (
     HostError,
     PluginError,
     SettingsError,
+    ProviderError
 )
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), 'kan_imagery_catalog_dock.ui'))
@@ -328,7 +329,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 qgis_helper.info_message('Warning', str(ex))
                 continue
 
-            except HostError as ex:
+            except (ProviderError, HostError) as ex:
                 qgis_helper.error_message('Error', str(ex))
                 continue
 
@@ -384,7 +385,9 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         thumbnail = get_thumbnail(
             provider=provider_name,
             host_name=host_name,
+            collection_name=collection_name,
             image_id=image_id,
+            feature_data=feature_data,
         )
 
         custom_item = CustomWidgetListItem(

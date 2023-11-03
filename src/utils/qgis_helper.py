@@ -42,6 +42,7 @@ def get_bounding_box_canvas():
 
     crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
     transform = QgsCoordinateTransform(active_layer.crs(), crs_transform, QgsProject.instance())
+
     bbox = iface.mapCanvas().extent()
     bbox_transformed = transform.transform(bbox)
 
@@ -64,12 +65,18 @@ def get_bounding_box_selected_feature(layer_name):
     if layer.selectedFeatureCount() > 0:
         selected_feature = layer.selectedFeatures()[0]
         bbox = selected_feature.geometry().boundingBox()
-        xmin = bbox.xMinimum()
-        ymin = bbox.yMinimum()
-        xmax = bbox.xMaximum()
-        ymax = bbox.yMaximum()
 
-        return {'x_min': xmin, 'y_min': ymin, 'x_max': xmax, 'y_max': ymax}
+        crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
+        transform = QgsCoordinateTransform(iface.activeLayer().crs(), crs_transform, QgsProject.instance())
+
+        bbox_transformed = transform.transform(bbox)
+
+        x_min = bbox_transformed.xMinimum()
+        y_min = bbox_transformed.yMinimum()
+        x_max = bbox_transformed.xMaximum()
+        y_max = bbox_transformed.yMaximum()
+
+        return {'x_min': x_min, 'y_min': y_min, 'x_max': x_max, 'y_max': y_max}
 
     raise DataNotFoundError('There are no features selected on the specified layer.')
 
@@ -154,9 +161,6 @@ def get_or_create_group(group_name):
     results_group = None
     for child in root.children():
         # Use of casefold is to avoid problems with special characters specially on windows
-        if child.name().casefold() == group_name.casefold():
-            print(f'{child.name()} {type(child)}')
-
         if isinstance(child, QgsLayerTreeGroup) and child.name().casefold() == group_name.casefold():
             results_group = child
             break
@@ -207,7 +211,7 @@ def get_or_create_footprints_layer(layer_name, group_name):
 
         QgsProject.instance().addMapLayer(footprints_layer, False)
         results_group.addLayer(footprints_layer)
-
+        
     return footprints_layer
 
 
@@ -258,6 +262,7 @@ def create_quicklook_layer(
     symbol_layer.setDataDefinedProperty(QgsSymbolLayer.PropertyWidth, data_defined)
 
     symbol.appendSymbolLayer(symbol_layer)
+    symbol.setClipFeaturesToExtent(False)
     new_layer.renderer().setSymbol(symbol)
     new_layer.triggerRepaint()
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/fernando/proyectos_kan/plugins-qgis/kan-imagery-catalog/github/qgis-imagery-catalogue/src/ui/frm_catalog_info.ui'
+# Form implementation generated from reading ui file '/home/fernando/proyectos_kan/plugins-qgis/kan-imagery-catalog/github/temporal/QGIS-KICa/src/ui/frm_catalog_info.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
