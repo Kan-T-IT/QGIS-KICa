@@ -119,9 +119,14 @@ def read_json_setting(setting_name, default_value=None):
     settings = QgsSettings()
     json_setting = settings.value(f'{PLUGIN_NAME}/{setting_name}', default_value)
 
-    if json_setting is not None:
-        value = json.loads(json_setting)
-        return value
+    value = {}
+    try:
+        if json_setting is not None:
+            value = json.loads(json_setting)
+    except Exception:
+        pass
+
+    return value
 
 
 # 0: Info
@@ -211,7 +216,7 @@ def get_or_create_footprints_layer(layer_name, group_name):
 
         QgsProject.instance().addMapLayer(footprints_layer, False)
         results_group.addLayer(footprints_layer)
-        
+
     return footprints_layer
 
 
