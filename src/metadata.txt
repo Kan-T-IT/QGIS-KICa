@@ -31,7 +31,7 @@ hasProcessingProvider=no
 # Tags are comma separated with spaces allowed
 tags=Satellite Imagery, Remote Sensor, Raster, Image, Sentinel, Landsat, Spot, UP42
 
-homepage=http://kan.com.ar
+homepage=https://kan-t-it.github.io/QGIS-KICa-Doc/
 
 # Category of the plugin: Raster, Vector, Database or Web
 category=Raster
