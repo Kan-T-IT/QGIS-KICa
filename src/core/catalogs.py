@@ -59,16 +59,27 @@ def get_catalog(
         if custom_query:
             search_params['filter'] = custom_query
 
-        catalogs = sentinel_hub.get_catalog(token=token, host_name=host_name, search_params=search_params)
-        for catalog in catalogs['features']:
+        all_catalogs = []
+        # Get catalog from each collection, because the API does not allow to search in multiple collections
+        for collection_name in collection_names:
+            search_params['collections'] = [collection_name]
+
+            # TODO: get available filters by collection, cloud coverage is not available for sentinel-1-grd
+            if collection_name == 'sentinel-1-grd':
+                search_params.pop('filter')
+                
+        col_catalogs = sentinel_hub.get_catalog(token=token, host_name=host_name, search_params=search_params)
+        for catalog in col_catalogs['features']:
             catalog['aux_date'] = catalog['properties']['datetime']
-            catalog['aux_angle'] = ''
-            catalog['aux_cloud_coverage'] = catalog['properties']['eo:cloud_cover']
+            catalog['aux_angle'] = None
+            catalog['aux_cloud_coverage'] = catalog['properties'].get('eo:cloud_cover')
             catalog['aux_collection_name'] = catalog['collection']
             catalog['aux_image_id'] = catalog['id']
             catalog['aux_coordinates'] = catalog['geometry']['coordinates'][0][0]
 
-        return catalogs['features']
+        all_catalogs += col_catalogs['features']
+
+        return all_catalogs
 
     raise ProviderError('Provider not found')
 

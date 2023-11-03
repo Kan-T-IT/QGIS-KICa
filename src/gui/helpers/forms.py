@@ -59,7 +59,7 @@ def set_form_stylesheet(parent):
         _style = qss_file.read()
 
     for key, value in StyleVariables.to_dict().items():
-        print(f'set_form_stylesheet -> key: @{key} value: {value}')
+        # print(f'set_form_stylesheet -> key: @{key} value: {value}')
         _style = _style.replace(f'@{key}', value)
 
     parent.setStyleSheet(_style)
