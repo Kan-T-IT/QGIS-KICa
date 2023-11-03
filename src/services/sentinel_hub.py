@@ -63,21 +63,17 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     url = 'https://services.sentinel-hub.com/api/v1/catalog/1.0.0/search'
     headers = {'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'}
 
-    try:
-        response = requests.request('POST', url, headers=headers, json=search_params, timeout=REQUEST_TIMEOUT)
+    response = requests.request('POST', url, headers=headers, json=search_params, timeout=REQUEST_TIMEOUT)
 
-        if response.status_code == 200:
-            return response.json()
-        if response.status_code == 542:
-            raise AuthorizationError(f'The {host_name} catalog you are trying to get is private.')
-        if response.status_code == 404:
-            raise HostError(f'It was not possible to get the requested {host_name} catalog.')
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 542:
+        raise AuthorizationError(f'The {host_name} catalog you are trying to get is private.')
+    elif response.status_code == 404:
+        raise HostError(f'It was not possible to get the requested {host_name} catalog.')
+    else:
+        raise HostError(f'Error getting catalogs from host {host_name}.\n {response.text}')
 
-        response.raise_for_status()
-    except requests.exceptions.HTTPError as ex:
-        raise HostError(f'Error getting catalogs from host {host_name}.\n {ex}') from ex
-
-    return {}
 
 
 @lru_cache(maxsize=None)

@@ -79,6 +79,7 @@ class FormSettings(FormBase, Ui_frm_settings):
         """Event handler for accept button click."""
 
         self.btn_up42_check_credentials_clicked()
+        self.btn_sentinelhub_check_credentials_clicked()
 
         self.settings.language = self.cbo_language.currentData()
         self.settings.back_days = int(self.txt_default_back_days.text())
@@ -89,6 +90,9 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.settings.max_features_results = int(self.txt_max_features_results.text())
 
         provider_settings = self.settings.provider_settings
+        provider_settings['microsoft'] = {
+            'valid': True,
+        }        
         provider_settings['up42'] = {
             'api_key': self.txt_up42_api_key.text(),
             'project_id': self.txt_up42_project_id.text(),

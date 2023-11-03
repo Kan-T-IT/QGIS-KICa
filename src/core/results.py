@@ -10,7 +10,7 @@ from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
 from utils.general import get_plugin_dir
 
 
-def create_quicklook(provider_name, host, image_id, layer_name):
+def create_quicklook(provider_name, host, image_id, layer_name, feature_data):
     """Create results layers."""
     footprints_layer = qgis_helper.get_or_create_footprints_layer(RESULTS_LAYER_NAME, RESULTS_GROUP_NAME)
 
@@ -24,7 +24,8 @@ def create_quicklook(provider_name, host, image_id, layer_name):
         return False
 
     image_id = feature_for_quicklook.attributes()[0]
-    image_response = catalogs.get_quicklook(provider_name, host, image_id)
+    image_response = catalogs.get_quicklook(provider_name, host, image_id, feature_data)
+
 
     temp_directory = f'{get_plugin_dir()}/temp'
     if not os.path.isdir(temp_directory):
