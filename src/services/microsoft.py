@@ -51,7 +51,7 @@ def get_thumbnail(collection_name: str, feature_data: dict):
     if preview_data:
         image_url = preview_data['href']
 
-    results = []
+    results = None
     if image_url:
         response = requests.request('GET', image_url, headers={}, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
@@ -69,7 +69,7 @@ def get_quicklook(host_name: str, image_id: str, feature_data: dict):
     if preview_data:
         image_url = preview_data['href']
 
-    results = []
+    results = None
     if image_url:
         response = requests.request('GET', image_url, headers={}, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()

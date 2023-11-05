@@ -129,24 +129,25 @@ def get_thumbnail(provider: str, collection_name: str, host_name: str, image_id:
 
     sleep(0.3)
 
+    thumbnail = None
     if provider == 'microsoft':
-        return microsoft.get_thumbnail(collection_name=collection_name, feature_data=feature_data)
+        thumbnail = microsoft.get_thumbnail(collection_name=collection_name, feature_data=feature_data)
         
     if provider == 'up42':
         token = up42.get_token(
             project_id=provider_settings['project_id'],
             api_key=provider_settings['api_key'],
         )
-        return up42.get_thumbnail(token=token, host_name=host_name, image_id=image_id)
+        thumbnail = up42.get_thumbnail(token=token, host_name=host_name, image_id=image_id)
 
     if provider == 'sentinel_hub':
         token = sentinel_hub.get_token(
             client_id=provider_settings['client_id'],
             client_secret=provider_settings['client_secret'],
         )
-        return sentinel_hub.get_thumbnail(token=token, host_name=host_name, image_id=image_id)
+        thumbnail = sentinel_hub.get_thumbnail(token=token, host_name=host_name, image_id=image_id)
 
-    raise ProviderError('Provider not found')
+    return thumbnail
 
 
 def get_quicklook(provider: str, host_name: str, image_id: str, feature_data: dict) -> dict:
@@ -155,21 +156,25 @@ def get_quicklook(provider: str, host_name: str, image_id: str, feature_data: di
     settings = PluginSettings()
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
 
-    if provider == 'microsoft':
-        return microsoft.get_quicklook(host_name=host_name, image_id=image_id, feature_data=feature_data)
+    if provider not in ['microsoft', 'up42']:
+        raise ProviderError('It is not possible to obtain a preview from this provider.')
 
+    quicklook = None
+
+    if provider == 'microsoft':
+        quicklook = microsoft.get_quicklook(host_name=host_name, image_id=image_id, feature_data=feature_data)
 
     if provider == 'up42':
         token = up42.get_token(
             project_id=provider_settings['project_id'],
             api_key=provider_settings['api_key'],
         )
-        return up42.get_quicklook(token=token, host_name=host_name, image_id=image_id)
+        quicklook = up42.get_quicklook(token=token, host_name=host_name, image_id=image_id)
 
-    if provider == 'sentinel_hub':
-        raise ProviderError('It is not possible to obtain a preview from this provider.')
-
-    raise ProviderError('Provider not found')
+    if not quicklook:
+        raise ProviderError('It is not possible to obtain a preview from this catalog.')
+    
+    return quicklook
 
 
 def get_download(provider: str, host_name: str, search_params: dict) -> dict:

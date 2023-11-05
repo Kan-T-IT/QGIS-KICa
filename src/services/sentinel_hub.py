@@ -80,10 +80,10 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
 def get_thumbnail(token: str, host_name: str, image_id: str):
     """Get catalog thumbnail from Sentinel Hub API"""
 
-    return []
+    return None
 
 
 def get_quicklook(token: str, host_name: str, image_id: str):
     """Get catalog quicklook from Sentinel Hub API"""
 
-    return []
+    return None

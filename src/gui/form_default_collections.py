@@ -32,6 +32,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         self.selected_collections = self.settings.selected_collections or []
         self.providers = self.settings.get_active_providers()
 
+        print(f'providers: {self.providers}')
         self.btn_filter_results_clicked()
         self.load_selected_collections()
 
@@ -86,11 +87,10 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
 
         results = []
         for provider in self.providers:
-
             try:
                 data = get_collections(provider, {})
             except ProviderError as ex:
-                qgis_helper.warning_message('Warning', f"{provider}: {ex.message}")
+                qgis_helper.warning_message('Warning', f'{provider}: {ex.message}')
                 continue
 
             for collection in data:
