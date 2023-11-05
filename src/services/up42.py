@@ -91,7 +91,7 @@ def get_thumbnail(token: str, host_name: str, image_id: str):
     response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
     response.raise_for_status()
 
-    results = []
+    results = None
     if response.status_code == 200:
         results = response.content
 
@@ -110,7 +110,7 @@ def get_quicklook(token: str, host_name: str, image_id: str):
         response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
 
-        results = []
+        results = None
         if response.status_code == 200:
             results = response.content
 
