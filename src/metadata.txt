@@ -11,7 +11,7 @@ description=KICa, is QGIS plugin Kan Imagery Catalog, developed by Kan Territory
             In the beginning, satellite imagery providers (free and commercial) are incorporated, 
             but it is planned to incorporate drone imagery among others.
 
-version=0.1.7
+version=0.2
 author=KAN Territory & IT
 email=info@kan.com.ar
 
@@ -38,7 +38,7 @@ category=Raster
 icon=icon.png
 
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
