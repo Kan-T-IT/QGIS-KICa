@@ -9,6 +9,7 @@ from gui.helpers import forms
 from ui.frm_default_collections import Ui_frm_default_collections
 from utils import qgis_helper
 from utils.exceptions import ProviderError
+from utils.helpers import tr
 
 
 class FormDefaultCollections(FormBase, Ui_frm_default_collections):
@@ -17,7 +18,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
     def __init__(self, parent=None, closing_plugin=None):
         super().__init__(parent=parent, accept_btn=True, closing_plugin=closing_plugin)
 
-        self.setWindowTitle('Catalog selection')
+        self.setWindowTitle(tr('Catalog selection'))
 
         self.btn_accept.clicked.connect(self.btn_accept_clicked)
         self.btn_filter_results.clicked.connect(self.btn_filter_results_clicked)
@@ -75,11 +76,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         """Event handler for filter results button click."""
 
         self.frame_content.setDisabled(True)
-        self.btn_filter_results.setText('Getting collections...')
+        self.btn_filter_results.setText(tr('Getting collections...'))
 
         if len(self.providers) == 0:
             qgis_helper.warning_message(
-                'Warning', 'You must set valid credentials for at least one provider in the plugin settings.'
+                tr('Warning'), tr('You must set valid credentials for at least one provider in the plugin settings.')
             )
             return
 
@@ -90,7 +91,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
             try:
                 data = get_collections(provider, {})
             except ProviderError as ex:
-                qgis_helper.warning_message('Warning', f'{provider}: {ex.message}')
+                qgis_helper.warning_message(tr('Warning'), f'{provider}: {ex.message}')
                 continue
 
             for collection in data:
@@ -123,7 +124,7 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
 
         self.load_filtered_collections(results)
 
-        self.btn_filter_results.setText('Filter results')
+        self.btn_filter_results.setText(tr('Filter results'))
         self.frame_content.setDisabled(False)
 
     def load_filtered_collections(self, data):
@@ -132,11 +133,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         headers = [
             '',
             '',
-            'Provider',
-            'Name',
-            'Type',
-            'Resolution',
-            'Description',
+            tr('Provider'),
+            tr('Name'),
+            tr('Type'),
+            tr('Resolution'),
+            tr('Description'),
         ]
         columns = [
             '',
@@ -165,11 +166,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         headers = [
             '',
             '',
-            'Provider',
-            'Name',
-            'Type',
-            'Resolution',
-            'Description',
+            tr('Provider'),
+            tr('Name'),
+            tr('Type'),
+            tr('Resolution'),
+            tr('Description'),
         ]
         columns = [
             '',

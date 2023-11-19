@@ -10,7 +10,7 @@ from gui.helpers import forms
 from ui.custom_widget_list_item import Ui_CustomWidgetListItem
 from utils import qgis_helper
 from utils.exceptions import HostError, PluginError
-from utils.helpers import open_url
+from utils.helpers import open_url, tr
 
 
 class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
@@ -124,4 +124,4 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
                 feature_data=self.feature_data,
             )
         except PluginError as ex:
-            qgis_helper.error_message('Could not get a preview', str(ex))
+            qgis_helper.error_message(tr('Could not get a preview'), str(ex))

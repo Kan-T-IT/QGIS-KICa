@@ -6,6 +6,7 @@ import requests
 from functools import lru_cache
 
 from utils.exceptions import AuthorizationError, HostError
+from utils.helpers import tr
 
 REQUEST_TIMEOUT = 120
 DOWNLOAD_URL = 'https://planetarycomputer.microsoft.com/'
@@ -36,11 +37,11 @@ def get_catalog(search_params: dict) -> dict:
     if response.status_code == 200:
         return response.json()
     elif response.status_code == 542:
-        raise AuthorizationError('The catalog you are trying to get is private.')
+        raise AuthorizationError(tr('The catalog you are trying to get is private.'))
     elif response.status_code == 404:
-        raise HostError('It was not possible to get the requested catalog.')
+        raise HostError(tr('It was not possible to get the requested catalog.'))
     else:
-        raise HostError(f'Error getting catalogs from MicrosoftPlanetary API.\n {response.text}')
+        raise HostError(f'{tr("Error getting catalogs from MicrosoftPlanetary API.")}\n{response.text}')
 
 
 def get_thumbnail(collection_name: str, feature_data: dict):

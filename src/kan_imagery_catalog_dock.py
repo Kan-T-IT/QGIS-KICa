@@ -32,14 +32,8 @@ from gui.form_settings import FormSettings
 from gui.helpers import forms
 from utils import qgis_helper
 from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
-from utils.exceptions import (
-    AuthorizationError,
-    DataNotFoundError,
-    HostError,
-    PluginError,
-    SettingsError,
-    ProviderError
-)
+from utils.exceptions import AuthorizationError, DataNotFoundError, HostError, PluginError, ProviderError, SettingsError
+from utils.helpers import tr
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), 'kan_imagery_catalog_dock.ui'))
 
@@ -75,7 +69,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.btn_select_catalogs.setGraphicsEffect(forms.get_shadow_effect())
         self.btn_get_data.setGraphicsEffect(forms.get_shadow_effect())
-        self.btn_get_data.setText('Search')
+        self.btn_get_data.setText(tr('Search'))
 
         int_validator = QIntValidator()
         self.txt_max_catalog_results.setValidator(int_validator)
@@ -84,9 +78,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.chk_search_by_dataframe.setChecked(True)
         self.chk_search_by_dataframe_update()
 
-        self.lbl_search_area_tooltip.setToolTip("Dataframe or project layers (only 'single polygon' type layers).")
-        self.lbl_catalogs_tooltip.setToolTip('Defines the catalogs of each supplier that will be used for searches.')
-        self.lbl_filters_tooltip.setToolTip('Perform the search according to the indicated filters.')
+        self.lbl_search_area_tooltip.setToolTip(tr("Dataframe or project layers (only 'single polygon' type layers)."))
+        self.lbl_catalogs_tooltip.setToolTip(
+            tr('Defines the catalogs of each supplier that will be used for searches.')
+        )
+        self.lbl_filters_tooltip.setToolTip(tr('Perform the search according to the indicated filters.'))
         # self.cbo_sort_by.setStyleSheet("QComboBox{border : 0px;}")
 
         sort_by = [
@@ -127,7 +123,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     def update_cloud_coverage_label(self):
         """Event handler for slider 'slider_cloud_coverage'."""
 
-        self.lbl_cloud_coverage.setText(f'Max cloud coverage ({self.slider_cloud_coverage.value()} %)')
+        max_cloud_coverage_text = tr('Max cloud coverage')
+        self.lbl_cloud_coverage.setText(f'{max_cloud_coverage_text} ({self.slider_cloud_coverage.value()} %)')
 
     def chk_search_by_dataframe_update(self):
         """Event handler for checkbox 'chk_search_by_dataframe'."""
@@ -209,14 +206,14 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         # Check if there are providers configured...
         if not self.settings.get_active_providers():
             qgis_helper.warning_message(
-                'Warning',
-                'There are no providers defined in the plugin settings.',
+                tr('Warning'),
+                tr('There are no providers defined in the plugin settings.'),
             )
             return
 
         self.frame_catalog.setDisabled(True)
         self.btn_settings.setDisabled(True)
-        self.btn_get_data.setText('Getting results...')
+        self.btn_get_data.setText(tr('Getting results...'))
 
         self.lst_data.clear()
 
@@ -234,7 +231,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         try:
             if not self.chk_search_by_dataframe.isChecked() and not self.cbo_layer.currentText():
-                raise DataNotFoundError('The project has no layers available to use as a reference for searching.')
+                raise DataNotFoundError(tr('The project has no layers available to use as a reference for searching.'))
 
             layer_name = '' if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentText()
 
@@ -245,16 +242,16 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 date_to=date_to,
                 max_catalog_results=max_catalog_results,
             )
-            qgis_helper.success_message('', 'The catalog search has ended.')
+            qgis_helper.success_message('', tr('The catalog search has ended.'))
 
         except SettingsError as ex:
-            qgis_helper.warning_message('Warning', str(ex))
+            qgis_helper.warning_message(tr('Warning'), str(ex))
 
         except DataNotFoundError as ex:
-            qgis_helper.info_message('Warning', str(ex))
+            qgis_helper.info_message(tr('Warning'), str(ex))
 
         except AuthorizationError as ex:
-            qgis_helper.warning_message('Warning', str(ex))
+            qgis_helper.warning_message(tr('Warning'), str(ex))
 
         except HostError as ex:
             qgis_helper.error_message('Error', str(ex))
@@ -265,7 +262,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         finally:
             self.frame_catalog.setDisabled(False)
             self.btn_settings.setDisabled(False)
-            self.btn_get_data.setText('Search')
+            self.btn_get_data.setText(tr('Search'))
 
     def get_results(self, layer_name, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
@@ -279,7 +276,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         limit_features = self.settings.max_features_results
 
         if not (isinstance(self.settings.selected_collections, list)) or len(self.settings.selected_collections) == 0:
-            raise SettingsError('There are no catalogs selected.')
+            raise SettingsError(tr('There are no catalogs selected.'))
 
         catalog_counter = 0
 
@@ -326,7 +323,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     collection_names=collection_aux,
                 )
             except AuthorizationError as ex:
-                qgis_helper.info_message('Warning', str(ex))
+                qgis_helper.info_message(tr('Warning'), str(ex))
                 continue
 
             except (ProviderError, HostError) as ex:
@@ -366,7 +363,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 QApplication.processEvents()
 
             catalog_counter += 1
-        qgis_helper.success_message('', 'The catalog search has ended.')
+        qgis_helper.success_message('', tr('The catalog search has ended.'))
 
     def add_item_to_results(
         self,

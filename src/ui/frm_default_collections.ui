@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Settings</string>
+   <string>Catalog selection</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -271,13 +271,13 @@
           <widget class="QPushButton" name="btn_remove_selected">
            <property name="minimumSize">
             <size>
-             <width>150</width>
+             <width>200</width>
              <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>150</width>
+             <width>200</width>
              <height>30</height>
             </size>
            </property>

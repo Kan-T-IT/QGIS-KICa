@@ -86,7 +86,7 @@
             </size>
            </property>
            <property name="text">
-            <string>...</string>
+            <string notr="true">...</string>
            </property>
           </widget>
          </item>
@@ -214,7 +214,7 @@
                   <item>
                    <widget class="QLabel" name="lbl_0_percent">
                     <property name="text">
-                     <string>0%</string>
+                     <string notr="true">0%</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -224,7 +224,7 @@
                   <item>
                    <widget class="QLabel" name="lbl_25_percent">
                     <property name="text">
-                     <string>25%</string>
+                     <string notr="true">25%</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
@@ -234,7 +234,7 @@
                   <item>
                    <widget class="QLabel" name="lbl_50_percent">
                     <property name="text">
-                     <string>50%</string>
+                     <string notr="true">50%</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
@@ -244,7 +244,7 @@
                   <item>
                    <widget class="QLabel" name="lbl_75_percent">
                     <property name="text">
-                     <string>75%</string>
+                     <string notr="true">75%</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
@@ -254,7 +254,7 @@
                   <item>
                    <widget class="QLabel" name="lbl_100_percent">
                     <property name="text">
-                     <string>100%</string>
+                     <string notr="true">100%</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -362,7 +362,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Default max cloud coverage (0%)    </string>
+            <string>Default max cloud coverage</string>
            </property>
           </widget>
          </item>
@@ -516,11 +516,11 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_up42">
          <attribute name="title">
-          <string>Up42</string>
+          <string notr="true">Up42</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="2" column="0">
@@ -681,7 +681,7 @@
              <item row="0" column="0" colspan="3">
               <widget class="QLabel" name="lbl_up42_check_credentials">
                <property name="text">
-                <string>TextLabel</string>
+                <string notr="true">TextLabel</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -695,7 +695,7 @@
         </widget>
         <widget class="QWidget" name="tab_sentinel">
          <attribute name="title">
-          <string>SentinelHub</string>
+          <string notr="true">SentinelHub</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="2" column="0">
@@ -789,7 +789,7 @@
              <item row="1" column="0" colspan="3">
               <widget class="QLabel" name="lbl_sentinelhub_check_credentials">
                <property name="text">
-                <string>TextLabel</string>
+                <string notr="true">TextLabel</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -870,7 +870,7 @@
         </widget>
         <widget class="QWidget" name="tab_planet">
          <attribute name="title">
-          <string>Planet</string>
+          <string notr="true">Planet</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">

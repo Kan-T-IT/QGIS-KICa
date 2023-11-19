@@ -4,7 +4,7 @@ def pyqt_set_trace():
     from PyQt5.QtCore import pyqtRemoveInputHook
 
     pyqtRemoveInputHook()
-    print('Using custom debug function...')
+    print(tr('Using custom debug function...'))
 
     try:
         import pudb

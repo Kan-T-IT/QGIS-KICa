@@ -2,8 +2,9 @@
 
 
 from core.settings import PluginSettings
-from services import sentinel_hub, up42, microsoft
+from services import microsoft, sentinel_hub, up42
 from utils.exceptions import ProviderError
+from utils.helpers import tr
 
 
 def get_collections(provider: str, search_params: dict = None) -> dict:
@@ -11,7 +12,6 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
 
     settings = PluginSettings()
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
-
 
     if provider == 'microsoft':
         collections = microsoft.get_collections()
@@ -24,7 +24,6 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
         #     collection['min_resolution'] = collection['resolutionValue'].get('minimum')
 
         return collections
-
 
     if provider == 'up42':
         collections = up42.get_collections()
@@ -57,4 +56,4 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
 
         return collections
 
-    raise ProviderError('Provider not found')
+    raise ProviderError(tr('Provider not found.'))

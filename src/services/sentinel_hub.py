@@ -3,6 +3,7 @@ import requests
 from functools import lru_cache
 
 from utils.exceptions import AuthorizationError, HostError
+from utils.helpers import tr
 
 REQUEST_TIMEOUT = 120
 DOWNLOAD_URL = 'https://www.sentinel-hub.com/'
@@ -10,7 +11,7 @@ DOWNLOAD_URL = 'https://www.sentinel-hub.com/'
 
 def get_token(client_id, client_secret):
     if not client_id or not client_secret:
-        raise AuthorizationError('SentinelHub credentials have not been configured.')
+        raise AuthorizationError(tr('SentinelHub credentials have not been configured.'))
 
     url = 'https://services.sentinel-hub.com/oauth/token'
 
@@ -33,7 +34,7 @@ def get_token(client_id, client_secret):
                 return data.get('access_token')
 
     except requests.exceptions.HTTPError as ex:
-        raise AuthorizationError(f'There was an error getting the token.\n {ex}') from ex
+        raise AuthorizationError(f'{tr("There was an error getting the token.")}\n{ex}') from ex
 
 
 @lru_cache(maxsize=None)
@@ -68,12 +69,11 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     if response.status_code == 200:
         return response.json()
     elif response.status_code == 542:
-        raise AuthorizationError(f'The {host_name} catalog you are trying to get is private.')
+        raise AuthorizationError(f'{tr("The catalog you are trying to get is private:")} {host_name}.')
     elif response.status_code == 404:
-        raise HostError(f'It was not possible to get the requested {host_name} catalog.')
+        raise HostError(f'{tr("It was not possible to get the requested catalog")}: {host_name}.')
     else:
-        raise HostError(f'Error getting catalogs from host {host_name}.\n {response.text}')
-
+        raise HostError(f'{tr("Error getting catalogs from host")} {host_name}.\n {response.text}')
 
 
 @lru_cache(maxsize=None)

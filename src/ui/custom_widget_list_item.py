@@ -33,6 +33,7 @@ class Ui_CustomWidgetListItem(object):
         self.lbl_thumbnail = QtWidgets.QLabel(self.frame_main)
         self.lbl_thumbnail.setMinimumSize(QtCore.QSize(40, 40))
         self.lbl_thumbnail.setMaximumSize(QtCore.QSize(40, 40))
+        self.lbl_thumbnail.setText("TextLabel")
         self.lbl_thumbnail.setObjectName("lbl_thumbnail")
         self.horizontalLayout.addWidget(self.lbl_thumbnail)
         self.frame_data = QtWidgets.QFrame(self.frame_main)
@@ -46,6 +47,7 @@ class Ui_CustomWidgetListItem(object):
         self.lbl_item_name = QtWidgets.QLabel(self.frame_data)
         self.lbl_item_name.setMinimumSize(QtCore.QSize(150, 20))
         self.lbl_item_name.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.lbl_item_name.setText("TextLabel")
         self.lbl_item_name.setObjectName("lbl_item_name")
         self.gridLayout.addWidget(self.lbl_item_name, 0, 0, 1, 1)
         self.frame_item_info = QtWidgets.QFrame(self.frame_data)
@@ -62,11 +64,13 @@ class Ui_CustomWidgetListItem(object):
         self.lbl_date_text = QtWidgets.QLabel(self.frame_item_info)
         self.lbl_date_text.setMinimumSize(QtCore.QSize(0, 20))
         self.lbl_date_text.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.lbl_date_text.setText("...")
         self.lbl_date_text.setObjectName("lbl_date_text")
         self.gridLayout_2.addWidget(self.lbl_date_text, 0, 1, 1, 1)
         self.lbl_angle_text = QtWidgets.QLabel(self.frame_item_info)
         self.lbl_angle_text.setMinimumSize(QtCore.QSize(0, 20))
         self.lbl_angle_text.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.lbl_angle_text.setText("...")
         self.lbl_angle_text.setObjectName("lbl_angle_text")
         self.gridLayout_2.addWidget(self.lbl_angle_text, 0, 3, 1, 1)
         self.lbl_angle_icon = QtWidgets.QLabel(self.frame_item_info)
@@ -96,6 +100,7 @@ class Ui_CustomWidgetListItem(object):
         self.lbl_cloud_coverage_text = QtWidgets.QLabel(self.frame_item_info)
         self.lbl_cloud_coverage_text.setMinimumSize(QtCore.QSize(0, 20))
         self.lbl_cloud_coverage_text.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.lbl_cloud_coverage_text.setText("...")
         self.lbl_cloud_coverage_text.setObjectName("lbl_cloud_coverage_text")
         self.gridLayout_2.addWidget(self.lbl_cloud_coverage_text, 0, 5, 1, 1)
         self.gridLayout_2.setColumnStretch(1, 1)
@@ -152,12 +157,7 @@ class Ui_CustomWidgetListItem(object):
         QtCore.QMetaObject.connectSlotsByName(CustomWidgetListItem)
 
     def retranslateUi(self, CustomWidgetListItem):
-        _translate = QtCore.QCoreApplication.translate
-        self.lbl_thumbnail.setText(_translate("CustomWidgetListItem", "TextLabel"))
-        self.lbl_item_name.setText(_translate("CustomWidgetListItem", "TextLabel"))
-        self.lbl_date_text.setText(_translate("CustomWidgetListItem", "..."))
-        self.lbl_angle_text.setText(_translate("CustomWidgetListItem", "..."))
-        self.lbl_cloud_coverage_text.setText(_translate("CustomWidgetListItem", "..."))
+        pass
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ from PyQt5.QtCore import QVariant
 from utils.constants import DEFAULT_CRS_SOURCE, DEFAULT_CRS_TARGET
 from utils.exceptions import DataNotFoundError
 from utils.general import PLUGIN_NAME
+from utils.helpers import tr
 
 try:
     from qgis.core import (
@@ -30,7 +31,7 @@ try:
     )
     from qgis.utils import iface
 except Exception as ex:  # noqa: E722    pylint: disable=bare-except
-    print('QGIS libraries could not be imported.\n', ex)
+    print(f"{tr('QGIS libraries could not be imported.')}\n{ex}")
 
 
 def get_bounding_box_canvas():
@@ -38,7 +39,7 @@ def get_bounding_box_canvas():
 
     active_layer = iface.activeLayer()
     if not active_layer:
-        raise DataNotFoundError('Must have at least one active layer.')
+        raise DataNotFoundError(tr('Must have at least one active layer.'))
 
     crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
     transform = QgsCoordinateTransform(active_layer.crs(), crs_transform, QgsProject.instance())
@@ -59,7 +60,7 @@ def get_bounding_box_selected_feature(layer_name):
 
     layers = QgsProject.instance().mapLayersByName(layer_name)
     if not layers:
-        raise DataNotFoundError('Error', 'The specified layer was not found.')
+        raise DataNotFoundError('Error', tr('The specified layer was not found.'))
 
     layer = layers[0]
     if layer.selectedFeatureCount() > 0:
@@ -78,7 +79,7 @@ def get_bounding_box_selected_feature(layer_name):
 
         return {'x_min': x_min, 'y_min': y_min, 'x_max': x_max, 'y_max': y_max}
 
-    raise DataNotFoundError('There are no features selected on the specified layer.')
+    raise DataNotFoundError(tr('There are no features selected on the specified layer.'))
 
 
 def get_single_polygon_layers():

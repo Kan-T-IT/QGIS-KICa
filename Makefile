@@ -26,7 +26,7 @@
 #Add iso code for any locales you want to support here (space separated)
 # default is no locales
 # LOCALES = af
-LOCALES = en es pt
+LOCALES = es pt
 
 # If locales are enabled, set the name of the lrelease binary on your system. If
 # you have trouble compiling the translations, you may have to specify the full path to
@@ -201,7 +201,7 @@ transclean:
 	@echo "------------------------------------"
 	@echo "Removing compiled translation files."
 	@echo "------------------------------------"
-	rm -f i18n/*.qm
+	rm -f src/i18n/*.qm
 
 clean:
 	@echo

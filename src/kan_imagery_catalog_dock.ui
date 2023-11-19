@@ -85,7 +85,7 @@
        <item>
         <widget class="QLabel" name="lbl_app_title">
          <property name="text">
-          <string>KAN Imagery Catalog</string>
+          <string notr="true">KAN Imagery Catalog</string>
          </property>
         </widget>
        </item>
@@ -607,7 +607,7 @@
                    </size>
                   </property>
                   <property name="displayFormat">
-                   <string>dd/MM/yy</string>
+                   <string notr="true">dd/MM/yy</string>
                   </property>
                   <property name="calendarPopup">
                    <bool>true</bool>
@@ -629,7 +629,7 @@
                    </size>
                   </property>
                   <property name="displayFormat">
-                   <string>dd/MM/yy</string>
+                   <string notr="true">dd/MM/yy</string>
                   </property>
                   <property name="calendarPopup">
                    <bool>true</bool>
@@ -825,7 +825,7 @@
                          <item>
                           <widget class="QLabel" name="lbl_0_percent">
                            <property name="text">
-                            <string>0%</string>
+                            <string notr="true">0%</string>
                            </property>
                            <property name="alignment">
                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -835,7 +835,7 @@
                          <item>
                           <widget class="QLabel" name="lbl_25_percent">
                            <property name="text">
-                            <string>25%</string>
+                            <string notr="true">25%</string>
                            </property>
                            <property name="alignment">
                             <set>Qt::AlignCenter</set>
@@ -845,7 +845,7 @@
                          <item>
                           <widget class="QLabel" name="lbl_50_percent">
                            <property name="text">
-                            <string>50%</string>
+                            <string notr="true">50%</string>
                            </property>
                            <property name="alignment">
                             <set>Qt::AlignCenter</set>
@@ -855,7 +855,7 @@
                          <item>
                           <widget class="QLabel" name="lbl_75_percent">
                            <property name="text">
-                            <string>75%</string>
+                            <string notr="true">75%</string>
                            </property>
                            <property name="alignment">
                             <set>Qt::AlignCenter</set>
@@ -865,7 +865,7 @@
                          <item>
                           <widget class="QLabel" name="lbl_100_percent">
                            <property name="text">
-                            <string>100%</string>
+                            <string notr="true">100%</string>
                            </property>
                            <property name="alignment">
                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
