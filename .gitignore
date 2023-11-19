@@ -160,7 +160,6 @@ cython_debug/
 
 src/.coverage
 src/help
-src/i18n/
 src/test/
 env
 .ruff_cache/

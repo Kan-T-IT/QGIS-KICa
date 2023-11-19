@@ -16,7 +16,6 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
     if provider == 'microsoft':
         collections = microsoft.get_collections()
 
-        print(f'microsoft-collections: {len(collections)}')
         for collection in collections:
             collection['name'] = collection['id']
             collection['hostName'] = collection['providers'][0]['name']

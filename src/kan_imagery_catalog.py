@@ -56,12 +56,9 @@ class KANImageryCatalog:
 
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
-        # locale = 'es'
-        print(locale)
         locale_path = os.path.join(self.plugin_dir, 'i18n', 'kan_imagery_catalog_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
-            print(f'Tomando archivo de traducciones: {locale_path}')
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)

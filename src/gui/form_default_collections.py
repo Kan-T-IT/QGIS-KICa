@@ -33,7 +33,6 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         self.selected_collections = self.settings.selected_collections or []
         self.providers = self.settings.get_active_providers()
 
-        print(f'providers: {self.providers}')
         self.btn_filter_results_clicked()
         self.load_selected_collections()
 
