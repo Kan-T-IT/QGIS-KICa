@@ -3,7 +3,7 @@
 from time import sleep
 
 from core.settings import PluginSettings
-from services import microsoft, sentinel_hub, up42
+from services import element84, microsoft, sentinel_hub, up42
 from utils.exceptions import ProviderError
 from utils.helpers import tr
 
@@ -29,6 +29,25 @@ def get_catalog(
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
     custom_query = get_custom_query(provider=provider, max_cloud_coverage=max_cloud_coverage)
     sleep(0.3)
+
+    if provider == 'element84':
+        # if custom_query:
+        #     search_params['query'] = custom_query
+
+        catalogs = []
+
+        catalogs_features = element84.get_catalog(search_params=search_params)
+        for catalog in catalogs_features['features']:
+            catalog['aux_date'] = catalog['properties']['datetime']
+            catalog['aux_angle'] = None
+            catalog['aux_cloud_coverage'] = None  # catalog['properties']['cloudCoverage']
+            catalog['aux_collection_name'] = catalog['collection']
+            catalog['aux_image_id'] = catalog['id']
+            catalog['aux_coordinates'] = catalog['geometry']['coordinates'][0]
+
+        catalogs += catalogs_features['features']
+
+        return catalogs
 
     if provider == 'microsoft':
         # if custom_query:
@@ -134,6 +153,9 @@ def get_thumbnail(provider: str, collection_name: str, host_name: str, image_id:
     if provider == 'microsoft':
         thumbnail = microsoft.get_thumbnail(collection_name=collection_name, feature_data=feature_data)
 
+    if provider == 'element84':
+        thumbnail = element84.get_thumbnail(collection_name=collection_name, image_id=image_id)
+
     if provider == 'up42':
         token = up42.get_token(
             project_id=provider_settings['project_id'],
@@ -157,13 +179,16 @@ def get_quicklook(provider: str, host_name: str, image_id: str, feature_data: di
     settings = PluginSettings()
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
 
-    if provider not in ['microsoft', 'up42']:
+    if provider not in ['microsoft', 'up42', 'element84']:
         raise ProviderError(tr('It is not possible to obtain a preview from this provider.'))
 
     quicklook = None
 
     if provider == 'microsoft':
         quicklook = microsoft.get_quicklook(host_name=host_name, image_id=image_id, feature_data=feature_data)
+
+    if provider == 'element84':
+        quicklook = element84.get_quicklook(image_id=image_id, feature_data=feature_data)
 
     if provider == 'up42':
         token = up42.get_token(

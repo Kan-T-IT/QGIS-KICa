@@ -2,7 +2,7 @@
 
 
 from core.settings import PluginSettings
-from services import microsoft, sentinel_hub, up42
+from services import element84, microsoft, sentinel_hub, up42
 from utils.exceptions import ProviderError
 from utils.helpers import tr
 
@@ -15,6 +15,17 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
 
     if provider == 'microsoft':
         collections = microsoft.get_collections()
+
+        for collection in collections:
+            collection['name'] = collection['id']
+            collection['hostName'] = collection['providers'][0]['name']
+        #     collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
+        #     collection['min_resolution'] = collection['resolutionValue'].get('minimum')
+
+        return collections
+
+    if provider == 'element84':
+        collections = element84.get_collections()
 
         for collection in collections:
             collection['name'] = collection['id']

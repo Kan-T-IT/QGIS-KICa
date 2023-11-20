@@ -95,6 +95,9 @@ class FormSettings(FormBase, Ui_frm_settings):
         provider_settings['microsoft'] = {
             'valid': True,
         }
+        provider_settings['element84'] = {
+            'valid': True,
+        }
         provider_settings['up42'] = {
             'api_key': self.txt_up42_api_key.text(),
             'project_id': self.txt_up42_project_id.text(),
