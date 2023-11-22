@@ -1,4 +1,9 @@
+""" Debugging utilities module. """
+
+
 def pyqt_set_trace():
+    """Set a tracepoint in the Python debugger that works with Qt."""
+
     import pdb
 
     from PyQt5.QtCore import pyqtRemoveInputHook

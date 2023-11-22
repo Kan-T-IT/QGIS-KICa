@@ -10,6 +10,8 @@ DOWNLOAD_URL = 'https://www.sentinel-hub.com/'
 
 
 def get_token(client_id, client_secret):
+    """Get token from Sentinel Hub API"""
+
     if not client_id or not client_secret:
         raise AuthorizationError(tr('SentinelHub credentials have not been configured.'))
 
@@ -39,6 +41,8 @@ def get_token(client_id, client_secret):
 
 @lru_cache(maxsize=None)
 def get_collections(token):
+    """Get collections from Sentinel Hub API"""
+
     url = 'https://services.sentinel-hub.com/api/v1/catalog/1.0.0/collections'
 
     headers = {

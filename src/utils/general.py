@@ -29,6 +29,8 @@ PLUGIN_NAME = _get_plugin_name()
 
 
 def clean_temporary_files():
+    """Clean temporary files"""
+
     temp_dir = os.path.join(get_plugin_dir(), 'temp')
 
     if os.path.exists(temp_dir):

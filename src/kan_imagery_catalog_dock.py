@@ -16,6 +16,7 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
+""" KAN Imagery Catalog QGIS plugin dock widget module. """
 
 import os
 
@@ -39,17 +40,21 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), 'kan_imag
 
 
 class WorkerThread(QThread):
+    """Worker thread class."""
+
     finished = pyqtSignal()
     progress_updated = pyqtSignal(dict)
     error_signal = pyqtSignal(str, str)
     warning_signal = pyqtSignal(str, str)
 
     def start(self, process, dict_params):
+        """Start thread."""
         self.process = process
         self.kwargs = dict_params
         super().start()
 
     def run(self):
+        """Run thread."""
         try:
             self.process(**self.kwargs)
         except (SettingsError, DataNotFoundError, AuthorizationError) as ex:
@@ -148,12 +153,18 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.set_form_state(False)
 
     def show_warning(self, title, message):
+        """Show warning message."""
+
         qgis_helper.warning_message(title, message)
 
     def show_error(self, title, message):
+        """Show error message."""
+
         qgis_helper.error_message(title, message)
 
     def set_form_state(self, status):
+        """Sets the form state (enabled/disabled) when the process is runnning in a separate thread."""
+
         self.lbl_logo.setVisible(not status)
         self.lbl_spinner.setVisible(status)
         if status:
@@ -397,6 +408,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             catalog_counter += 1
 
     def update_progress(self, progress_data):
+        """Update thread results in Toc and DockWidget."""
+
         self.add_feature_to_footprints_layer(
             coordinates=progress_data['coordinates'],
             footprint_id=progress_data['image_id'],
@@ -453,5 +466,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.lst_data.setItemWidget(item, custom_item)
 
     def add_feature_to_footprints_layer(self, coordinates, footprint_id):
+        """Add feature to footprints layer."""
         footprints_layer = qgis_helper.get_or_create_footprints_layer(RESULTS_LAYER_NAME, RESULTS_GROUP_NAME)
         qgis_helper.add_feature_to_layer(coordinates, footprint_id, footprints_layer)

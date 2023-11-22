@@ -1,3 +1,5 @@
+""" Base form module for all forms in the plugin. """
+
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import (
     QDialog,
@@ -13,6 +15,8 @@ from utils.helpers import tr
 
 
 class FormBase(QDialog):
+    """Base form class for all forms in the plugin."""
+
     def __init__(
         self,
         parent=None,
@@ -39,6 +43,8 @@ class FormBase(QDialog):
         self.set_control_buttons(accept_btn, cancel_btn, close_btn)
 
     def set_control_buttons(self, accept_btn, cancel_btn, close_btn):
+        """Set control buttons for the form (Accept, Cancel, Close)."""
+
         if not accept_btn and not cancel_btn and not close_btn:
             return
 
@@ -80,4 +86,6 @@ class FormBase(QDialog):
         self.layout().addWidget(frame)
 
     def btn_close_click(self):
+        """Event handler for the Close button click."""
+
         self.close()

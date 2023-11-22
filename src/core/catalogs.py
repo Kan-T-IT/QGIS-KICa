@@ -9,6 +9,8 @@ from utils.helpers import tr
 
 
 def get_custom_query(provider: str, max_cloud_coverage: int) -> dict:
+    """Get custom query for a specific provider."""
+
     query = {}
 
     if provider == 'up42':
