@@ -170,7 +170,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         if status:
             self.loading_spinner.start()
 
-            # Diosable form controls
+            # Disable form controls
             self.frame_catalog.setDisabled(True)
             self.btn_settings.setDisabled(True)
             self.btn_get_data.setText(tr('Getting results...'))
@@ -467,5 +467,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
     def add_feature_to_footprints_layer(self, coordinates, footprint_id):
         """Add feature to footprints layer."""
+
         footprints_layer = qgis_helper.get_or_create_footprints_layer(RESULTS_LAYER_NAME, RESULTS_GROUP_NAME)
         qgis_helper.add_feature_to_layer(coordinates, footprint_id, footprints_layer)
