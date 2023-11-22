@@ -18,10 +18,12 @@
 
 
 import os
+import sys
+import time
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import QDate, Qt, QVariant, pyqtSignal
-from PyQt5.QtGui import QIcon, QIntValidator
+from PyQt5.QtCore import QCoreApplication, QDate, QMetaObject, QSize, Qt, QThread, QThreadPool, QVariant, pyqtSignal
+from PyQt5.QtGui import QIcon, QIntValidator, QMovie
 from PyQt5.QtWidgets import QApplication, QListWidgetItem
 
 from core.catalogs import get_catalog, get_thumbnail
@@ -30,12 +32,36 @@ from gui.custom_widgets import CustomWidgetListItem
 from gui.form_default_collections import FormDefaultCollections
 from gui.form_settings import FormSettings
 from gui.helpers import forms
+from gui.worker import Worker
 from utils import qgis_helper
 from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
 from utils.exceptions import AuthorizationError, DataNotFoundError, HostError, PluginError, ProviderError, SettingsError
 from utils.helpers import tr
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), 'kan_imagery_catalog_dock.ui'))
+
+
+class WorkerThread(QThread):
+    finished = pyqtSignal()
+    progress_updated = pyqtSignal(dict)
+    error_signal = pyqtSignal(str, str)
+    warning_signal = pyqtSignal(str, str)
+
+    def start(self, process, dict_params):
+        self.process = process
+        self.kwargs = dict_params
+        super().start()
+
+    def run(self):
+        try:
+            self.process(**self.kwargs)
+        except (SettingsError, DataNotFoundError, AuthorizationError) as ex:
+            self.warning_signal.emit(tr('Warning'), str(ex))
+
+        except (HostError, PluginError, Exception) as ex:
+            self.error_signal.emit(tr('Error'), str(ex))
+
+        self.finished.emit()
 
 
 class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
@@ -106,8 +132,48 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.slider_cloud_coverage.setValue(int(self.settings.cloud_coverage or 0))
         self.txt_max_catalog_results.setText(str(self.settings.max_catalog_results or 0))
         self.collections = []
-
         self.sort_ascending = True
+
+        # SPINNER
+        self.loading_spinner = QMovie(':/resources/spinner.gif')
+        self.lbl_spinner.setMovie(self.loading_spinner)
+        self.lbl_spinner.setFixedSize(QSize(25, 25))
+
+        self.background_process = WorkerThread()
+        self.background_process.started.connect(lambda: self.set_form_state(True))
+        self.background_process.finished.connect(lambda: self.set_form_state(False))
+        self.background_process.finished.connect(
+            lambda: qgis_helper.success_message('', tr('The catalog search has ended.'))
+        )
+        self.background_process.progress_updated.connect(self.update_progress)
+        self.background_process.error_signal.connect(self.show_error)
+        self.background_process.warning_signal.connect(self.show_warning)
+        self.set_form_state(False)
+
+    def show_warning(self, title, message):
+        qgis_helper.warning_message(title, message)
+
+    def show_error(self, title, message):
+        qgis_helper.error_message(title, message)
+
+    def set_form_state(self, status):
+        self.lbl_logo.setVisible(not status)
+        self.lbl_spinner.setVisible(status)
+        if status:
+            self.loading_spinner.start()
+
+            # Diosable form controls
+            self.frame_catalog.setDisabled(True)
+            self.btn_settings.setDisabled(True)
+            self.btn_get_data.setText(tr('Getting results...'))
+            self.lst_data.clear()
+        else:
+            self.loading_spinner.stop()
+
+            # Enable form controls
+            self.frame_catalog.setDisabled(False)
+            self.btn_settings.setDisabled(False)
+            self.btn_get_data.setText(tr('Search'))
 
     def closeEvent(self, event):
         """Run close plugin event."""
@@ -203,6 +269,9 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     def btn_get_data_clicked(self):
         """Event handler for button 'btn_get_data'."""
 
+        if not self.chk_search_by_dataframe.isChecked() and not self.cbo_layer.currentText():
+            raise DataNotFoundError(tr('The project has no layers available to use as a reference for searching.'))
+
         # Check if there are providers configured...
         if not self.settings.get_active_providers():
             qgis_helper.warning_message(
@@ -211,15 +280,10 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             )
             return
 
-        self.frame_catalog.setDisabled(True)
-        self.btn_settings.setDisabled(True)
-        self.btn_get_data.setText(tr('Getting results...'))
-
-        self.lst_data.clear()
-
         cloud_coverage = self.slider_cloud_coverage.value()
         date_from = self.dt_date_from.date()
         date_to = self.dt_date_to.date()
+        layer_name = '' if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentText()
 
         try:
             max_catalog_results = int(self.txt_max_catalog_results.text().strip())
@@ -227,42 +291,15 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             max_catalog_results = self.settings.max_catalog_results
             self.txt_max_catalog_results.setText(str(max_catalog_results))
 
-        QApplication.processEvents()
+        params = {
+            'layer_name': layer_name,
+            'cloud_coverage': cloud_coverage,
+            'date_from': date_from,
+            'date_to': date_to,
+            'max_catalog_results': max_catalog_results,
+        }
 
-        try:
-            if not self.chk_search_by_dataframe.isChecked() and not self.cbo_layer.currentText():
-                raise DataNotFoundError(tr('The project has no layers available to use as a reference for searching.'))
-
-            layer_name = '' if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentText()
-
-            self.get_results(
-                layer_name=layer_name,
-                cloud_coverage=cloud_coverage,
-                date_from=date_from,
-                date_to=date_to,
-                max_catalog_results=max_catalog_results,
-            )
-            qgis_helper.success_message('', tr('The catalog search has ended.'))
-
-        except SettingsError as ex:
-            qgis_helper.warning_message(tr('Warning'), str(ex))
-
-        except DataNotFoundError as ex:
-            qgis_helper.info_message(tr('Warning'), str(ex))
-
-        except AuthorizationError as ex:
-            qgis_helper.warning_message(tr('Warning'), str(ex))
-
-        except HostError as ex:
-            qgis_helper.error_message('Error', str(ex))
-
-        except (PluginError, Exception) as ex:
-            qgis_helper.error_message('Error', str(ex))
-
-        finally:
-            self.frame_catalog.setDisabled(False)
-            self.btn_settings.setDisabled(False)
-            self.btn_get_data.setText(tr('Search'))
+        self.background_process.start(self.get_results, params)
 
     def get_results(self, layer_name, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
@@ -323,47 +360,63 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     collection_names=collection_aux,
                 )
             except AuthorizationError as ex:
-                qgis_helper.info_message(tr('Warning'), str(ex))
+                self.error_signal.emit(tr('Warning'), str(ex))
                 continue
 
             except (ProviderError, HostError) as ex:
-                qgis_helper.error_message('Error', str(ex))
+                self.error_signal.emit(tr('Error'), str(ex))
                 continue
 
             features_counter = 0
-            for catalog in catalogs:  # ['features']:
+            for catalog in catalogs:
                 if features_counter >= limit_features:
                     break
 
-                item_date = catalog['aux_date']
-                item_angle = catalog['aux_angle']
-                item_cloud_coverage = catalog['aux_cloud_coverage']
-                collection_name = catalog['aux_collection_name']
-                image_id = catalog['aux_image_id']
-
-                coordinates = catalog['aux_coordinates']
-                self.add_feature_to_footprints_layer(
-                    coordinates=coordinates,
-                    footprint_id=image_id,
-                )
-
-                self.add_item_to_results(
-                    provider_name=provider,
-                    host_name=host,
-                    collection_name=collection_name,
+                thumbnail = get_thumbnail(
+                    provider=provider,
+                    host_name=host_name,
+                    collection_name=catalog['aux_collection_name'],
+                    image_id=catalog['aux_image_id'],
                     feature_data=catalog,
-                    acquisition_date=item_date,
-                    incidence_angle=item_angle,
-                    cloud_coverage=item_cloud_coverage,
-                    image_id=image_id,
-                    feature_index=features_counter,
                 )
 
+                dic_result = {
+                    'coordinates': catalog['aux_coordinates'],
+                    'provider_name': provider,
+                    'host_name': host,
+                    'collection_name': catalog['aux_collection_name'],
+                    'feature_data': catalog,
+                    'acquisition_date': catalog['aux_date'],
+                    'incidence_angle': catalog['aux_angle'],
+                    'cloud_coverage': catalog['aux_cloud_coverage'],
+                    'image_id': catalog['aux_image_id'],
+                    'feature_index': features_counter,
+                    'thumbnail': thumbnail,
+                }
+
+                self.background_process.progress_updated.emit(dic_result)
                 features_counter += 1
-                QApplication.processEvents()
 
             catalog_counter += 1
-        qgis_helper.success_message('', tr('The catalog search has ended.'))
+
+    def update_progress(self, progress_data):
+        self.add_feature_to_footprints_layer(
+            coordinates=progress_data['coordinates'],
+            footprint_id=progress_data['image_id'],
+        )
+
+        self.add_item_to_results(
+            provider_name=progress_data['provider_name'],
+            host_name=progress_data['host_name'],
+            collection_name=progress_data['collection_name'],
+            feature_data=progress_data['feature_data'],
+            acquisition_date=progress_data['acquisition_date'],
+            incidence_angle=progress_data['incidence_angle'],
+            cloud_coverage=progress_data['cloud_coverage'],
+            image_id=progress_data['image_id'],
+            feature_index=progress_data['feature_index'],
+            thumbnail=progress_data['thumbnail'],
+        )
 
     def add_item_to_results(
         self,
@@ -376,16 +429,9 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         cloud_coverage,
         image_id,
         feature_index,
+        thumbnail,
     ):
         """Add item to results list."""
-
-        thumbnail = get_thumbnail(
-            provider=provider_name,
-            host_name=host_name,
-            collection_name=collection_name,
-            image_id=image_id,
-            feature_data=feature_data,
-        )
 
         custom_item = CustomWidgetListItem(
             parent=self.lst_data,

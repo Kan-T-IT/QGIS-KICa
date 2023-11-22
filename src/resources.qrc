@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>resources/spinner.gif</file>
     <file>resources/icons/sort-ascending.svg</file>
     <file>resources/icons/sort-descending.svg</file>
     <file>resources/icons/calendar-2.svg</file>

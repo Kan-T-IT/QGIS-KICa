@@ -7,7 +7,7 @@ from functools import lru_cache
 
 from services.utils import encode_base64
 from utils.exceptions import AuthorizationError, HostError
-from utils.helpers import image_from_s3, tr
+from utils.helpers import tr
 
 REQUEST_TIMEOUT = 120
 DOWNLOAD_URL = '#'  # https://console.up42.com/catalog/new-order'
