@@ -15,5 +15,3 @@ Submodules
    providers/index.rst
    results/index.rst
    settings/index.rst
-
-

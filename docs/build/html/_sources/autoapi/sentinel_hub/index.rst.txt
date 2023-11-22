@@ -31,5 +31,3 @@ Functions
 .. py:function:: get_token_info(client_id)
 
    Get token info from Sentinel Hub API
-
-

@@ -57,6 +57,3 @@ Classes
    .. py:method:: load_selected_collections()
 
       Load selected collections in table.
-
-
-

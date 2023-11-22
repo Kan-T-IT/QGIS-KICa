@@ -94,6 +94,3 @@ Classes
    .. py:method:: run()
 
       Run method that loads and starts the plugin
-
-
-

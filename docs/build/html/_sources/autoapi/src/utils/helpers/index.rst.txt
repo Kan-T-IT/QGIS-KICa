@@ -18,5 +18,3 @@ Functions
 
 
 .. py:function:: open_url(url: str, params: Optional[dict] = None) -> bool
-
-

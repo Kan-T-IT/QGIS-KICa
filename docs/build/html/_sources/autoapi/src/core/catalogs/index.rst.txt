@@ -55,5 +55,3 @@ Functions
 .. py:function:: get_download_url(provider: str)
 
    Get catalog download url from a specific provider.
-
-

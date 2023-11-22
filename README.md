@@ -1,6 +1,6 @@
-# KICa - KAN Imagery Catalog 
+# KICa - KAN Imagery Catalog
 
-## QGIS Plugin - Remote Sensors Catalogue 
+## QGIS Plugin - Remote Sensors Catalogue
 
 
 *  QGIS Minimum Version: 3.22
@@ -16,12 +16,12 @@
 
 ## Contributing
 
-This plugins is a project that integrates different platforms to access from QGIS and one can collaborate, either on Bugs or Pull Requests. 
+This plugins is a project that integrates different platforms to access from QGIS and one can collaborate, either on Bugs or Pull Requests.
 
 
 ### Development Environment Configuration
 
-As a first point, it is important to be able to configure the development environment, which we will describe below: 
+As a first point, it is important to be able to configure the development environment, which we will describe below:
 
 
 #### Pre-requisites Recommended

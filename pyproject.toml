@@ -1,5 +1,5 @@
 [tool.ruff]
-exclude = [".eggs",".git",".git-rewrite",".mypy_cache",".pytype",".ruff_cache",".tox","__pypackages__","_build","build","dist","env","**/pyptoject.toml"]
+exclude = [".eggs",".git",".git-rewrite",".mypy_cache",".pytype",".ruff_cache",".tox","__pypackages__","_build","build","dist","env","**/pyptoject.toml", "src/ui"]
 
 line-length = 120
 indent-width = 4
@@ -22,6 +22,7 @@ quote-style = "single"
 indent-style = "space"
 # magic-trailing-comma = "preview"
 line-ending = "auto"
+
 
 [tool.ruff.isort]
 known-first-party = ["core", "gui", "services", "ui", "utils"]

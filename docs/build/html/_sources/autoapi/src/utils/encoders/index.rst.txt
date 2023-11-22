@@ -32,6 +32,3 @@ Classes
    .. py:method:: default(o)
 
       Encode Decimal objects as float.
-
-
-

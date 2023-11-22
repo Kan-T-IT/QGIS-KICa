@@ -17,5 +17,3 @@ Submodules
    general/index.rst
    helpers/index.rst
    qgis_helper/index.rst
-
-

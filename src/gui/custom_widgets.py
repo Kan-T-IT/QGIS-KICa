@@ -9,7 +9,7 @@ from gui.form_catalog_info import FormCatalogInfo
 from gui.helpers import forms
 from ui.custom_widget_list_item import Ui_CustomWidgetListItem
 from utils import qgis_helper
-from utils.exceptions import HostError, PluginError
+from utils.exceptions import PluginError
 from utils.helpers import open_url, tr
 
 

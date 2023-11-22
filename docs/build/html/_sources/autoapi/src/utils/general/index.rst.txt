@@ -44,8 +44,6 @@ Attributes
 
 .. py:data:: PLUGIN_NAME
 
-   
+
 
 .. py:function:: clean_temporary_files()
-
-

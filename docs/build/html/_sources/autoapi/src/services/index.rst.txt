@@ -13,5 +13,3 @@ Submodules
    sentinel_hub/index.rst
    up42/index.rst
    utils/index.rst
-
-

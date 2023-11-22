@@ -57,6 +57,3 @@ Classes
    .. py:method:: btn_up42_check_credentials_clicked()
 
       Event handler for check credentials button click.
-
-
-

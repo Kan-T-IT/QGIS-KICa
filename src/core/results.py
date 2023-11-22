@@ -4,7 +4,6 @@ import os
 from time import sleep
 
 from core import catalogs
-from core.settings import PluginSettings
 from utils import qgis_helper
 from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
 from utils.general import get_plugin_dir
@@ -25,7 +24,6 @@ def create_quicklook(provider_name, host, image_id, layer_name, feature_data):
 
     image_id = feature_for_quicklook.attributes()[0]
     image_response = catalogs.get_quicklook(provider_name, host, image_id, feature_data)
-
 
     temp_directory = f'{get_plugin_dir()}/temp'
     if not os.path.isdir(temp_directory):

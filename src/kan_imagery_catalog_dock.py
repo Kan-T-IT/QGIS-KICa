@@ -18,13 +18,11 @@
 
 
 import os
-import sys
-import time
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import QCoreApplication, QDate, QMetaObject, QSize, Qt, QThread, QThreadPool, QVariant, pyqtSignal
+from PyQt5.QtCore import QDate, QSize, Qt, QThread, QVariant, pyqtSignal
 from PyQt5.QtGui import QIcon, QIntValidator, QMovie
-from PyQt5.QtWidgets import QApplication, QListWidgetItem
+from PyQt5.QtWidgets import QListWidgetItem
 
 from core.catalogs import get_catalog, get_thumbnail
 from core.settings import PluginSettings
@@ -32,7 +30,6 @@ from gui.custom_widgets import CustomWidgetListItem
 from gui.form_default_collections import FormDefaultCollections
 from gui.form_settings import FormSettings
 from gui.helpers import forms
-from gui.worker import Worker
 from utils import qgis_helper
 from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
 from utils.exceptions import AuthorizationError, DataNotFoundError, HostError, PluginError, ProviderError, SettingsError

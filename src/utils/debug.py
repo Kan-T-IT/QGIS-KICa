@@ -3,6 +3,8 @@ def pyqt_set_trace():
 
     from PyQt5.QtCore import pyqtRemoveInputHook
 
+    from utils.helpers import tr
+
     pyqtRemoveInputHook()
     print(tr('Using custom debug function...'))
 

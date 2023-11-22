@@ -58,5 +58,3 @@ Module Contents
    Bases: :py:obj:`PluginError`
 
    Custom exception for data related errors.
-
-
