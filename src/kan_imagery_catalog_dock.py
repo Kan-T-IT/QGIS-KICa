@@ -25,6 +25,7 @@ from PyQt5.QtCore import QDate, QSize, Qt, QThread, QVariant, pyqtSignal
 from PyQt5.QtGui import QIcon, QIntValidator, QMovie
 from PyQt5.QtWidgets import QListWidgetItem
 
+from core.collections import get_collections
 from core.catalogs import get_catalog, get_thumbnail
 from core.settings import PluginSettings
 from gui.custom_widgets import CustomWidgetListItem
@@ -57,7 +58,7 @@ class WorkerThread(QThread):
         """Run thread."""
         try:
             self.process(**self.kwargs)
-        except (SettingsError, DataNotFoundError, AuthorizationError) as ex:
+        except (ProviderError, SettingsError, DataNotFoundError, AuthorizationError) as ex:
             self.warning_signal.emit(tr('Warning'), str(ex))
 
         except (HostError, PluginError, Exception) as ex:
@@ -141,16 +142,23 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.lbl_spinner.setMovie(self.loading_spinner)
         self.lbl_spinner.setFixedSize(QSize(25, 25))
 
-        self.background_process = WorkerThread()
-        self.background_process.started.connect(lambda: self.set_form_state(True))
-        self.background_process.finished.connect(lambda: self.set_form_state(False))
-        self.background_process.finished.connect(
-            lambda: qgis_helper.success_message('', tr('The catalog search has ended.'))
-        )
-        self.background_process.progress_updated.connect(self.update_progress)
-        self.background_process.error_signal.connect(self.show_error)
-        self.background_process.warning_signal.connect(self.show_warning)
-        self.set_form_state(False)
+        self.thread_get_catalogs = WorkerThread()
+        self.thread_get_catalogs.started.connect(lambda: self.set_form_state(is_busy=True, show_spinner=True))
+        self.thread_get_catalogs.finished.connect(lambda: self.set_form_state(is_busy=False, show_spinner=False))
+        self.thread_get_catalogs.finished.connect(self.get_data_finished)
+        self.thread_get_catalogs.progress_updated.connect(self.update_progress)
+        self.thread_get_catalogs.error_signal.connect(self.show_error)
+        self.thread_get_catalogs.warning_signal.connect(self.show_warning)
+
+        self.thread_load_collections_cache = WorkerThread()
+        self.thread_load_collections_cache.started.connect(lambda: self.set_form_state(is_busy=True, show_spinner=True))
+        self.thread_load_collections_cache.finished.connect(lambda: self.set_form_state(is_busy=False, show_spinner=True))
+        self.thread_load_collections_cache.finished.connect(self.show_collections_form)
+        self.thread_load_collections_cache.error_signal.connect(self.show_error)
+        self.thread_load_collections_cache.warning_signal.connect(self.show_warning)
+
+
+        # self.set_form_state(is_busy=False)
 
     def show_warning(self, title, message):
         """Show warning message."""
@@ -162,26 +170,26 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         qgis_helper.error_message(title, message)
 
-    def set_form_state(self, status):
+    def set_form_state(self, is_busy, show_spinner=False):
         """Sets the form state (enabled/disabled) when the process is runnning in a separate thread."""
 
-        self.lbl_logo.setVisible(not status)
-        self.lbl_spinner.setVisible(status)
-        if status:
-            self.loading_spinner.start()
+        self.lbl_logo.setVisible(not show_spinner or (show_spinner and not is_busy))
+        self.lbl_spinner.setVisible(show_spinner and is_busy)
+
+        if is_busy:
+            if show_spinner:
+                self.loading_spinner.start()
 
             # Disable form controls
             self.frame_catalog.setDisabled(True)
             self.btn_settings.setDisabled(True)
-            self.btn_get_data.setText(tr('Getting results...'))
-            self.lst_data.clear()
         else:
-            self.loading_spinner.stop()
+            if show_spinner:
+                self.loading_spinner.stop()
 
             # Enable form controls
             self.frame_catalog.setDisabled(False)
             self.btn_settings.setDisabled(False)
-            self.btn_get_data.setText(tr('Search'))
 
     def closeEvent(self, event):
         """Run close plugin event."""
@@ -223,15 +231,31 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     def btn_settings_clicked(self):
         """Event handler for button 'btn_settings'."""
 
+        self.set_form_state(is_busy=True)
         frm = FormSettings(parent=self, closing_plugin=self.closing_plugin)
         frm.exec()
         self.settings = PluginSettings()
+        self.set_form_state(is_busy=False)
 
     def btn_select_catalogs_clicked(self):
         """Event handler for button 'btn_select_catalogs'."""
 
+        self.thread_load_collections_cache.start(self.load_collections_cache, {})
+
+    def load_collections_cache(self):
+        # Load collections in caché
+        for provider in self.settings.get_active_providers():
+            try:
+                _ = get_collections(provider, {})
+            except ProviderError as ex:            
+                self.show_warning(tr('Warning'), f'{provider}: {ex.message}')
+
+    def show_collections_form(self):
+
+        self.set_form_state(is_busy=True)
         frm = FormDefaultCollections(parent=self, closing_plugin=self.closing_plugin)
         frm.exec()
+        self.set_form_state(is_busy=False)
 
     def btn_sort_results_clicked(self):
         """Event handler for button 'btn_sort_results'."""
@@ -288,6 +312,10 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             )
             return
 
+
+        self.btn_get_data.setText(tr('Getting results...'))
+        self.lst_data.clear()
+
         cloud_coverage = self.slider_cloud_coverage.value()
         date_from = self.dt_date_from.date()
         date_to = self.dt_date_to.date()
@@ -307,7 +335,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             'max_catalog_results': max_catalog_results,
         }
 
-        self.background_process.start(self.get_results, params)
+        self.thread_get_catalogs.start(self.get_results, params)
+
+    def get_data_finished(self):
+        self.btn_get_data.setText(tr('Search'))
+        qgis_helper.success_message('', tr('The catalog search has ended.'))
 
     def get_results(self, layer_name, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
@@ -368,11 +400,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     collection_names=collection_aux,
                 )
             except AuthorizationError as ex:
-                self.error_signal.emit(tr('Warning'), str(ex))
+                self.show_warning(tr('Warning'), str(ex))
                 continue
 
             except (ProviderError, HostError) as ex:
-                self.error_signal.emit(tr('Error'), str(ex))
+                self.show_error(tr('Error'), str(ex))
                 continue
 
             features_counter = 0
@@ -402,7 +434,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     'thumbnail': thumbnail,
                 }
 
-                self.background_process.progress_updated.emit(dic_result)
+                self.thread_get_catalogs.progress_updated.emit(dic_result)
                 features_counter += 1
 
             catalog_counter += 1
