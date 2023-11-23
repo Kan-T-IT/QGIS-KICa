@@ -38,17 +38,7 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.btn_sentinelhub_check_credentials.setGraphicsEffect(forms.get_shadow_effect())
         self.btn_download_dir.setGraphicsEffect(forms.get_shadow_effect())
 
-        languages = [
-            # {'key': 'spanish', 'value': 'Español'},
-            # {'key': 'portuguese', 'value': 'Portugûese'},
-            {'key': 'english', 'value': 'English'},
-        ]
-
-        forms.load_combobox(self.cbo_language, 'key', 'value', languages)
-
         self.settings = PluginSettings()
-
-        self.cbo_language.setCurrentIndex(self.cbo_language.findData(self.settings.language))
         self.txt_default_back_days.setText(str(self.settings.back_days or 0))
         self.slider_cloud_coverage.setValue(int(self.settings.cloud_coverage or 0))
         self.txt_max_catalog_results.setText(str(self.settings.max_catalog_results or 0))
@@ -71,6 +61,10 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.txt_sentinelhub_client_secret.setText(self.sentinelhub_settings.get('client_secret'))
         self.lbl_sentinelhub_check_credentials.setText('')
 
+        self.lbl_download_path.setHidden(True)
+        self.txt_download_path.setHidden(True)
+        self.btn_download_dir.setHidden(True)
+
     def update_cloud_coverage_label(self):
         """Update cloud coverage label text."""
 
@@ -83,7 +77,6 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.btn_up42_check_credentials_clicked()
         self.btn_sentinelhub_check_credentials_clicked()
 
-        self.settings.language = self.cbo_language.currentData()
         self.settings.back_days = int(self.txt_default_back_days.text())
         self.settings.cloud_coverage = int(self.slider_cloud_coverage.value())
         self.settings.download_path = self.txt_download_path.text()

@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>645</width>
-    <height>600</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>535</width>
-    <height>600</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -34,7 +34,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
       <property name="spacing">
        <number>10</number>
       </property>
@@ -58,6 +58,12 @@
           <height>0</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -71,33 +77,40 @@
          <property name="verticalSpacing">
           <number>6</number>
          </property>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="btn_download_dir">
-           <property name="minimumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>30</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="text">
-            <string notr="true">...</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label">
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_download_path">
            <property name="text">
             <string>Download path</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1" colspan="2">
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Max catalogs</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="txt_max_features_results">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maxLength">
+            <number>3</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
           <widget class="QFrame" name="frame_6">
            <property name="minimumSize">
             <size>
@@ -347,26 +360,45 @@
            </layout>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="lbl_cloud_coverage">
+         <item row="2" column="2">
+          <widget class="QPushButton" name="btn_download_dir">
            <property name="minimumSize">
             <size>
-             <width>260</width>
-             <height>0</height>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="text">
+            <string notr="true">...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="txt_download_path">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>16777215</height>
+             <height>30</height>
             </size>
            </property>
-           <property name="text">
-            <string>Default max cloud coverage</string>
+           <property name="maxLength">
+            <number>1024</number>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <widget class="QLineEdit" name="txt_default_back_days">
            <property name="minimumSize">
             <size>
@@ -386,67 +418,32 @@
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Max catalogs</string>
+            <string>Max catalog features</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_language">
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_cloud_coverage">
            <property name="minimumSize">
             <size>
-             <width>150</width>
+             <width>260</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>150</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="text">
-            <string>Language</string>
+            <string>Default max cloud coverage</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="cbo_language">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>30</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="txt_download_path">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maxLength">
-            <number>1024</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+         <item row="0" column="0">
           <widget class="QLabel" name="lbl_days_after">
            <property name="minimumSize">
             <size>
@@ -465,33 +462,7 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Max catalog features</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLineEdit" name="txt_max_features_results">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maxLength">
-            <number>3</number>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
+         <item row="3" column="1">
           <widget class="QLineEdit" name="txt_max_catalog_results">
            <property name="minimumSize">
             <size>
@@ -905,7 +876,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cbo_language</tabstop>
   <tabstop>txt_default_back_days</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>txt_up42_project_id</tabstop>
