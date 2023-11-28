@@ -98,7 +98,7 @@ def get_thumbnail(token: str, host_name: str, image_id: str):
 
 def get_quicklook(token: str, host_name: str, image_id: str):
     """Get catalog quicklook from UP42 API"""
-    
+
     url = f' https://api.up42.com/catalog/{host_name}/image/{image_id}/quicklook'
     headers = {
         'accept': '*/*',

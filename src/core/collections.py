@@ -47,7 +47,6 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
                 filtered_collections.append(collection)
 
         return filtered_collections
-    
 
     if provider == 'sentinel_hub':
         token = sentinel_hub.get_token(

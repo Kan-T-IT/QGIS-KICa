@@ -1,15 +1,20 @@
 """ Custom widgets module. """
 
-from PyQt5.QtCore import Qt
+import os
+from time import sleep
+
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget
 
 from core import catalogs, results
 from gui.form_catalog_info import FormCatalogInfo
 from gui.helpers import forms
+from gui.helpers.worker import WorkerThread
 from ui.custom_widget_list_item import Ui_CustomWidgetListItem
 from utils import qgis_helper
 from utils.exceptions import PluginError
+from utils.general import get_plugin_dir
 from utils.helpers import open_url, tr
 
 
@@ -38,8 +43,11 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         self.closing_plugin = closing_plugin
         self.parent = parent
         self.btn_download.clicked.connect(self.download_images)
-        self.btn_view.clicked.connect(self.get_quicklook)
+        self.btn_view.clicked.connect(self.show_quicklook)
         self.btn_details.clicked.connect(self.view_details)
+
+        self.thread_quicklooks = WorkerThread()
+        self.thread_quicklooks.progress_updated.connect(self.create_quicklook_layer)
 
         self.provider = provider_name
         self.host = host_name
@@ -112,16 +120,44 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         frm = FormCatalogInfo(parent=self, data=self.feature_data, closing_plugin=self.closing_plugin)
         frm.exec()
 
-    def get_quicklook(self):
-        """Get quicklook action."""
+    def show_quicklook(self):
+        """Show quicklook action."""
+
+        params = {
+            'provider': self.provider,
+            'host_name': self.host,
+            'image_id': self.image_id,
+            'feature_data': self.feature_data,
+        }
+
+        self.thread_quicklooks.start(self.get_quicklook_image, params)
+
+    def get_quicklook_image(self, provider: str, host_name: str, image_id: str, feature_data: dict):
+        """Get quicklook from host."""
 
         try:
-            results.create_quicklook(
-                provider_name=self.provider,
-                host=self.host,
-                image_id=self.image_id,
-                layer_name=f'{self.image_id}_{self.feature_index}',
-                feature_data=self.feature_data,
-            )
+            image_response = catalogs.get_quicklook(provider, host_name, image_id, feature_data)
+
+            temp_directory = f'{get_plugin_dir()}/temp'
+            if not os.path.isdir(temp_directory):
+                os.makedirs(temp_directory)
+
+            image_path = f'{temp_directory}/{image_id}.jpg'
+            file = open(image_path, 'wb')
+            file.write(image_response)
+            file.close()
+
+            progress_data = {'image_path': image_path, 'image_id': image_id, 'layer_name': image_id}
+            self.thread_quicklooks.progress_updated.emit(progress_data)
         except PluginError as ex:
-            qgis_helper.error_message(tr('Could not get a preview'), str(ex))
+            self.thread_quicklooks.error_signal.emit(tr('Could not get a preview'), str(ex))
+
+    def create_quicklook_layer(self, params: dict):
+        image_path = params.get('image_path')
+        image_id = params.get('image_id')
+        layer_name = params.get('layer_name')
+
+        try:
+            results.create_quicklook(image_path=image_path, image_id=image_id, layer_name=layer_name)
+        except PluginError as ex:
+            self.thread_quicklooks.error_signal.emit(tr('Could not get a preview'), str(ex))
