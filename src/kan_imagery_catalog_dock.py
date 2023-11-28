@@ -33,7 +33,7 @@ from gui.helpers import forms
 from gui.helpers.worker import WorkerThread
 from utils import qgis_helper
 from utils.constants import RESULTS_GROUP_NAME, RESULTS_LAYER_NAME
-from utils.exceptions import AuthorizationError, DataNotFoundError, HostError, PluginError, ProviderError, SettingsError
+from utils.exceptions import AuthorizationError, DataNotFoundError, HostError, ProviderError, SettingsError
 from utils.helpers import tr
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), 'kan_imagery_catalog_dock.ui'))
@@ -226,7 +226,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.thread_load_collections_cache.start(self.load_collections_cache, {})
 
     def load_collections_cache(self):
-        # Load collections in caché
+        """Load collections in caché"""
+
         for provider in self.settings.get_active_providers():
             try:
                 _ = get_collections(provider, {})
@@ -234,6 +235,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 self.show_warning(tr('Warning'), f'{provider}: {ex.message}')
 
     def show_collections_form(self):
+        """Show form to select collections."""
+
         self.set_form_state(is_busy=True)
         frm = FormDefaultCollections(parent=self, closing_plugin=self.closing_plugin)
         frm.exec()
@@ -319,6 +322,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.thread_get_catalogs.start(self.get_results, params)
 
     def get_data_finished(self):
+        """Event handler for thread 'thread_get_catalogs' finished."""
+
         self.btn_get_data.setText(tr('Search'))
         qgis_helper.success_message('', tr('The catalog search has ended.'))
 

@@ -1,9 +1,8 @@
 """ Custom widgets module. """
 
 import os
-from time import sleep
 
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget
 
@@ -12,7 +11,6 @@ from gui.form_catalog_info import FormCatalogInfo
 from gui.helpers import forms
 from gui.helpers.worker import WorkerThread
 from ui.custom_widget_list_item import Ui_CustomWidgetListItem
-from utils import qgis_helper
 from utils.exceptions import PluginError
 from utils.general import get_plugin_dir
 from utils.helpers import open_url, tr
@@ -153,6 +151,8 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
             self.thread_quicklooks.error_signal.emit(tr('Could not get a preview'), str(ex))
 
     def create_quicklook_layer(self, params: dict):
+        """Create a layer with the quicklook."""
+
         image_path = params.get('image_path')
         image_id = params.get('image_id')
         layer_name = params.get('layer_name')

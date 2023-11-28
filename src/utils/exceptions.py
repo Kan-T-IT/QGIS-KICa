@@ -1,7 +1,5 @@
 """ Custom exceptions module."""
 
-import sys
-
 from utils.constants import MessageType
 from utils.helpers import tr
 

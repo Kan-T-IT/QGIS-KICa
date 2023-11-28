@@ -1,3 +1,5 @@
+""" Worker thread class. """
+
 from PyQt5.QtCore import QThread, pyqtSignal
 
 from utils.exceptions import AuthorizationError, DataNotFoundError, HostError, PluginError, ProviderError, SettingsError

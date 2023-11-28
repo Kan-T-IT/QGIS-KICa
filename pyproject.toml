@@ -12,6 +12,7 @@ exclude = [
     "build",
     "dist",
     "env",
+    "src/ui",
     "**/pyptoject.toml",
     ]
 

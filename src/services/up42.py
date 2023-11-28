@@ -5,7 +5,6 @@ import json
 import requests
 from functools import lru_cache
 
-from services.utils import encode_base64
 from utils.exceptions import AuthorizationError, DataNotFoundError, HostError
 from utils.helpers import tr
 
