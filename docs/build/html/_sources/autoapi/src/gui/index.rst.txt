@@ -24,5 +24,3 @@ Submodules
    form_catalog_info/index.rst
    form_default_collections/index.rst
    form_settings/index.rst
-
-

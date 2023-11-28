@@ -41,27 +41,27 @@ Attributes
 .. py:data:: PROTOCOL
    :value: 'https'
 
-   
+
 
 .. py:data:: SERVER
    :value: 'plugins.qgis.org'
 
-   
+
 
 .. py:data:: PORT
    :value: '443'
 
-   
+
 
 .. py:data:: ENDPOINT
    :value: '/plugins/RPC2/'
 
-   
+
 
 .. py:data:: VERBOSE
    :value: False
 
-   
+
 
 .. py:function:: main(parameters, arguments)
 
@@ -83,6 +83,3 @@ Attributes
 
 
 .. py:data:: parser
-
-   
-

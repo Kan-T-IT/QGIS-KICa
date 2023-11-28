@@ -1,18 +1,5 @@
 /* GENERAL === */
 
-
-/* Colores
-kan   F53F61 4C1C50
-fb5058
-f03861
-
-
-
-SCROLLBARS
-b8b8b8
-*/
-
-
 QDialog {
     background-color: #ffffff;
     padding: 0 0 0 0;
@@ -64,8 +51,6 @@ QDateEdit::drop-down{
     height:16px;
     width:16px;
     image:url(':/resources/icons/calendar-2.svg');
-    _border: 2px solid darkgray;
-    _padding: 2px;
     margin: 2px;
 }
 
@@ -213,10 +198,6 @@ QDockWidget #lbl_app_title {
     background-color: transparent;
     color: @COLOR_TEXT_DEFAULT;
     font-weight: 500;
-}
-
-#__lbl_languange {
-    font-size: @FONT_SIZE_SMALL;
 }
 
 QDockWidget #lbl_search_area,

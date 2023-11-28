@@ -14,5 +14,3 @@ Submodules
    frm_catalog_info/index.rst
    frm_default_collections/index.rst
    frm_settings/index.rst
-
-

@@ -1,10 +1,17 @@
+""" Debugging utilities module. """
+
+
 def pyqt_set_trace():
+    """Set a tracepoint in the Python debugger that works with Qt."""
+
     import pdb
 
     from PyQt5.QtCore import pyqtRemoveInputHook
 
+    from utils.helpers import tr
+
     pyqtRemoveInputHook()
-    print('Using custom debug function...')
+    print(tr('Using custom debug function...'))
 
     try:
         import pudb

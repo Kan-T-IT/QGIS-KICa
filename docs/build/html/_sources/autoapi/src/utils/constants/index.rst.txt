@@ -32,17 +32,17 @@ Attributes
 .. py:data:: DEBUG_MODE
    :value: True
 
-   
+
 
 .. py:data:: RESULTS_GROUP_NAME
    :value: 'kan_imagery_catalog_preview'
 
-   
+
 
 .. py:data:: RESULTS_LAYER_NAME
    :value: 'kan_imagery_catalog_footprints'
 
-   
+
 
 .. py:class:: CustomEnum
 
@@ -93,37 +93,37 @@ Attributes
    .. py:attribute:: FONT_SIZE_DEFAULT
       :value: '12px'
 
-      
+
 
    .. py:attribute:: FONT_SIZE_SMALL
       :value: '8px'
 
-      
+
 
    .. py:attribute:: COLOR_MAIN_DARK
       :value: '#6597AF'
 
-      
+
 
    .. py:attribute:: COLOR_MAIN_LIGHT
       :value: '#F5F5F5'
 
-      
+
 
    .. py:attribute:: COLOR_TEXT_DEFAULT
       :value: '#2D2D2D'
 
-      
+
 
    .. py:attribute:: COLOR_TEXT_LIGHT
       :value: '#E8E8E8'
 
-      
+
 
    .. py:attribute:: COLOR_BACKGROUND_DEFAULT
       :value: '#E8E8E8'
 
-      
+
 
 
 .. py:class:: MessageType
@@ -132,21 +132,17 @@ Attributes
    .. py:attribute:: INFO
       :value: 0
 
-      
+
 
    .. py:attribute:: WARNING
       :value: 1
 
-      
+
 
    .. py:attribute:: CRITICAL
       :value: 2
 
-      
+
 
    .. py:attribute:: SUCCESS
       :value: 3
-
-      
-
-

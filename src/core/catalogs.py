@@ -3,11 +3,14 @@
 from time import sleep
 
 from core.settings import PluginSettings
-from services import sentinel_hub, up42, microsoft
+from services import element84, microsoft, sentinel_hub, up42
 from utils.exceptions import ProviderError
+from utils.helpers import tr
 
 
 def get_custom_query(provider: str, max_cloud_coverage: int) -> dict:
+    """Get custom query for a specific provider."""
+
     query = {}
 
     if provider == 'up42':
@@ -29,6 +32,25 @@ def get_catalog(
     custom_query = get_custom_query(provider=provider, max_cloud_coverage=max_cloud_coverage)
     sleep(0.3)
 
+    if provider == 'element84':
+        # if custom_query:
+        #     search_params['query'] = custom_query
+
+        catalogs = []
+
+        catalogs_features = element84.get_catalog(search_params=search_params)
+        for catalog in catalogs_features['features']:
+            catalog['aux_date'] = catalog['properties']['datetime']
+            catalog['aux_angle'] = None
+            catalog['aux_cloud_coverage'] = None  # catalog['properties']['cloudCoverage']
+            catalog['aux_collection_name'] = catalog['collection']
+            catalog['aux_image_id'] = catalog['id']
+            catalog['aux_coordinates'] = catalog['geometry']['coordinates'][0]
+
+        catalogs += catalogs_features['features']
+
+        return catalogs
+
     if provider == 'microsoft':
         # if custom_query:
         #     search_params['query'] = custom_query
@@ -47,11 +69,11 @@ def get_catalog(
         catalogs += catalogs_features['features']
 
         return catalogs
-    
+
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
 
         if custom_query:
@@ -80,8 +102,8 @@ def get_catalog(
 
         all_catalogs = []
         aux_collections = search_params['collections']
-        
-        # Get catalog from each collection, because the API does not allow to search in multiple collections        
+
+        # Get catalog from each collection, because the API does not allow to search in multiple collections
         for collection_name in aux_collections:
             search_params['collections'] = [collection_name]
 
@@ -102,7 +124,7 @@ def get_catalog(
 
         return all_catalogs
 
-    raise ProviderError('Provider not found')
+    raise ProviderError(tr('Provider not found.'))
 
 
 def get_catalogs_from_collection(collections: list, provider: str, search_params: dict) -> list:
@@ -132,12 +154,16 @@ def get_thumbnail(provider: str, collection_name: str, host_name: str, image_id:
     thumbnail = None
     if provider == 'microsoft':
         thumbnail = microsoft.get_thumbnail(collection_name=collection_name, feature_data=feature_data)
-        
+
+    if provider == 'element84':
+        thumbnail = element84.get_thumbnail(collection_name=collection_name, image_id=image_id)
+
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
+
         thumbnail = up42.get_thumbnail(token=token, host_name=host_name, image_id=image_id)
 
     if provider == 'sentinel_hub':
@@ -156,24 +182,27 @@ def get_quicklook(provider: str, host_name: str, image_id: str, feature_data: di
     settings = PluginSettings()
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
 
-    if provider not in ['microsoft', 'up42']:
-        raise ProviderError('It is not possible to obtain a preview from this provider.')
+    if provider not in ['microsoft', 'up42', 'element84']:
+        raise ProviderError(tr('It is not possible to obtain a preview from this provider.'))
 
     quicklook = None
 
     if provider == 'microsoft':
         quicklook = microsoft.get_quicklook(host_name=host_name, image_id=image_id, feature_data=feature_data)
 
+    if provider == 'element84':
+        quicklook = element84.get_quicklook(image_id=image_id, feature_data=feature_data)
+
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
+
         quicklook = up42.get_quicklook(token=token, host_name=host_name, image_id=image_id)
 
     if not quicklook:
-        raise ProviderError('It is not possible to obtain a preview from this catalog.')
-    
+        raise ProviderError(tr('It is not possible to obtain a preview from this catalog.'))
     return quicklook
 
 
@@ -186,18 +215,19 @@ def get_download(provider: str, host_name: str, search_params: dict) -> dict:
 
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
+
         return up42.get_catalog(token=token, host_name=host_name, search_params=search_params)
 
     if provider == 'planet':
-        raise ProviderError('This provider is not available.')
+        raise ProviderError(tr('This provider is not available.'))
 
     if provider == 'sentinel_hub':
-        raise ProviderError('This provider is not available.')
+        raise ProviderError(tr('This provider is not available.'))
 
-    raise ProviderError('Provider not found')
+    raise ProviderError(tr('Provider not found.'))
 
 
 def get_download_url(provider: str):
@@ -209,4 +239,4 @@ def get_download_url(provider: str):
     if provider == 'sentinel_hub':
         return sentinel_hub.DOWNLOAD_URL
 
-    raise ProviderError('Provider not found')
+    raise ProviderError(tr('Provider not found.'))

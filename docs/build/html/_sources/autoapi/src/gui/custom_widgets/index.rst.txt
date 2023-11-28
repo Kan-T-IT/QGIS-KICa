@@ -59,6 +59,3 @@ Classes
    .. py:method:: get_quicklook()
 
       Get quicklook action.
-
-
-

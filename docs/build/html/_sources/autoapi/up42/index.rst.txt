@@ -38,12 +38,12 @@ Attributes
 .. py:data:: REQUEST_TIMEOUT
    :value: 120
 
-   
+
 
 .. py:data:: DOWNLOAD_URL
    :value: 'https://console.up42.com/catalog/new-order'
 
-   
+
 
 .. py:function:: get_token(project_id: str, api_key: str) -> str
 
@@ -68,5 +68,3 @@ Attributes
 .. py:function:: get_quicklook(token: str, host_name: str, image_id: str)
 
    Get catalog quicklook from UP42 API
-
-

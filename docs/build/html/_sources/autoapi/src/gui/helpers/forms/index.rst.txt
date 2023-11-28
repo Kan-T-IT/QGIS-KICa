@@ -67,5 +67,3 @@ Functions
 .. py:function:: check_int_not_empty(txt_widget)
 
    Check if the value is an integer and greater than 0 in a QLineEdit.
-
-

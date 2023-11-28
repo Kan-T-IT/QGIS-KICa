@@ -31,7 +31,9 @@ class PluginSettings:
         self.max_features_results = int(qgis_helper.read_setting('max_features_results', 5))
         self.download_path = qgis_helper.read_setting('download_path', './downloads')
         self._last_cleaning_date = qgis_helper.read_setting('last_cleaning_date')
-        self._provider_settings = qgis_helper.read_json_setting('provider_settings', '{"microsoft": {"valid": True}}')
+
+        default_provider_settings = "{'microsoft': {'valid': True}, 'element84': {'valid': True}}"
+        self._provider_settings = qgis_helper.read_json_setting('provider_settings', default_provider_settings)
         self._selected_collections = qgis_helper.read_json_setting('selected_collections', '[]')
 
     def save(self):

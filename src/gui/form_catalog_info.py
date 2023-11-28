@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QTableWidget
 from gui.form_base import FormBase
 from gui.helpers import forms
 from ui.frm_catalog_info import Ui_frm_catalog_info
+from utils.helpers import tr
 
 
 class FormCatalogInfo(FormBase, Ui_frm_catalog_info):
@@ -15,7 +16,7 @@ class FormCatalogInfo(FormBase, Ui_frm_catalog_info):
         super().__init__(parent=parent, closing_plugin=closing_plugin)
         self.setAttribute(Qt.WA_DeleteOnClose)
 
-        self.setWindowTitle('Information about the selected view.')
+        self.setWindowTitle(tr('Information about the selected view.'))
 
         data = self.normalize_dict_data(data['properties'])
         table_data = []

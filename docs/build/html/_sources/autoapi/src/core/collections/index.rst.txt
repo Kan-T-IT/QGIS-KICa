@@ -25,5 +25,3 @@ Functions
 .. py:function:: get_collections(provider: str, search_params: dict = None) -> dict
 
    Get collections from a specific provider.
-
-

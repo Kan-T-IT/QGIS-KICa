@@ -9,7 +9,7 @@ def check_credentials(provider: str, credentials: dict) -> bool:
 
     try:
         if provider == 'up42':
-            token = up42.get_token(project_id=credentials['project_id'], api_key=credentials['api_key'])
+            token = up42.get_token(username=credentials['username'], password=credentials['password'])
             return token is not None
 
         if provider == 'sentinel_hub':

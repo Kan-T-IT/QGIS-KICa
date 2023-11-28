@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import (
 from utils.constants import StyleVariables
 from utils.exceptions import PluginError
 from utils.general import get_plugin_dir
+from utils.helpers import tr
 
 
 def load_combobox(obj_combobox, key_member, value_member, lst_data, block_signals=False):
@@ -141,12 +142,14 @@ def load_table_data(  # noqa: C901
     """Load table with provided data, headers and columns."""
 
     if not isinstance(data, list):
-        raise PluginError('The data parameter must be a list')
+        raise PluginError(tr('The data parameter must be a list'))
 
     row_count = len(data)
 
     if len(headers) != len(columns):
-        message = f"Number of columns for '{obj_table.objectName()}' does not match headers."
+        message_part_a = tr('Number of columns for')
+        message_part_b = tr('does not match headers')
+        message = f"{message_part_a} '{obj_table.objectName()}' {message_part_b}."
         raise PluginError(message)
 
     if not headers:
@@ -227,7 +230,7 @@ def load_table_data(  # noqa: C901
                 # Is not allowed to save the dictionary in a column that is checkable or custom,
                 # in this case an additional empty column can be added as index 0 and hide it.
                 raise PluginError(
-                    'The load_table method does not support set a dictionary in a custom item cell.'  # noqa: E501
+                    tr('The load_table method does not support set a dictionary in a custom item cell.')  # noqa: E501
                 )
 
             if not item_custom and not is_checkable:

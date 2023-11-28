@@ -31,5 +31,3 @@ Functions
 .. py:function:: create_quicklook(provider_name, host, image_id, layer_name)
 
    Create results layers.
-
-

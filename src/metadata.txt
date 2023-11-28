@@ -5,17 +5,17 @@
 [general]
 name=KICa - KAN Imagery Catalog
 qgisMinimumVersion=3.22
-description=KICa, is QGIS plugin Kan Imagery Catalog, developed by Kan Territory & IT 
-            to consult availability of images in an area in an agnostic way, 
-            having as main objective to solve the need and not to focus on suppliers. 
-            In the beginning, satellite imagery providers (free and commercial) are incorporated, 
+description=KICa, is QGIS plugin Kan Imagery Catalog, developed by Kan Territory & IT
+            to consult availability of images in an area in an agnostic way,
+            having as main objective to solve the need and not to focus on suppliers.
+            In the beginning, satellite imagery providers (free and commercial) are incorporated,
             but it is planned to incorporate drone imagery among others.
 
-version=0.2
+version=0.3
 author=KAN Territory & IT
 email=info@kan.com.ar
 
-about=KICa - QGIS Kan Imagery Catalog Plugin, developed to query the availability of imagery 
+about=KICa - QGIS Kan Imagery Catalog Plugin, developed to query the availability of imagery
        in an area in an agnostic way, focused on geospatial analysis.
 
 tracker=https://github.com/Kan-T-IT/QGIS-KICa/issues

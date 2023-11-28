@@ -38,6 +38,3 @@ Attributes
 
 
 .. py:data:: app
-
-   
-

@@ -37,6 +37,3 @@ Classes
    .. py:method:: load_data(data)
 
       Load data in table.
-
-
-

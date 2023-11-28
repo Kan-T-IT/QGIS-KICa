@@ -26,7 +26,7 @@ Classes
 
    .. py:attribute:: closing_plugin
 
-      
+
 
    .. py:method:: closeEvent(event)
 
@@ -99,6 +99,3 @@ Classes
 
 
    .. py:method:: add_feature_to_footprints_layer(feature_data, footprint_id)
-
-
-

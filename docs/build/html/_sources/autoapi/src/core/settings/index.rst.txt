@@ -43,52 +43,52 @@ Classes
       :type: str
       :value: 'english'
 
-      
+
 
    .. py:attribute:: back_days
       :type: int
       :value: 20
 
-      
+
 
    .. py:attribute:: cloud_coverage
       :type: int
       :value: 10
 
-      
+
 
    .. py:attribute:: max_catalog_results
       :type: int
       :value: 10
 
-      
+
 
    .. py:attribute:: max_features_results
       :type: int
       :value: 5
 
-      
+
 
    .. py:attribute:: download_path
       :type: str
       :value: './downloads'
 
-      
+
 
    .. py:attribute:: _last_cleaning_date
       :type: Optional[str]
 
-      
+
 
    .. py:attribute:: _provider_settings
       :type: dict
 
-      
+
 
    .. py:attribute:: _selected_collections
       :type: list
 
-      
+
 
    .. py:method:: __post_init__()
 
@@ -109,6 +109,3 @@ Classes
    .. py:method:: update_last_cleaning_date()
 
       Update last activity date.
-
-
-

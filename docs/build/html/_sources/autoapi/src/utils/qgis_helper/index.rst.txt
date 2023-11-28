@@ -127,5 +127,3 @@ Functions
 .. py:function:: create_quicklook_layer(layer_name, group_name, feature, crs, layer_type='Polygon', image_path=None)
 
    Create a layer with a quicklook image.
-
-

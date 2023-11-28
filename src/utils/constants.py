@@ -1,6 +1,6 @@
-from enum import Enum
+""" Constants module. """
 
-DEBUG_MODE = True
+from enum import Enum
 
 RESULTS_GROUP_NAME = 'kan_imagery_catalog_preview'
 RESULTS_LAYER_NAME = 'kan_imagery_catalog_footprints'
@@ -8,15 +8,24 @@ RESULTS_LAYER_NAME = 'kan_imagery_catalog_footprints'
 DEFAULT_CRS_SOURCE = 'EPSG:4326'
 DEFAULT_CRS_TARGET = 'EPSG:3857'
 
+DEFAULT_MESSAGE_DURATION = 5
+
 
 class CustomEnum(Enum):
+    """Custom Enum class."""
+
     def __repr__(self) -> str:
+        """Override the default repr behavior."""
         return self.value
 
     def __str__(self) -> str:
+        """Override the default str behavior."""
+
         return str(self.value)
 
     def __eq__(self, other):
+        """Override the default eq behavior."""
+
         if isinstance(other, str):
             return self.value.lower() == other.lower()
 
@@ -26,19 +35,15 @@ class CustomEnum(Enum):
         return False
 
     @classmethod
-    def listar(cls):
-        return [e for e in cls]
-
-    @classmethod
     def to_dict(cls) -> dict:
-        return {i.name: i.value for i in cls}
+        """Convert enum to dict."""
 
-    @classmethod
-    def to_key_value_list(cls) -> list:
-        return [{'key': i.name, 'value': i.value} for i in cls]
+        return {i.name: i.value for i in cls}
 
 
 class StyleVariables(CustomEnum):
+    """Style variables for qss stylesheet."""
+
     FONT_SIZE_DEFAULT = '12px'
     FONT_SIZE_SMALL = '8px'
     COLOR_MAIN_DARK = '#6597AF'
@@ -49,6 +54,8 @@ class StyleVariables(CustomEnum):
 
 
 class MessageType:
+    """Qgis Message types."""
+
     INFO = 0  # "Info", 0  # Qgis.Info
     WARNING = 1  # "Warning", 1  # Qgis.Warning
     CRITICAL = 2  # "Error", 2  # Qgis.Critical

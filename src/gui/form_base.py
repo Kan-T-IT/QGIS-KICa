@@ -1,3 +1,5 @@
+""" Base form module for all forms in the plugin. """
+
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import (
     QDialog,
@@ -9,9 +11,12 @@ from PyQt5.QtWidgets import (
 )
 
 from gui.helpers import forms
+from utils.helpers import tr
 
 
 class FormBase(QDialog):
+    """Base form class for all forms in the plugin."""
+
     def __init__(
         self,
         parent=None,
@@ -38,6 +43,8 @@ class FormBase(QDialog):
         self.set_control_buttons(accept_btn, cancel_btn, close_btn)
 
     def set_control_buttons(self, accept_btn, cancel_btn, close_btn):
+        """Set control buttons for the form (Accept, Cancel, Close)."""
+
         if not accept_btn and not cancel_btn and not close_btn:
             return
 
@@ -49,21 +56,21 @@ class FormBase(QDialog):
         self.layout_control.addSpacerItem(spacerItem)
 
         if accept_btn:
-            self.btn_accept = QPushButton('Accept')
+            self.btn_accept = QPushButton(tr('Accept'))
             self.btn_accept.setObjectName('btn_accept')
             self.btn_accept.setFixedSize(default_widget_size)
             self.layout_control.addWidget(self.btn_accept)
             self.btn_accept.setGraphicsEffect(forms.get_shadow_effect())
 
         if cancel_btn:
-            self.btn_cancel = QPushButton('Cancel')
+            self.btn_cancel = QPushButton(tr('Cancel'))
             self.btn_cancel.setObjectName('btn_cancel')
             self.btn_cancel.setFixedSize(default_widget_size)
             self.layout_control.addWidget(self.btn_cancel)
             self.btn_cancel.setGraphicsEffect(forms.get_shadow_effect())
 
         if close_btn:
-            self.btn_close = QPushButton('Close')
+            self.btn_close = QPushButton(tr('Close'))
             self.btn_close.setObjectName('btn_close')
             self.btn_close.setFixedSize(default_widget_size)
             self.layout_control.addWidget(self.btn_close)
@@ -79,4 +86,6 @@ class FormBase(QDialog):
         self.layout().addWidget(frame)
 
     def btn_close_click(self):
+        """Event handler for the Close button click."""
+
         self.close()

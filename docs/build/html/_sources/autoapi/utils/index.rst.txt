@@ -25,5 +25,3 @@ Functions
 .. py:function:: encode_base64(text_to_encode: str) -> str
 
    Encode a string to Base64
-
-

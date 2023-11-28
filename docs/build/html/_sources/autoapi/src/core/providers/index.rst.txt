@@ -25,5 +25,3 @@ Functions
 .. py:function:: check_credentials(provider: str, credentials: dict) -> bool
 
    Check credentials from a specific provider.
-
-

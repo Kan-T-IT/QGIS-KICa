@@ -1,5 +1,20 @@
 [tool.ruff]
-exclude = [".eggs",".git",".git-rewrite",".mypy_cache",".pytype",".ruff_cache",".tox","__pypackages__","_build","build","dist","env","**/pyptoject.toml"]
+exclude = [
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".mypy_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".tox",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "env",
+    "src/ui",
+    "**/pyptoject.toml",
+    ]
 
 line-length = 120
 indent-width = 4
@@ -22,6 +37,7 @@ quote-style = "single"
 indent-style = "space"
 # magic-trailing-comma = "preview"
 line-ending = "auto"
+exclude = ["*/ui/*"]
 
 [tool.ruff.isort]
 known-first-party = ["core", "gui", "services", "ui", "utils"]
@@ -54,7 +70,7 @@ ignore-module = false
 ignore-nested-functions = false
 ignore-nested-classes = true
 ignore-setters = true
-fail-under = 85
+fail-under = 100
 exclude = ["env", "docs", "*/test/*", "*/help/*", "*/ui/*", "src/resources.py"]
 ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 verbose = 1

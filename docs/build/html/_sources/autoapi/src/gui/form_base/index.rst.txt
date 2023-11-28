@@ -26,6 +26,3 @@ Classes
 
 
    .. py:method:: btn_close_click()
-
-
-

@@ -10,75 +10,72 @@ Module Contents
 .. py:data:: extensions
    :value: ['sphinx.ext.todo', 'sphinx.ext.imgmath', 'sphinx.ext.viewcode']
 
-   
+
 
 .. py:data:: templates_path
    :value: ['_templates']
 
-   
+
 
 .. py:data:: source_suffix
    :value: '.rst'
 
-   
+
 
 .. py:data:: master_doc
    :value: 'index'
 
-   
+
 
 .. py:data:: project
    :value: 'KANImageryCatalog'
 
-   
+
 
 .. py:data:: copyright
    :value: '2023, Fernando D. Gómez :: KAN Territory & IT'
 
-   
+
 
 .. py:data:: version
    :value: '0.1'
 
-   
+
 
 .. py:data:: release
    :value: '0.1'
 
-   
+
 
 .. py:data:: exclude_patterns
    :value: []
 
-   
+
 
 .. py:data:: pygments_style
    :value: 'sphinx'
 
-   
+
 
 .. py:data:: html_theme
    :value: 'default'
 
-   
+
 
 .. py:data:: html_static_path
    :value: ['_static']
 
-   
+
 
 .. py:data:: htmlhelp_basename
    :value: 'TemplateClassdoc'
 
-   
+
 
 .. py:data:: latex_documents
    :value: [('index', 'KANImageryCatalog.tex', 'KANImageryCatalog Documentation', 'Fernando D. Gómez :: KAN...
 
-   
+
 
 .. py:data:: man_pages
    :value: [('index', 'TemplateClass', 'KANImageryCatalog Documentation', ['Fernando D. Gómez :: KAN...
-
-   
-
