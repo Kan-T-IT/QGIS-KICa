@@ -53,8 +53,8 @@ class FormSettings(FormBase, Ui_frm_settings):
         self.sentinelhub_is_valid = self.sentinelhub_settings.get('valid', False)
         self.planet_is_valid = self.planet_settings.get('valid', False)
 
-        self.txt_up42_api_key.setText(self.up42_settings.get('api_key'))
-        self.txt_up42_project_id.setText(self.up42_settings.get('project_id'))
+        self.txt_up42_username.setText(self.up42_settings.get('username'))
+        self.txt_up42_password.setText(self.up42_settings.get('password'))
         self.lbl_up42_check_credentials.setText('')
 
         self.txt_sentinelhub_client_id.setText(self.sentinelhub_settings.get('client_id'))
@@ -92,8 +92,8 @@ class FormSettings(FormBase, Ui_frm_settings):
             'valid': True,
         }
         provider_settings['up42'] = {
-            'api_key': self.txt_up42_api_key.text(),
-            'project_id': self.txt_up42_project_id.text(),
+            'username': self.txt_up42_username.text(),
+            'password': self.txt_up42_password.text(),
             'valid': self.up42_is_valid,
         }
 
@@ -125,9 +125,9 @@ class FormSettings(FormBase, Ui_frm_settings):
     def btn_up42_check_credentials_clicked(self):
         """Event handler for check credentials button click."""
 
-        project_id = self.txt_up42_project_id.text()
-        api_key = self.txt_up42_api_key.text()
-        self.up42_is_valid = providers.check_credentials('up42', {'project_id': project_id, 'api_key': api_key})
+        username = self.txt_up42_username.text()
+        password = self.txt_up42_password.text()
+        self.up42_is_valid = providers.check_credentials('up42', {'username': username, 'password': password})
 
         self.lbl_up42_check_credentials.setText(
             tr('The credentials are valid.') if self.up42_is_valid else tr('Verify the credentials entered.')

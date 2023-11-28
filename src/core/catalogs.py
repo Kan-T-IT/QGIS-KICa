@@ -72,8 +72,8 @@ def get_catalog(
 
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
 
         if custom_query:
@@ -160,9 +160,10 @@ def get_thumbnail(provider: str, collection_name: str, host_name: str, image_id:
 
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
+
         thumbnail = up42.get_thumbnail(token=token, host_name=host_name, image_id=image_id)
 
     if provider == 'sentinel_hub':
@@ -194,9 +195,10 @@ def get_quicklook(provider: str, host_name: str, image_id: str, feature_data: di
 
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
+
         quicklook = up42.get_quicklook(token=token, host_name=host_name, image_id=image_id)
 
     if not quicklook:
@@ -213,9 +215,10 @@ def get_download(provider: str, host_name: str, search_params: dict) -> dict:
 
     if provider == 'up42':
         token = up42.get_token(
-            project_id=provider_settings['project_id'],
-            api_key=provider_settings['api_key'],
+            username=provider_settings['username'],
+            password=provider_settings['password'],
         )
+
         return up42.get_catalog(token=token, host_name=host_name, search_params=search_params)
 
     if provider == 'planet':

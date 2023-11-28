@@ -71,6 +71,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     """KANImageryCatalogDock Dockwidget class."""
 
     closing_plugin = pyqtSignal()
+    error_signal = pyqtSignal(str, str)
+    warning_signal = pyqtSignal(str, str)
 
     def __init__(self, parent=None):
         """Constructor."""
@@ -157,7 +159,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.thread_load_collections_cache.error_signal.connect(self.show_error)
         self.thread_load_collections_cache.warning_signal.connect(self.show_warning)
 
-
+        self.error_signal.connect(self.show_error)
+        self.warning_signal.connect(self.show_warning)
         # self.set_form_state(is_busy=False)
 
     def show_warning(self, title, message):
@@ -312,7 +315,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             )
             return
 
-
         self.btn_get_data.setText(tr('Getting results...'))
         self.lst_data.clear()
 
@@ -383,7 +385,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 break
 
             datetime_params = f"{date_from.toString('yyyy-MM-ddT00:00:00Z')}/{date_to.toString('yyyy-MM-ddT23:59:59Z')}"
-
             search_params = {
                 'collections': collections,
                 'bbox': [dict_bbox['x_min'], dict_bbox['y_min'], dict_bbox['x_max'], dict_bbox['y_max']],
@@ -400,11 +401,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     collection_names=collection_aux,
                 )
             except AuthorizationError as ex:
-                self.show_warning(tr('Warning'), str(ex))
+                self.warning_signal.emit(tr('Warning'), str(ex))
                 continue
 
             except (ProviderError, HostError) as ex:
-                self.show_error(tr('Error'), str(ex))
+                self.error_signal.emit(tr('Error'), str(ex))
                 continue
 
             features_counter = 0
@@ -412,14 +413,21 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 if features_counter >= limit_features:
                     break
 
-                thumbnail = get_thumbnail(
-                    provider=provider,
-                    host_name=host_name,
-                    collection_name=catalog['aux_collection_name'],
-                    image_id=catalog['aux_image_id'],
-                    feature_data=catalog,
-                )
+                thumbnail = None
+                try:
+                    thumbnail = get_thumbnail(
+                        provider=provider,
+                        host_name=host_name,
+                        collection_name=catalog['aux_collection_name'],
+                        image_id=catalog['aux_image_id'],
+                        feature_data=catalog,
+                    )
+                except AuthorizationError as ex:
+                    self.warning_signal.emit(tr('Warning'), str(ex))
 
+                except (ProviderError, HostError) as ex:
+                    self.error_signal.emit(tr('Error'), str(ex))
+        
                 dic_result = {
                     'coordinates': catalog['aux_coordinates'],
                     'provider_name': provider,

@@ -13,21 +13,19 @@ REQUEST_TIMEOUT = 120
 DOWNLOAD_URL = 'https://console.up42.com/catalog/new-order'
 
 
-def get_token(project_id: str, api_key: str) -> str:
+def get_token(username: str, password: str) -> str:
     """Get token from UP42 API"""
     url = 'https://api.up42.com/oauth/token'
 
-    if not project_id or not api_key:
+    if not username or not password:
         raise AuthorizationError(tr('UP42 credentials have not been configured.'))
 
-    encoded_value = encode_base64(f'{project_id}:{api_key}')
     headers = {
         'Accept': '*/*',
-        'Authorization': f'Basic {encoded_value}',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    payload = 'grant_type=client_credentials'
+    payload = f'grant_type=password&username={username}&password={password}'
 
     try:
         response = requests.request('POST', url, data=payload, headers=headers, timeout=REQUEST_TIMEOUT)
@@ -100,6 +98,7 @@ def get_thumbnail(token: str, host_name: str, image_id: str):
 
 def get_quicklook(token: str, host_name: str, image_id: str):
     """Get catalog quicklook from UP42 API"""
+    
     url = f' https://api.up42.com/catalog/{host_name}/image/{image_id}/quicklook'
     headers = {
         'accept': '*/*',

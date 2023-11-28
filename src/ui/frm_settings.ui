@@ -487,7 +487,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_up42">
          <attribute name="title">
@@ -520,14 +520,14 @@
               <number>10</number>
              </property>
              <item row="0" column="0">
-              <widget class="QLabel" name="lbl_up42_project_id">
+              <widget class="QLabel" name="lbl_up42_username">
                <property name="text">
-                <string>Project ID</string>
+                <string>Username</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLineEdit" name="txt_up42_project_id">
+              <widget class="QLineEdit" name="txt_up42_username">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -546,14 +546,14 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QLabel" name="lbl_up42_api_key">
+              <widget class="QLabel" name="lbl_up42_password">
                <property name="text">
-                <string>Api ID</string>
+                <string>Password</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="txt_up42_api_key">
+              <widget class="QLineEdit" name="txt_up42_password">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -568,6 +568,9 @@
                </property>
                <property name="maxLength">
                 <number>512</number>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::Password</enum>
                </property>
               </widget>
              </item>
@@ -878,8 +881,8 @@
  <tabstops>
   <tabstop>txt_default_back_days</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>txt_up42_project_id</tabstop>
-  <tabstop>txt_up42_api_key</tabstop>
+  <tabstop>txt_up42_username</tabstop>
+  <tabstop>txt_up42_password</tabstop>
  </tabstops>
  <connections />
 </ui>
