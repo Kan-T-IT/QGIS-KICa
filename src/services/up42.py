@@ -6,7 +6,7 @@ import requests
 from functools import lru_cache
 
 from services.utils import encode_base64
-from utils.exceptions import AuthorizationError, HostError
+from utils.exceptions import AuthorizationError, DataNotFoundError, HostError
 from utils.helpers import tr
 
 REQUEST_TIMEOUT = 120
@@ -87,12 +87,13 @@ def get_thumbnail(token: str, host_name: str, image_id: str):
     }
 
     response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
-    response.raise_for_status()
-
     results = None
     if response.status_code == 200:
         results = response.content
+    elif response.status_code == 404:
+        raise DataNotFoundError(f'{tr("It was not possible to get the requested thumbnail")}: {image_id}.')
 
+    response.raise_for_status()
     return results
 
 

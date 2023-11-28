@@ -45,6 +45,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     closing_plugin = pyqtSignal()
     error_signal = pyqtSignal(str, str)
     warning_signal = pyqtSignal(str, str)
+    info_signal = pyqtSignal(str, str)
 
     def __init__(self, parent=None):
         """Constructor."""
@@ -135,6 +136,12 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.error_signal.connect(self.show_error)
         self.warning_signal.connect(self.show_warning)
+        self.info_signal.connect(self.show_info)
+
+    def show_info(self, title, message):
+        """Show info message."""
+
+        qgis_helper.info_message(title, message)
 
     def show_warning(self, title, message):
         """Show warning message."""
@@ -394,10 +401,13 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                         image_id=catalog['aux_image_id'],
                         feature_data=catalog,
                     )
-                except AuthorizationError as ex:
+                except DataNotFoundError as ex:
+                    self.info_signal.emit(tr('Info'), str(ex))
+
+                except (AuthorizationError, HostError) as ex:
                     self.warning_signal.emit(tr('Warning'), str(ex))
 
-                except (ProviderError, HostError) as ex:
+                except (ProviderError, Exception) as ex:
                     self.error_signal.emit(tr('Error'), str(ex))
 
                 dic_result = {

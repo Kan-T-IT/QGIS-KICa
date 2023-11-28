@@ -11,6 +11,7 @@ class WorkerThread(QThread):
     progress_updated = pyqtSignal(dict)
     error_signal = pyqtSignal(str, str)
     warning_signal = pyqtSignal(str, str)
+    info_signal = pyqtSignal(str, str)
 
     def start(self, process, dict_params):
         """Start thread."""
