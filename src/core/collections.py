@@ -12,16 +12,15 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
 
     settings = PluginSettings()
     provider_settings = settings.provider_settings.get(provider, {'project_id': '', 'api_key': ''})
-
     if provider == 'microsoft':
         collections = microsoft.get_collections()
 
+        # Filtering collections
         for collection in collections:
             collection['name'] = collection['id']
             collection['hostName'] = collection['providers'][0]['name']
         #     collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
         #     collection['min_resolution'] = collection['resolutionValue'].get('minimum')
-
         return collections
 
     if provider == 'element84':
@@ -38,11 +37,17 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
     if provider == 'up42':
         collections = up42.get_collections()
 
+        filtered_collections = []
         for collection in collections:
             collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
             collection['min_resolution'] = collection['resolutionValue'].get('minimum')
 
-        return collections
+            # Filtering collections by type
+            if collection['isIntegrated'] and collection['type'] == 'ARCHIVE':
+                filtered_collections.append(collection)
+
+        return filtered_collections
+    
 
     if provider == 'sentinel_hub':
         token = sentinel_hub.get_token(
