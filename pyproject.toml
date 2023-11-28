@@ -13,7 +13,6 @@ exclude = [
     "dist",
     "env",
     "**/pyptoject.toml",
-    "src/**"
     ]
 
 line-length = 120
