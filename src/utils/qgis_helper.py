@@ -4,7 +4,7 @@ import json
 
 from PyQt5.QtCore import QVariant
 
-from utils.constants import DEFAULT_CRS_SOURCE, DEFAULT_CRS_TARGET
+from utils.constants import DEFAULT_CRS_SOURCE, DEFAULT_CRS_TARGET, DEFAULT_MESSAGE_DURATION
 from utils.exceptions import DataNotFoundError
 from utils.general import PLUGIN_NAME
 from utils.helpers import tr
@@ -145,19 +145,19 @@ def error_message(title, text):
 def warning_message(title, text):
     """Show warning message."""
 
-    iface.messageBar().pushMessage(title, text, level=Qgis.Warning)
+    iface.messageBar().pushMessage(title, text, level=Qgis.Warning, duration=DEFAULT_MESSAGE_DURATION)
 
 
 def info_message(title, text):
     """Show info message."""
 
-    iface.messageBar().pushMessage(title, text, level=Qgis.Info)
+    iface.messageBar().pushMessage(title, text, level=Qgis.Info, duration=DEFAULT_MESSAGE_DURATION)
 
 
 def success_message(title, text):
     """Show success message."""
 
-    iface.messageBar().pushMessage(title, text, level=Qgis.Success)
+    iface.messageBar().pushMessage(title, text, level=Qgis.Success, duration=DEFAULT_MESSAGE_DURATION)
 
 
 def get_or_create_group(group_name):
