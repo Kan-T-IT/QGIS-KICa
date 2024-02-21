@@ -24,7 +24,7 @@
         <translation>Este proveedor no está disponible.</translation>
     </message>
     <message>
-        <location filename="../core/collections.py" line="73"/>
+        <location filename="../core/catalogs.py" line="242"/>
         <source>Provider not found.</source>
         <translation>Proveedor no encontrado.</translation>
     </message>
@@ -79,7 +79,7 @@
         <translation>Debe definir credenciales válidas al menos para un proveedor en la configuración del plugin.</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="126"/>
+        <location filename="../gui/form_default_collections.py" line="131"/>
         <source>Filter results</source>
         <translation>Filtrar resultados</translation>
     </message>
@@ -176,7 +176,7 @@
     <message>
         <location filename="../kan_imagery_catalog_dock.py" line="85"/>
         <source>Dataframe or project layers (only &apos;single polygon&apos; type layers).</source>
-        <translation>Dataframe o capas del proyecto (únicamente capas del tipo &apos;Single Polygon&apos;).</translation>
+        <translation>Dataframe o capas del proyecto (únicamente capas del tipo 'Single Polygon').</translation>
     </message>
     <message>
         <location filename="../kan_imagery_catalog_dock.py" line="86"/>
@@ -211,7 +211,7 @@
     <message>
         <location filename="../kan_imagery_catalog_dock.py" line="328"/>
         <source>The catalog search has ended.</source>
-        <translation>La búsqueda de catálogos a finalizado.</translation>
+        <translation>La búsqueda de catálogos ha finalizado.</translation>
     </message>
     <message>
         <location filename="../kan_imagery_catalog_dock.py" line="342"/>
@@ -234,27 +234,27 @@
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="168"/>
+        <location filename="../gui/form_default_collections.py" line="173"/>
         <source>Provider</source>
         <translation>Proveedor</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="169"/>
+        <location filename="../gui/form_default_collections.py" line="174"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="170"/>
+        <location filename="../gui/form_default_collections.py" line="175"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="171"/>
+        <location filename="../gui/form_default_collections.py" line="176"/>
         <source>Resolution</source>
         <translation>Resolución</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="172"/>
+        <location filename="../gui/form_default_collections.py" line="177"/>
         <source>Description</source>
         <translation>Descripción</translation>
     </message>
@@ -356,32 +356,32 @@
 <context>
     <name>frm_default_collections</name>
     <message>
-        <location filename="../ui/frm_default_collections.ui" line="116"/>
+        <location filename="../ui/frm_default_collections.py" line="130"/>
         <source>Search by name/description:</source>
         <translation>Buscar por Nombre / Descripción:</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.ui" line="172"/>
+        <location filename="../ui/frm_default_collections.py" line="131"/>
         <source>Filter</source>
         <translation>Filtrar</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.ui" line="250"/>
+        <location filename="../ui/frm_default_collections.py" line="132"/>
         <source>Selected collections</source>
         <translation>Seleccionar colecciones</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.ui" line="285"/>
+        <location filename="../ui/frm_default_collections.py" line="133"/>
         <source>Delete selected</source>
         <translation>Eliminar los seleccionados</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.ui" line="356"/>
+        <location filename="../ui/frm_default_collections.py" line="134"/>
         <source>Add selected</source>
         <translation>Agregar los seleccionados</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.ui" line="26"/>
+        <location filename="../ui/frm_default_collections.py" line="129"/>
         <source>Catalog selection</source>
         <translation>Selección de catálogos</translation>
     </message>
