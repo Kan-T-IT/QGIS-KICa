@@ -57,6 +57,10 @@ for f in $_files;
         pyuic5 -x $f -o $fout;
     done
 
+
+message "COMPILE TRANSLATION FILES"
+make transcompile
+
 cd ${SOURCE_DIR}
 
 message "COMPILE RESOURCES"
