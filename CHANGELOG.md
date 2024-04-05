@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/Kan-T-IT/QGIS-KICa/tree/HEAD)
+## [v0.4.0](https://github.com/Kan-T-IT/QGIS-KICa/tree/v0.4.0) (2024-04-05)
 
-[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v0.3.0...HEAD)
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v0.3.0...v0.4.0)
 
 - Enhance search [\#29](https://github.com/Kan-T-IT/QGIS-KICa/issues/29)
 - Search returns PNEO results from other side of GLOBE [\#26](https://github.com/Kan-T-IT/QGIS-KICa/issues/26)
@@ -14,6 +14,7 @@
 - Add provider Element 84 Earth Search [\#17](https://github.com/Kan-T-IT/QGIS-KICa/issues/17)
 - Background processing [\#2](https://github.com/Kan-T-IT/QGIS-KICa/issues/2)
 
+- add CHANGELOG [\#32](https://github.com/Kan-T-IT/QGIS-KICa/pull/32) ([fgomezdev](https://github.com/fgomezdev))
 - update metadata for v.0.4.0 [\#31](https://github.com/Kan-T-IT/QGIS-KICa/pull/31) ([fgomezdev](https://github.com/fgomezdev))
 - v0.4.0 [\#30](https://github.com/Kan-T-IT/QGIS-KICa/pull/30) ([fgomezdev](https://github.com/fgomezdev))
 
