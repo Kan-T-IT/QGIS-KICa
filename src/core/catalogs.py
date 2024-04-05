@@ -80,7 +80,6 @@ def get_catalog(
             search_params['query'] = custom_query
 
         catalogs = up42.get_catalog(token=token, host_name=host_name, search_params=search_params)
-
         for catalog in catalogs['features']:
             catalog['aux_date'] = catalog['properties']['acquisitionDate']
             catalog['aux_angle'] = float(catalog['properties']['providerProperties'].get('incidenceAngle', 0))

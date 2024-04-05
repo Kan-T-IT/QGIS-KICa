@@ -9,7 +9,7 @@ from gui.helpers import forms
 from ui.frm_default_collections import Ui_frm_default_collections
 from utils import qgis_helper
 from utils.exceptions import ProviderError
-from utils.helpers import tr
+from utils.helpers import normalize_text, tr
 
 
 class FormDefaultCollections(FormBase, Ui_frm_default_collections):
@@ -106,11 +106,16 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
                 if is_selected:
                     continue
 
-                if (
-                    search_text != ''
-                    and search_text.lower()
-                    not in provider.lower() + collection['title'].lower() + collection['hostName'].lower()
-                ):
+                # normalize text, because of accented characters (e.g. "á" -> "a")
+                search_text = normalize_text(search_text).strip().lower()
+
+                normalized_text = (
+                    normalize_text(provider.lower() + collection['title'].lower() + collection['hostName'].lower())
+                    .strip()
+                    .lower()
+                )
+
+                if search_text != '' and search_text not in normalized_text:
                     continue
 
                 collection['provider'] = provider

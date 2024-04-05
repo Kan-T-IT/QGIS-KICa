@@ -160,7 +160,7 @@ cython_debug/
 
 src/.coverage
 src/help
-src/test/
+src/test
 env
 .ruff_cache/
 .vscode
