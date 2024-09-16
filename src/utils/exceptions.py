@@ -1,4 +1,6 @@
-""" Custom exceptions module."""
+"""Custom exceptions module."""
+
+import sys
 
 from utils.constants import MessageType
 from utils.helpers import tr
@@ -13,6 +15,7 @@ class PluginError(Exception):
         #     print(f'{message} \n {str(sys.exc_info()[2])}')
 
         self.message = message
+        print(f'{message} \n {str(sys.exc_info()[2])}')
         super().__init__(self.message)
 
 

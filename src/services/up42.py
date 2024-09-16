@@ -55,7 +55,7 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     }
 
     payload = json.dumps(search_params)
-    return http_post(url, headers=headers, payload=payload)
+    return http_post(url, headers=headers, host_name=f'UP42: {host_name}', payload=payload)
 
 
 @lru_cache(maxsize=None)
@@ -68,7 +68,7 @@ def get_thumbnail(token: str, host_name: str, image_id: str):
         'authorization': f'Bearer {token}',
     }
 
-    return http_get(url, headers=headers, response_type='content')
+    return http_get(url, headers=headers, host_name=f'UP42: {host_name}', result_type='content')
 
 
 def get_quicklook(token: str, host_name: str, image_id: str):
@@ -80,121 +80,4 @@ def get_quicklook(token: str, host_name: str, image_id: str):
         'authorization': f'Bearer {token}',
     }
 
-    return http_get(url, headers=headers)
-
-
-# ------------ OLD ------------
-
-# def get_token(username: str, password: str) -> str:
-#     """Get token from UP42 API"""
-#     url = 'https://api.up42.com/oauth/token'
-
-#     if not username or not password:
-#         raise AuthorizationError(tr('UP42 credentials have not been configured.'))
-
-#     headers = {
-#         'Accept': '*/*',
-#         'Content-Type': 'application/x-www-form-urlencoded',
-#     }
-
-#     payload = f'grant_type=password&username={username}&password={password}'
-
-#     try:
-#         response = requests.request('POST', url, data=payload, headers=headers, timeout=REQUEST_TIMEOUT)
-#         response.raise_for_status()
-
-#         if response.status_code == 200:
-#             data = response.json().get('data')
-#             if data:
-#                 return data.get('accessToken')
-
-#     except requests.exceptions.HTTPError as ex:
-#         raise AuthorizationError(f"{tr('There was an error getting the token.')}\n {ex}") from ex
-
-
-# @lru_cache(maxsize=None)
-# def get_collections():
-#     """Get collections from UP42 API"""
-#     url = 'https://api.up42.com/collections'
-
-#     response = requests.request('GET', url, timeout=REQUEST_TIMEOUT)
-#     response.raise_for_status()
-
-#     if response.status_code == 200:
-#         return response.json().get('data')
-#     elif response.status_code == 403:
-#         raise AuthorizationError(tr('Check the credentials you are using for the provider'))
-#     elif response.status_code == 404:
-#         raise HostError(tr('It was not possible to get the requested collections'))
-#     else:
-#         raise HostError(f'{tr("Error getting collections from host")}.\n {response.text}')
-
-
-# def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
-#     """Get catalog data from UP42 API"""
-
-#     url = f'https://api.up42.com/catalog/hosts/{host_name}/stac/search'
-
-#     headers = {
-#         'accept': 'application/json, text/plain, */*',
-#         'authorization': f'Bearer {token}',
-#         'content-type': 'application/json',
-#     }
-
-#     payload = json.dumps(search_params)
-#     response = requests.request('POST', url, headers=headers, data=payload, timeout=REQUEST_TIMEOUT)
-
-#     if response.status_code == 200:
-#         return response.json()
-#     elif response.status_code == 403:
-#         raise AuthorizationError(f'{tr("Check the credentials you are using for the provider")}: {host_name}.')
-#     elif response.status_code == 542:
-#         raise AuthorizationError(f'{tr("The catalog you are trying to get is private:")} {host_name}.')
-#     elif response.status_code == 404:
-#         raise HostError(f'{tr("It was not possible to get the requested catalog")}: {host_name}.')
-#     else:
-#         raise HostError(f'{tr("Error getting catalogs from host")} {host_name}.\n {response.text}')
-
-
-# @lru_cache(maxsize=None)
-# def get_thumbnail(token: str, host_name: str, image_id: str):
-#     """Get catalog thumbnail from UP42 API"""
-
-#     url = f' https://api.up42.com/catalog/{host_name}/image/{image_id}/thumbnail'
-#     headers = {
-#         'accept': '*/*',
-#         'authorization': f'Bearer {token}',
-#     }
-
-#     response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
-#     results = None
-#     if response.status_code == 200:
-#         results = response.content
-#     elif response.status_code == 404:
-#         raise DataNotFoundError(f'{tr("It was not possible to get the requested thumbnail")}: {image_id}.')
-
-#     response.raise_for_status()
-#     return results
-
-
-# def get_quicklook(token: str, host_name: str, image_id: str):
-#     """Get catalog quicklook from UP42 API"""
-
-#     url = f' https://api.up42.com/catalog/{host_name}/image/{image_id}/quicklook'
-#     headers = {
-#         'accept': '*/*',
-#         'authorization': f'Bearer {token}',
-#     }
-
-#     try:
-#         response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
-#         response.raise_for_status()
-
-#         results = None
-#         if response.status_code == 200:
-#             results = response.content
-
-#         return results
-
-#     except requests.exceptions.HTTPError as ex:
-#         raise HostError(f'{tr("Error getting quicklook")} {image_id}.\n {ex}') from ex
+    return http_get(url, headers=headers, host_name=f'UP42: {host_name}', result_type='content')

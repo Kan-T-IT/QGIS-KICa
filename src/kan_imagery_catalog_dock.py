@@ -14,7 +14,7 @@
 # (at your option) any later version.
 
 
-""" KAN Imagery Catalog QGIS plugin dock widget module. """
+"""KAN Imagery Catalog QGIS plugin dock widget module."""
 
 import os
 
@@ -230,12 +230,19 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         for provider in self.settings.get_active_providers():
             try:
-                _ = get_collections(provider, {})
+                self.collections = get_collections(provider, {})
             except ProviderError as ex:
-                self.show_warning(tr('Warning'), f'{provider}: {ex.message}')
+                self.warning_signal.emit(tr('Warning'), f'{provider}: {ex.message}')
+            except (AuthorizationError, HostError) as ex:
+                self.warning_signal.emit(tr('Warning'), ex.message)
+            except Exception as ex:
+                self.warning_signal.emit(tr('Error'), f'{provider}: {ex}')
 
     def show_collections_form(self):
         """Show form to select collections."""
+
+        if not self.collections:
+            return
 
         self.set_form_state(is_busy=True)
         frm = FormDefaultCollections(parent=self, closing_plugin=self.closing_plugin)

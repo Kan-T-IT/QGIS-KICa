@@ -1,4 +1,4 @@
-""" Collection selection form module."""
+"""Collection selection form module."""
 
 from PyQt5.QtCore import Qt
 
@@ -8,7 +8,7 @@ from gui.form_base import FormBase
 from gui.helpers import forms
 from ui.frm_default_collections import Ui_frm_default_collections
 from utils import qgis_helper
-from utils.exceptions import ProviderError
+from utils.exceptions import AuthorizationError, HostError, ProviderError
 from utils.helpers import normalize_text, tr
 
 
@@ -89,8 +89,11 @@ class FormDefaultCollections(FormBase, Ui_frm_default_collections):
         for provider in self.providers:
             try:
                 data = get_collections(provider, {})
-            except ProviderError as ex:
+            except (ProviderError, AuthorizationError, HostError) as ex:
                 qgis_helper.warning_message(tr('Warning'), f'{provider}: {ex.message}')
+                continue
+            except Exception as ex:
+                qgis_helper.error_message(tr('Error'), f'{provider}: {ex.message}')
                 continue
 
             for collection in data:

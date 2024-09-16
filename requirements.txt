@@ -17,6 +17,8 @@ PyQt5-sip==12.13.0
 pytest==7.4.2
 pytest-cov==4.1.0
 python-docx==1.0.1
+setuptools==75.1.0
+
 
 #Documentation
 docxsphinx==1.0.0
