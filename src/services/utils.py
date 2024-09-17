@@ -20,7 +20,7 @@ def encode_base64(text_to_encode: str) -> str:
 
 
 def http_get(url, host_name='', headers={}, result_type='json'):
-    response = requests.request('GET', url, timeout=REQUEST_TIMEOUT)
+    response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
 
     if host_name:
         host_name = f': {host_name}'

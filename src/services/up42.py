@@ -25,15 +25,26 @@ def get_token(username: str, password: str) -> str:
 
     payload = f'grant_type=password&username={username}&password={password}'
 
+    # try:
+    #     json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
+    #     data = json_response.get('data')
+    #     if data:
+    #         return data.get('accessToken')
+
+    # except requests.exceptions.HTTPError as ex:
+    #     message = tr('There was an error getting the token.')
+    #     raise AuthorizationError(f'{message}\n{ex}') from ex
+
     try:
         json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
-        data = json_response.get('data')
-        if data:
-            return data.get('accessToken')
+        token = json_response.get('access_token')
+        if not token:
+            raise AuthorizationError(tr('There was an error getting the token.'))
+
+        return token
 
     except requests.exceptions.HTTPError as ex:
-        message = tr('There was an error getting the token.')
-        raise AuthorizationError(f'{message}\n{ex}') from ex
+        raise AuthorizationError(f'{tr("There was an error getting the token.")}\n{ex}') from ex
 
 
 @lru_cache(maxsize=None)
@@ -59,11 +70,15 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     return http_post(url, headers=headers, host_name=f'UP42: {host_name}', payload=payload)
 
 
-@lru_cache(maxsize=None)
+# @lru_cache(maxsize=None)
 def get_thumbnail(token: str, host_name: str, image_id: str):
     """Get catalog thumbnail from UP42 API"""
 
-    url = f' https://api.up42.com/catalog/{host_name}/image/{image_id}/thumbnail'
+    print(token)
+    print(host_name)
+    print(image_id)
+
+    url = f'https://api.up42.com/catalog/{host_name}/image/{image_id}/thumbnail'
     headers = {
         'accept': '*/*',
         'authorization': f'Bearer {token}',
@@ -75,7 +90,7 @@ def get_thumbnail(token: str, host_name: str, image_id: str):
 def get_quicklook(token: str, host_name: str, image_id: str):
     """Get catalog quicklook from UP42 API"""
 
-    url = f' https://api.up42.com/catalog/{host_name}/image/{image_id}/quicklook'
+    url = f'https://api.up42.com/catalog/{host_name}/image/{image_id}/quicklook'
     headers = {
         'accept': '*/*',
         'authorization': f'Bearer {token}',
