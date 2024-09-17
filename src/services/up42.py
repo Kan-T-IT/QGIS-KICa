@@ -32,7 +32,8 @@ def get_token(username: str, password: str) -> str:
             return data.get('accessToken')
 
     except requests.exceptions.HTTPError as ex:
-        raise AuthorizationError(f'{tr("There was an error getting the token.")}\n{ex}') from ex
+        message = tr('There was an error getting the token.')
+        raise AuthorizationError(f'{message}\n{ex}') from ex
 
 
 @lru_cache(maxsize=None)

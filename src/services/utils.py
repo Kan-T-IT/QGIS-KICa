@@ -33,13 +33,17 @@ def http_get(url, host_name='', headers={}, result_type='json'):
             return response.json()
 
     elif response.status_code == 403:
-        raise AuthorizationError(f"{tr('Check the credentials you are using for the provider')}{host_name}")
+        message = tr('Check the credentials you are using for the provider')
+        raise AuthorizationError(f'{message}{host_name}')
     elif response.status_code == 542:
-        raise AuthorizationError(f'{tr("The resource you are trying to get is private")}{host_name}.')
+        message = tr('The resource you are trying to get is private')
+        raise AuthorizationError(f'{message}{host_name}.')
     elif response.status_code == 404:
-        raise HostError(f"{tr('It was not possible to get the requested resource')}{host_name}")
+        message = tr('It was not possible to get the requested resource')
+        raise HostError(f'{message}{host_name}.')
     else:
-        raise HostError(f'{tr("Error getting results from host")}{host_name}.\n {response.text}')
+        message = tr('Error getting results from host')
+        raise HostError(f'{message}.\n {response.text}')
 
 
 def http_post(url, host_name='', headers={}, payload={}, result_type='json', raise_for_status=False):
@@ -57,10 +61,14 @@ def http_post(url, host_name='', headers={}, payload={}, result_type='json', rai
         else:
             return response.json()
     elif response.status_code == 403:
-        raise AuthorizationError(f"{tr('Check the credentials you are using for the provider')}{host_name}")
+        message = tr('Check the credentials you are using for the provider')
+        raise AuthorizationError(f'{message}{host_name}.')
     elif response.status_code == 542:
-        raise AuthorizationError(f'{tr("The resource you are trying to get is private")}{host_name}.')
+        message = tr('The resource you are trying to get is private')
+        raise AuthorizationError(f'{message}{host_name}.')
     elif response.status_code == 404:
-        raise HostError(f"{tr('It was not possible to get the requested resource')}{host_name}")
+        message = tr('It was not possible to get the requested resource')
+        raise HostError(f'{message}{host_name}.')
     else:
-        raise HostError(f'{tr("Error getting results from host")}{host_name}.\n {response.text}')
+        message = tr('Error getting results from host')
+        raise HostError(f'{message}{host_name}.\n {response.text}')

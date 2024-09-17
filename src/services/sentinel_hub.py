@@ -35,7 +35,8 @@ def get_token(client_id, client_secret):
             return data.get('access_token')
 
     except requests.exceptions.HTTPError as ex:
-        raise AuthorizationError(f'{tr("There was an error getting the token.")}\n{ex}') from ex
+        message = tr('There was an error getting the token.')
+        raise AuthorizationError(f'{message}\n{ex}') from ex
 
 
 @lru_cache(maxsize=None)

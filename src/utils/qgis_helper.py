@@ -1,4 +1,4 @@
-""" QGIS helper functions module. """
+"""QGIS helper functions module."""
 
 import json
 
@@ -31,7 +31,8 @@ try:
     )
     from qgis.utils import iface
 except Exception as ex:  # noqa: E722    pylint: disable=bare-except
-    print(f"{tr('QGIS libraries could not be imported.')}\n{ex}")
+    message = tr('QGIS libraries could not be imported.')
+    print(f'{message}\n{ex}')
 
 
 def get_bounding_box_canvas():
