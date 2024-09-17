@@ -4,27 +4,22 @@
 <context>
     <name>@default</name>
     <message>
-        <location filename="../test/test_translations.py" line="45"/>
-        <source>Good morning</source>
-        <translation>Buen día</translation>
-    </message>
-    <message>
-        <location filename="../core/catalogs.py" line="186"/>
+        <location filename="../core/catalogs.py" line="185"/>
         <source>It is not possible to obtain a preview from this provider.</source>
         <translation>No es posible obtener una vista previa para este proveedor.</translation>
     </message>
     <message>
-        <location filename="../core/catalogs.py" line="205"/>
+        <location filename="../core/catalogs.py" line="204"/>
         <source>It is not possible to obtain a preview from this catalog.</source>
         <translation>No es posible obtener una vista previa de este catálogo.</translation>
     </message>
     <message>
-        <location filename="../core/catalogs.py" line="228"/>
+        <location filename="../core/catalogs.py" line="227"/>
         <source>This provider is not available.</source>
         <translation>Este proveedor no está disponible.</translation>
     </message>
     <message>
-        <location filename="../core/catalogs.py" line="242"/>
+        <location filename="../core/collections.py" line="73"/>
         <source>Provider not found.</source>
         <translation>Proveedor no encontrado.</translation>
     </message>
@@ -69,7 +64,7 @@
         <translation>Obteniendo colecciones...</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="413"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="420"/>
         <source>Warning</source>
         <translation>Atención</translation>
     </message>
@@ -79,7 +74,7 @@
         <translation>Debe definir credenciales válidas al menos para un proveedor en la configuración del plugin.</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="131"/>
+        <location filename="../gui/form_default_collections.py" line="134"/>
         <source>Filter results</source>
         <translation>Filtrar resultados</translation>
     </message>
@@ -104,22 +99,12 @@
         <translation>Verifique las credenciales ingresadas.</translation>
     </message>
     <message>
-        <location filename="../services/element84.py" line="43"/>
-        <source>The catalog you are trying to get is private.</source>
-        <translation>El catálogo que intenta obtener es privado.</translation>
-    </message>
-    <message>
-        <location filename="../services/element84.py" line="45"/>
-        <source>It was not possible to get the requested catalog.</source>
-        <translation>No fue posible obtener el catálogo solicitado.</translation>
-    </message>
-    <message>
-        <location filename="../services/sentinel_hub.py" line="16"/>
+        <location filename="../services/sentinel_hub.py" line="17"/>
         <source>SentinelHub credentials have not been configured.</source>
         <translation>Las credenciales para SentinelHub no fueron configuradas.</translation>
     </message>
     <message>
-        <location filename="../services/up42.py" line="20"/>
+        <location filename="../services/up42.py" line="19"/>
         <source>UP42 credentials have not been configured.</source>
         <translation>Las credenciales para Up42 no fueron configuradas.</translation>
     </message>
@@ -129,54 +114,54 @@
         <translation>Utiizando la función de depuración personalizada...</translation>
     </message>
     <message>
-        <location filename="../utils/exceptions.py" line="22"/>
+        <location filename="../utils/exceptions.py" line="25"/>
         <source>Error to get results from provider.</source>
         <translation>Error al obtener resultados del proveedor.</translation>
     </message>
     <message>
-        <location filename="../utils/exceptions.py" line="29"/>
+        <location filename="../utils/exceptions.py" line="32"/>
         <source>Error to get results from host.</source>
         <translation>Error al obtener resultados del host.</translation>
     </message>
     <message>
-        <location filename="../utils/exceptions.py" line="36"/>
+        <location filename="../utils/exceptions.py" line="39"/>
         <source>Error to get results from authorization.</source>
         <translation>Error al obtener resultados para la autorización.</translation>
     </message>
     <message>
-        <location filename="../utils/exceptions.py" line="43"/>
+        <location filename="../utils/exceptions.py" line="46"/>
         <source>Please check the plugin settings.</source>
         <translation>Por favor verifique la configuración del plugin.</translation>
     </message>
     <message>
-        <location filename="../utils/exceptions.py" line="50"/>
+        <location filename="../utils/exceptions.py" line="53"/>
         <source>No data found.</source>
         <translation>No se encontraron datos.</translation>
     </message>
     <message>
-        <location filename="../utils/qgis_helper.py" line="42"/>
+        <location filename="../utils/qgis_helper.py" line="43"/>
         <source>Must have at least one active layer.</source>
         <translation>Debe tener al menos una capa activa.</translation>
     </message>
     <message>
-        <location filename="../utils/qgis_helper.py" line="63"/>
+        <location filename="../utils/qgis_helper.py" line="64"/>
         <source>The specified layer was not found.</source>
         <translation>La capa especificada no fue encontrada.</translation>
     </message>
     <message>
-        <location filename="../utils/qgis_helper.py" line="82"/>
+        <location filename="../utils/qgis_helper.py" line="83"/>
         <source>There are no features selected on the specified layer.</source>
         <translation>No hay objetos seleccionados en la capa especificada.</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="327"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="334"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../kan_imagery_catalog_dock.py" line="85"/>
         <source>Dataframe or project layers (only &apos;single polygon&apos; type layers).</source>
-        <translation>Dataframe o capas del proyecto (únicamente capas del tipo 'Single Polygon').</translation>
+        <translation>Dataframe o capas del proyecto (únicamente capas del tipo &apos;Single Polygon&apos;).</translation>
     </message>
     <message>
         <location filename="../kan_imagery_catalog_dock.py" line="86"/>
@@ -194,27 +179,27 @@
         <translation>Nubosidad máxima</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="294"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="301"/>
         <source>There are no providers defined in the plugin settings.</source>
         <translation>No hay proveedores definidos en la configuración del plugin.</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="300"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="307"/>
         <source>Getting results...</source>
         <translation>Obteniendo resultados...</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="290"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="297"/>
         <source>The project has no layers available to use as a reference for searching.</source>
         <translation>El proyecto no contiene capas disponibles para utilizar como referencia para la búsqueda.</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="328"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="335"/>
         <source>The catalog search has ended.</source>
         <translation>La búsqueda de catálogos ha finalizado.</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="342"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="349"/>
         <source>There are no catalogs selected.</source>
         <translation>No hay catálogos seleccionados.</translation>
     </message>
@@ -234,39 +219,69 @@
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="173"/>
+        <location filename="../gui/form_default_collections.py" line="176"/>
         <source>Provider</source>
         <translation>Proveedor</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="174"/>
+        <location filename="../gui/form_default_collections.py" line="177"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="175"/>
+        <location filename="../gui/form_default_collections.py" line="178"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="176"/>
+        <location filename="../gui/form_default_collections.py" line="179"/>
         <source>Resolution</source>
         <translation>Resolución</translation>
     </message>
     <message>
-        <location filename="../gui/form_default_collections.py" line="177"/>
+        <location filename="../gui/form_default_collections.py" line="180"/>
         <source>Description</source>
         <translation>Descripción</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="416"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="423"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../kan_imagery_catalog_dock.py" line="410"/>
+        <location filename="../kan_imagery_catalog_dock.py" line="417"/>
         <source>Info</source>
         <translation>Info</translation>
+    </message>
+    <message>
+        <location filename="../services/up42.py" line="35"/>
+        <source>There was an error getting the token.</source>
+        <translation>Ocurrió un error al obtener el token.</translation>
+    </message>
+    <message>
+        <location filename="../services/utils.py" line="64"/>
+        <source>Check the credentials you are using for the provider</source>
+        <translation>Verifique las credenciales que está utilizando para el proveedor</translation>
+    </message>
+    <message>
+        <location filename="../services/utils.py" line="67"/>
+        <source>The resource you are trying to get is private</source>
+        <translation>El recurso al que está intentando acceder es privado</translation>
+    </message>
+    <message>
+        <location filename="../services/utils.py" line="70"/>
+        <source>It was not possible to get the requested resource</source>
+        <translation>No fue posible obtener el recurso solicitado</translation>
+    </message>
+    <message>
+        <location filename="../services/utils.py" line="73"/>
+        <source>Error getting results from host</source>
+        <translation>Error al obtener resultados del host</translation>
+    </message>
+    <message>
+        <location filename="../utils/qgis_helper.py" line="34"/>
+        <source>QGIS libraries could not be imported.</source>
+        <translation>Las librerías de QGIS no pudieron ser importadas.</translation>
     </message>
 </context>
 <context>
@@ -348,7 +363,7 @@
 <context>
     <name>frm_catalog_info</name>
     <message>
-        <location filename="../ui/frm_catalog_info.py" line="44"/>
+        <location filename="../ui/frm_catalog_info.ui" line="26"/>
         <source>Settings</source>
         <translation>Configuraciones</translation>
     </message>
@@ -356,32 +371,32 @@
 <context>
     <name>frm_default_collections</name>
     <message>
-        <location filename="../ui/frm_default_collections.py" line="130"/>
+        <location filename="../ui/frm_default_collections.ui" line="116"/>
         <source>Search by name/description:</source>
         <translation>Buscar por Nombre / Descripción:</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.py" line="131"/>
+        <location filename="../ui/frm_default_collections.ui" line="172"/>
         <source>Filter</source>
         <translation>Filtrar</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.py" line="132"/>
+        <location filename="../ui/frm_default_collections.ui" line="250"/>
         <source>Selected collections</source>
         <translation>Seleccionar colecciones</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.py" line="133"/>
+        <location filename="../ui/frm_default_collections.ui" line="285"/>
         <source>Delete selected</source>
         <translation>Eliminar los seleccionados</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.py" line="134"/>
+        <location filename="../ui/frm_default_collections.ui" line="356"/>
         <source>Add selected</source>
         <translation>Agregar los seleccionados</translation>
     </message>
     <message>
-        <location filename="../ui/frm_default_collections.py" line="129"/>
+        <location filename="../ui/frm_default_collections.ui" line="26"/>
         <source>Catalog selection</source>
         <translation>Selección de catálogos</translation>
     </message>
