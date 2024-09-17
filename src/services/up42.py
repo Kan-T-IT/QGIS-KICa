@@ -74,10 +74,6 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
 def get_thumbnail(token: str, host_name: str, image_id: str):
     """Get catalog thumbnail from UP42 API"""
 
-    print(token)
-    print(host_name)
-    print(image_id)
-
     url = f'https://api.up42.com/catalog/{host_name}/image/{image_id}/thumbnail'
     headers = {
         'accept': '*/*',
