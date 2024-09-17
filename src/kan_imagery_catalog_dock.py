@@ -125,6 +125,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.thread_get_catalogs.error_signal.connect(self.show_error)
         self.thread_get_catalogs.warning_signal.connect(self.show_warning)
 
+        self.thread_get_thumbnails = WorkerThread()
+        self.thread_get_thumbnails.progress_updated.connect(self.update_progress)
+        self.thread_get_thumbnails.error_signal.connect(self.show_error)
+        self.thread_get_thumbnails.warning_signal.connect(self.show_warning)
+
         self.thread_load_collections_cache = WorkerThread()
         self.thread_load_collections_cache.started.connect(lambda: self.set_form_state(is_busy=True, show_spinner=True))
         self.thread_load_collections_cache.finished.connect(
@@ -326,6 +331,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             'max_catalog_results': max_catalog_results,
         }
 
+        self.thread_get_thumbnails.stop
         self.thread_get_catalogs.start(self.get_results, params)
 
     def get_data_finished(self):
@@ -355,6 +361,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         collection_aux = {}
 
         active_providers = self.settings.get_active_providers()
+
+        catalogs_data_result = []
 
         for collection in self.settings.selected_collections:
             if collection['provider'] not in active_providers:
@@ -405,22 +413,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     break
 
                 thumbnail = None
-                try:
-                    thumbnail = get_thumbnail(
-                        provider=provider,
-                        host_name=host_name,
-                        collection_name=catalog['aux_collection_name'],
-                        image_id=catalog['aux_image_id'],
-                        feature_data=catalog,
-                    )
-                except DataNotFoundError as ex:
-                    self.info_signal.emit(tr('Info'), str(ex))
-
-                except (AuthorizationError, HostError) as ex:
-                    self.warning_signal.emit(tr('Warning'), str(ex))
-
-                except (ProviderError, Exception) as ex:
-                    self.error_signal.emit(tr('Error'), str(ex))
 
                 dic_result = {
                     'coordinates': catalog['aux_coordinates'],
@@ -436,31 +428,72 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     'thumbnail': thumbnail,
                 }
 
+                catalogs_data_result.append(
+                    {
+                        'provider': provider,
+                        'host_name': host_name,
+                        'collection_name': catalog['aux_collection_name'],
+                        'image_id': catalog['aux_image_id'],
+                        'feature_data': catalog,
+                        'catalog_result': dic_result,
+                    }
+                )
+
                 self.thread_get_catalogs.progress_updated.emit(dic_result)
                 features_counter += 1
 
             catalog_counter += 1
 
+        self.thread_get_thumbnails.start(
+            self.get_thumbnails_in_background,
+            {'catalogs_data': catalogs_data_result},
+        )
+
+    def get_thumbnails_in_background(
+        self,
+        catalogs_data: list,
+    ):
+        for data in catalogs_data:
+            thumbnail = get_thumbnail(
+                provider=data['provider'],
+                host_name=data['host_name'],
+                collection_name=data['collection_name'],
+                image_id=data['image_id'],
+                feature_data=data['feature_data'],
+            )
+            catalog_result = data['catalog_result']
+            catalog_result['thumbnail'] = thumbnail
+            self.thread_get_catalogs.progress_updated.emit(catalog_result)
+
     def update_progress(self, progress_data):
         """Update thread results in Toc and DockWidget."""
 
-        self.add_feature_to_footprints_layer(
-            coordinates=progress_data['coordinates'],
-            footprint_id=progress_data['image_id'],
-        )
+        if 'thumbnail' in progress_data and progress_data['thumbnail'] is not None:
+            feature_index = progress_data['feature_index']
+            for i in range(self.lst_data.count()):
+                item = self.lst_data.item(i)
+                custom_item = item.data(Qt.UserRole)
+                if custom_item.feature_index == feature_index:
+                    custom_item.set_thumbnail(progress_data['thumbnail'])
+                    break
+        else:
+            self.add_feature_to_footprints_layer(
+                coordinates=progress_data['coordinates'],
+                footprint_id=progress_data['image_id'],
+            )
 
-        self.add_item_to_results(
-            provider_name=progress_data['provider_name'],
-            host_name=progress_data['host_name'],
-            collection_name=progress_data['collection_name'],
-            feature_data=progress_data['feature_data'],
-            acquisition_date=progress_data['acquisition_date'],
-            incidence_angle=progress_data['incidence_angle'],
-            cloud_coverage=progress_data['cloud_coverage'],
-            image_id=progress_data['image_id'],
-            feature_index=progress_data['feature_index'],
-            thumbnail=progress_data['thumbnail'],
-        )
+            self.add_item_to_results(
+                provider_name=progress_data['provider_name'],
+                host_name=progress_data['host_name'],
+                collection_name=progress_data['collection_name'],
+                feature_data=progress_data['feature_data'],
+                acquisition_date=progress_data['acquisition_date'],
+                incidence_angle=progress_data['incidence_angle'],
+                cloud_coverage=progress_data['cloud_coverage'],
+                image_id=progress_data['image_id'],
+                feature_index=progress_data['feature_index'],
+                thumbnail=progress_data['thumbnail'],
+            )
 
     def add_item_to_results(
         self,

@@ -1,4 +1,4 @@
-""" Catalogs module. """
+"""Catalogs module."""
 
 from time import sleep
 
