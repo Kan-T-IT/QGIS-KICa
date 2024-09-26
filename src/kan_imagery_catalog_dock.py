@@ -331,7 +331,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             'max_catalog_results': max_catalog_results,
         }
 
-        self.thread_get_thumbnails.stop
+        self.thread_get_thumbnails.requestInterruption()
         self.thread_get_catalogs.start(self.get_results, params)
 
     def get_data_finished(self):
@@ -454,6 +454,9 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         catalogs_data: list,
     ):
         for data in catalogs_data:
+            if self.thread_get_thumbnails.isInterruptionRequested():
+                break
+
             thumbnail = get_thumbnail(
                 provider=data['provider'],
                 host_name=data['host_name'],
