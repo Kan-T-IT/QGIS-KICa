@@ -212,7 +212,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         layer_list = ['  -----  ']
         if not self.chk_search_by_dataframe.isChecked():
-            layer_list = qgis_helper.get_single_polygon_layers()
+            layer_list = qgis_helper.get_valid_project_layers_to_search()
 
         self.cbo_layer.addItems(layer_list)
 
@@ -344,7 +344,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         """Get results from selected catalogs with selected filters."""
 
         if layer_name:
-            dict_bbox = qgis_helper.get_bounding_box_selected_feature(layer_name)
+            dict_bbox = qgis_helper.get_selected_feature_bounding_box(layer_name)
         else:
             dict_bbox = qgis_helper.get_bounding_box_canvas()
 

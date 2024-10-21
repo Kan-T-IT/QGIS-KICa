@@ -20,6 +20,7 @@ try:
         QgsFillSymbol,
         QgsGeometry,
         QgsLayerTreeGroup,
+        QgsMapLayer,
         QgsPointXY,
         QgsProject,
         QgsProperty,
@@ -56,18 +57,23 @@ def get_bounding_box_canvas():
     return {'x_min': x_min, 'y_min': y_min, 'x_max': x_max, 'y_max': y_max}
 
 
-def get_bounding_box_selected_feature(layer_name):
-    """Get bounding box from selected feature."""
+def get_selected_feature_bounding_box(layer_name, default_first=True):
+    """Get bounding box from feature. By default, the first feature is used if no feature is selected."""
 
     layers = QgsProject.instance().mapLayersByName(layer_name)
     if not layers:
         raise DataNotFoundError('Error', tr('The specified layer was not found.'))
 
     layer = layers[0]
-    if layer.selectedFeatureCount() > 0:
-        selected_feature = layer.selectedFeatures()[0]
-        bbox = selected_feature.geometry().boundingBox()
+    selected_feature = next((x for x in layer.getSelectedFeatures()), None)
+    if selected_feature is None and default_first:
+        selected_feature = next(layer.getFeatures())
 
+        # select the first feature in the layer
+        layer.selectByIds([selected_feature.id()])
+
+    if selected_feature:
+        bbox = selected_feature.geometry().boundingBox()
         crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
         transform = QgsCoordinateTransform(iface.activeLayer().crs(), crs_transform, QgsProject.instance())
 
@@ -83,13 +89,31 @@ def get_bounding_box_selected_feature(layer_name):
     raise DataNotFoundError(tr('There are no features selected on the specified layer.'))
 
 
-def get_single_polygon_layers():
-    """Get single polygon layers from current project."""
+def get_valid_project_layers_to_search():
+    """Get vector layers names from current project excluding the ones in the results group."""
+
+    def is_in_group(project, layer, group_name):
+        layer_tree_layer = project.layerTreeRoot().findLayer(layer.id())
+        parent = layer_tree_layer.parent()
+
+        while parent is not None:
+            if parent.name() == group_name:
+                return True
+            parent = parent.parent()
+
+        return False
 
     layer_list = []
-    for layer in QgsProject.instance().mapLayers().values():
-        if isinstance(layer, QgsVectorLayer) and layer.wkbType() == 3:
-            layer_list.append(layer.name())
+
+    _project = QgsProject.instance()
+    _excluded_group = 'kan_imagery_catalog_preview'
+
+    all_layers = _project.mapLayers().values()
+    layer_list = [
+        _layer.name()
+        for _layer in all_layers
+        if not is_in_group(_project, _layer, _excluded_group) and _layer.type() == QgsMapLayer.VectorLayer
+    ]
 
     return layer_list
 
