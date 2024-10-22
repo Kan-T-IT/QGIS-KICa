@@ -57,25 +57,26 @@ def get_bounding_box_canvas():
     return {'x_min': x_min, 'y_min': y_min, 'x_max': x_max, 'y_max': y_max}
 
 
-def get_selected_feature_bounding_box(layer_name, default_first=True):
-    """Get bounding box from feature. By default, the first feature is used if no feature is selected."""
+def get_selected_feature_bounding_box(layer_id, default_first=True):
+    """Get bounding box from feature. By default, the first feature in the array is used if no feature is selected."""
 
-    layers = QgsProject.instance().mapLayersByName(layer_name)
-    if not layers:
+    layer = QgsProject.instance().mapLayer(layer_id)
+    if not layer:
         raise DataNotFoundError('Error', tr('The specified layer was not found.'))
 
-    layer = layers[0]
     selected_feature = next((x for x in layer.getSelectedFeatures()), None)
     if selected_feature is None and default_first:
         selected_feature = next(layer.getFeatures())
 
         # select the first feature in the layer
         layer.selectByIds([selected_feature.id()])
+        zoom_selected_features(layer)
 
     if selected_feature:
         bbox = selected_feature.geometry().boundingBox()
         crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
-        transform = QgsCoordinateTransform(iface.activeLayer().crs(), crs_transform, QgsProject.instance())
+        source_crs = layer.crs()
+        transform = QgsCoordinateTransform(source_crs, crs_transform, QgsProject.instance())
 
         bbox_transformed = transform.transform(bbox)
 
@@ -109,8 +110,9 @@ def get_valid_project_layers_to_search():
     _excluded_group = 'kan_imagery_catalog_preview'
 
     all_layers = _project.mapLayers().values()
+
     layer_list = [
-        _layer.name()
+        (_layer.id(), _layer.name())
         for _layer in all_layers
         if not is_in_group(_project, _layer, _excluded_group) and _layer.type() == QgsMapLayer.VectorLayer
     ]
@@ -299,3 +301,17 @@ def create_quicklook_layer(
 
     QgsProject.instance().addMapLayer(new_layer, False)
     results_group.addLayer(new_layer)
+
+
+def zoom_selected_features(layer):
+    """Zoom to selected features in layer."""
+
+    print(f'zoom_selected_features: name->{layer.name()} id->{layer.id()}')
+    if layer is not None:
+        box = layer.boundingBoxOfSelected()
+        print(f'box: {box}')
+        margin = 1
+        box.scale(1 + margin)
+        canvas = iface.mapCanvas()
+        canvas.setExtent(box)
+        canvas.refresh()

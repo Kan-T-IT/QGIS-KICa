@@ -18,7 +18,7 @@
 
 import os
 
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtCore import QDate, QSize, Qt, QVariant, pyqtSignal
 from PyQt5.QtGui import QIcon, QIntValidator, QMovie
 from PyQt5.QtWidgets import QListWidgetItem
@@ -143,6 +143,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.warning_signal.connect(self.show_warning)
         self.info_signal.connect(self.show_info)
 
+        self.show_ended_search_message = True
+
     def show_info(self, title, message):
         """Show info message."""
 
@@ -214,7 +216,13 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         if not self.chk_search_by_dataframe.isChecked():
             layer_list = qgis_helper.get_valid_project_layers_to_search()
 
-        self.cbo_layer.addItems(layer_list)
+        model = QtGui.QStandardItemModel(0, 1)
+        for key, value in layer_list:
+            item = QtGui.QStandardItem(value)
+            item.setData(key, Qt.UserRole)
+            model.appendRow(item)
+
+        self.cbo_layer.setModel(model)
 
     def btn_settings_clicked(self):
         """Event handler for button 'btn_settings'."""
@@ -315,7 +323,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         cloud_coverage = self.slider_cloud_coverage.value()
         date_from = self.dt_date_from.date()
         date_to = self.dt_date_to.date()
-        layer_name = '' if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentText()
+        layer_id = None if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentData()
 
         try:
             max_catalog_results = int(self.txt_max_catalog_results.text().strip())
@@ -323,14 +331,26 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             max_catalog_results = self.settings.max_catalog_results
             self.txt_max_catalog_results.setText(str(max_catalog_results))
 
+        self.show_ended_search_message = True
+        dict_bbox = {}
+        try:
+            if layer_id:
+                dict_bbox = qgis_helper.get_selected_feature_bounding_box(layer_id)
+            else:
+                dict_bbox = qgis_helper.get_bounding_box_canvas()
+        except DataNotFoundError as ex:
+            self.show_ended_search_message = False
+            raise ex
+
         params = {
-            'layer_name': layer_name,
+            'bounding_box': dict_bbox,
             'cloud_coverage': cloud_coverage,
             'date_from': date_from,
             'date_to': date_to,
             'max_catalog_results': max_catalog_results,
         }
 
+        print(f'params: {params}')
         self.thread_get_thumbnails.requestInterruption()
         self.thread_get_catalogs.start(self.get_results, params)
 
@@ -338,15 +358,12 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         """Event handler for thread 'thread_get_catalogs' finished."""
 
         self.btn_get_data.setText(tr('Search'))
-        qgis_helper.success_message('', tr('The catalog search has ended.'))
 
-    def get_results(self, layer_name, cloud_coverage, date_from, date_to, max_catalog_results):
+        if self.show_ended_search_message:
+            qgis_helper.success_message('', tr('The catalog search has ended.'))
+
+    def get_results(self, bounding_box, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
-
-        if layer_name:
-            dict_bbox = qgis_helper.get_selected_feature_bounding_box(layer_name)
-        else:
-            dict_bbox = qgis_helper.get_bounding_box_canvas()
 
         catalogs = []
         limit_features = self.settings.max_features_results
@@ -386,7 +403,12 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             datetime_params = f"{date_from.toString('yyyy-MM-ddT00:00:00Z')}/{date_to.toString('yyyy-MM-ddT23:59:59Z')}"
             search_params = {
                 'collections': collections,
-                'bbox': [dict_bbox['x_min'], dict_bbox['y_min'], dict_bbox['x_max'], dict_bbox['y_max']],
+                'bbox': [
+                    bounding_box.get('x_min'),
+                    bounding_box.get('y_min'),
+                    bounding_box.get('x_max'),
+                    bounding_box.get('y_max'),
+                ],
                 'datetime': datetime_params,
                 'limit': limit_features,
             }
