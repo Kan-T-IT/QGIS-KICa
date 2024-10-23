@@ -340,7 +340,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 dict_bbox = qgis_helper.get_bounding_box_canvas()
         except DataNotFoundError as ex:
             self.show_ended_search_message = False
-            raise ex
+            qgis_helper.warning_message(
+                tr('Information'),
+                tr(str(ex)),
+            )
+            return
 
         params = {
             'bounding_box': dict_bbox,
