@@ -1,4 +1,4 @@
-""" Custom widgets module. """
+"""Custom widgets module."""
 
 import os
 
@@ -156,8 +156,11 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         image_path = params.get('image_path')
         image_id = params.get('image_id')
         layer_name = params.get('layer_name')
+        new_layer = None
 
         try:
-            results.create_quicklook(image_path=image_path, image_id=image_id, layer_name=layer_name)
+            new_layer = results.create_quicklook(image_path=image_path, image_id=image_id, layer_name=layer_name)
         except PluginError as ex:
             self.thread_quicklooks.error_signal.emit(tr('Could not get a preview'), str(ex))
+
+        return new_layer

@@ -354,7 +354,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             'max_catalog_results': max_catalog_results,
         }
 
-        print(f'params: {params}')
         self.thread_get_thumbnails.requestInterruption()
         self.thread_get_catalogs.start(self.get_results, params)
 

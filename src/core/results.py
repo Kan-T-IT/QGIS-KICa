@@ -18,11 +18,12 @@ def create_quicklook(image_path, image_id, layer_name):
     if not feature_for_quicklook:
         return False
 
-    qgis_helper.create_quicklook_layer(
+    new_layer = qgis_helper.create_quicklook_layer(
+        footprints_crs=footprints_layer.crs().authid(),
         layer_name=layer_name,
         group_name=RESULTS_GROUP_NAME,
         feature=feature_for_quicklook,
         image_path=image_path,
     )
 
-    return layer_name
+    return new_layer
