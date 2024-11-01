@@ -1,14 +1,13 @@
-""" Constants module. """
+"""Constants module."""
 
 from enum import Enum
 
 RESULTS_GROUP_NAME = 'kan_imagery_catalog_preview'
 RESULTS_LAYER_NAME = 'kan_imagery_catalog_footprints'
-
-DEFAULT_CRS_SOURCE = 'EPSG:4326'
-DEFAULT_CRS_TARGET = 'EPSG:3857'
-
 DEFAULT_MESSAGE_DURATION = 5
+
+DEFAULT_SOURCE_CRS = 'EPSG:3857'
+DEFAULT_TARGET_CRS = 'EPSG:4326'
 
 
 class CustomEnum(Enum):

@@ -1,10 +1,13 @@
 """QGIS helper functions module."""
 
 import json
+import os
 
+import processing
+from osgeo import gdal
 from PyQt5.QtCore import QVariant
 
-from utils.constants import DEFAULT_CRS_SOURCE, DEFAULT_CRS_TARGET, DEFAULT_MESSAGE_DURATION
+from utils.constants import DEFAULT_MESSAGE_DURATION, DEFAULT_SOURCE_CRS, DEFAULT_TARGET_CRS
 from utils.exceptions import DataNotFoundError
 from utils.general import PLUGIN_NAME
 from utils.helpers import tr
@@ -25,7 +28,10 @@ try:
         QgsProject,
         QgsProperty,
         QgsRasterFillSymbolLayer,
+        QgsRasterLayer,
+        QgsRectangle,
         QgsSettings,
+        QgsSymbol,
         QgsSymbolLayer,
         QgsUnitTypes,
         QgsVectorLayer,
@@ -43,16 +49,21 @@ def get_bounding_box_canvas():
     if not active_layer:
         raise DataNotFoundError(tr('Must have at least one active layer.'))
 
-    crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
-    transform = QgsCoordinateTransform(active_layer.crs(), crs_transform, QgsProject.instance())
-
     bbox = iface.mapCanvas().extent()
-    bbox_transformed = transform.transform(bbox)
 
-    x_min = bbox_transformed.xMinimum()
-    y_min = bbox_transformed.yMinimum()
-    x_max = bbox_transformed.xMaximum()
-    y_max = bbox_transformed.yMaximum()
+    source_crs = active_layer.crs()
+    target_crs = QgsProject.instance().crs()
+
+    if source_crs != target_crs:
+        crs_transform = QgsCoordinateReferenceSystem(target_crs)
+        transform = QgsCoordinateTransform(source_crs, crs_transform, QgsProject.instance())
+
+        bbox = transform.transform(bbox)
+
+    x_min = bbox.xMinimum()
+    y_min = bbox.yMinimum()
+    x_max = bbox.xMaximum()
+    y_max = bbox.yMaximum()
 
     return {'x_min': x_min, 'y_min': y_min, 'x_max': x_max, 'y_max': y_max}
 
@@ -74,16 +85,19 @@ def get_selected_feature_bounding_box(layer_id, default_first=True):
 
     if selected_feature:
         bbox = selected_feature.geometry().boundingBox()
-        crs_transform = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
+
         source_crs = layer.crs()
-        transform = QgsCoordinateTransform(source_crs, crs_transform, QgsProject.instance())
+        target_crs = DEFAULT_TARGET_CRS  # QgsProject.instance().crs()
 
-        bbox_transformed = transform.transform(bbox)
+        if source_crs.authid() != target_crs:
+            crs_transform = QgsCoordinateReferenceSystem(target_crs)
+            transform = QgsCoordinateTransform(source_crs, crs_transform, QgsProject.instance())
+            bbox = transform.transform(bbox)
 
-        x_min = bbox_transformed.xMinimum()
-        y_min = bbox_transformed.yMinimum()
-        x_max = bbox_transformed.xMaximum()
-        y_max = bbox_transformed.yMaximum()
+        x_min = bbox.xMinimum()
+        y_min = bbox.yMinimum()
+        x_max = bbox.xMaximum()
+        y_max = bbox.yMaximum()
 
         return {'x_min': x_min, 'y_min': y_min, 'x_max': x_max, 'y_max': y_max}
 
@@ -95,7 +109,7 @@ def get_valid_project_layers_to_search():
 
     def is_in_group(project, layer, group_name):
         layer_tree_layer = project.layerTreeRoot().findLayer(layer.id())
-        parent = layer_tree_layer.parent()
+        parent = layer_tree_layer.parent() if layer_tree_layer else None
 
         while parent is not None:
             if parent.name() == group_name:
@@ -218,12 +232,13 @@ def get_or_create_footprints_layer(layer_name, group_name):
     """Get or create footprints layer."""
 
     layer_type = 'Polygon'
+    default_crs = QgsProject.instance().crs().authid()
     layers = QgsProject.instance().mapLayersByName(layer_name)
     if layers:
         footprints_layer = layers[0]
     else:
         results_group = get_or_create_group(group_name)
-        footprints_layer = QgsVectorLayer(f'{layer_type}?crs={DEFAULT_CRS_TARGET}', layer_name, 'memory')
+        footprints_layer = QgsVectorLayer(f'{layer_type}?crs={default_crs}', layer_name, 'memory')
 
         symbol = QgsFillSymbol.createSimple(
             {
@@ -251,9 +266,17 @@ def get_or_create_footprints_layer(layer_name, group_name):
 def add_feature_to_layer(coordinates, feature_id, layer):
     """Add feature to layer."""
 
-    source_crs = QgsCoordinateReferenceSystem(DEFAULT_CRS_SOURCE)
-    transform = QgsCoordinateTransform(source_crs, layer.crs(), QgsProject.instance())
-    points = [transform.transform(QgsPointXY(point[0], point[1])) for point in coordinates]
+    # source_crs = QgsProject.instance().crs()
+    # target_crs = layer.crs()
+    # if source_crs != target_crs:
+    #     transform = QgsCoordinateTransform(source_crs, target_crs, QgsProject.instance())
+    #     points = [transform.transform(QgsPointXY(point[0], point[1])) for point in coordinates]
+    # else:
+    #     transform = QgsCoordinateTransform(source_crs, target_crs, QgsProject.instance())
+    #     points = [transform.transform(QgsPointXY(point[0], point[1])) for point in coordinates]
+    #     # points = coordinates
+
+    points = [QgsPointXY(point[0], point[1]) for point in coordinates]
     polygon = QgsGeometry.fromPolygonXY([points])
 
     feature = QgsFeature()
@@ -265,7 +288,35 @@ def add_feature_to_layer(coordinates, feature_id, layer):
     return layer
 
 
+def get_georeferenced_image(feature, image_path):
+    """Get georeferenced image from feature and image path."""
+    image_filename = os.path.basename(image_path)
+    image_name = os.path.splitext(image_filename)[0]
+    temp_dir = os.path.dirname(image_path)
+
+    input_image_path = f'{temp_dir}/{image_filename}'
+    output_image_path = f'{temp_dir}/georef_{image_name}.tif'
+
+    bbox = feature.geometry().boundingBox()
+    xmin = bbox.xMinimum()
+    ymin = bbox.yMinimum()
+    xmax = bbox.xMaximum()
+    ymax = bbox.yMaximum()
+
+    # FIX: bbox with x inverted to match the image (temporal solution)
+    gdal.Translate(
+        output_image_path,
+        input_image_path,
+        outputSRS=DEFAULT_TARGET_CRS,
+        noData=0,
+        outputBounds=[xmin, ymax, xmax, ymin],
+    )
+
+    return output_image_path
+
+
 def create_quicklook_layer(
+    footprints_crs,
     layer_name,
     group_name,
     feature,
@@ -273,43 +324,23 @@ def create_quicklook_layer(
 ):
     """Create a layer with a quicklook image."""
 
-    layer_type = 'Polygon'
     results_group = get_or_create_group(group_name)
-
-    new_layer = QgsVectorLayer(f'{layer_type}?crs={DEFAULT_CRS_TARGET}', layer_name, 'memory')
-    new_layer_data_provider = new_layer.dataProvider()
-    new_layer_data_provider.addFeatures([feature])
-
-    symbol = QgsFillSymbol.createSimple(
-        {
-            'color': '255,0,0,0',
-            'outline_color': 'transparent',
-            'outline_width': '0',
-        }
-    )
-
-    symbol_layer = QgsRasterFillSymbolLayer(image_path)
-    symbol_layer.setWidthUnit(QgsUnitTypes.RenderMapUnits)
-
-    data_defined = QgsProperty.fromExpression('bounds_width(@geometry)')
-    symbol_layer.setDataDefinedProperty(QgsSymbolLayer.PropertyWidth, data_defined)
-
-    symbol.appendSymbolLayer(symbol_layer)
-    symbol.setClipFeaturesToExtent(False)
-    new_layer.renderer().setSymbol(symbol)
+    image_filename = os.path.basename(image_path)
+    image_name = os.path.splitext(image_filename)[0]
+    tif_image = get_georeferenced_image(feature=feature, image_path=image_path)
+    new_layer = QgsRasterLayer(tif_image, image_name)
     new_layer.triggerRepaint()
 
     QgsProject.instance().addMapLayer(new_layer, False)
     results_group.addLayer(new_layer)
+    iface.mapCanvas().refresh()
 
 
 def zoom_selected_features(layer):
     """Zoom to selected features in layer."""
 
-    print(f'zoom_selected_features: name->{layer.name()} id->{layer.id()}')
     if layer is not None:
         box = layer.boundingBoxOfSelected()
-        print(f'box: {box}')
         margin = 1
         box.scale(1 + margin)
         canvas = iface.mapCanvas()
