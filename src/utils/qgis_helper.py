@@ -3,7 +3,6 @@
 import json
 import os
 
-import processing
 from osgeo import gdal
 from PyQt5.QtCore import QVariant
 
@@ -26,14 +25,9 @@ try:
         QgsMapLayer,
         QgsPointXY,
         QgsProject,
-        QgsProperty,
-        QgsRasterFillSymbolLayer,
         QgsRasterLayer,
         QgsRectangle,
         QgsSettings,
-        QgsSymbol,
-        QgsSymbolLayer,
-        QgsUnitTypes,
         QgsVectorLayer,
     )
     from qgis.utils import iface
@@ -42,23 +36,27 @@ except Exception as ex:  # noqa: E722    pylint: disable=bare-except
     print(f'{message}\n{ex}')
 
 
+def get_bounding_box_transformed(bbox, source_crs, target_crs):
+    """Get bounding box from canvas and transform it if necessary to the default target CRS."""
+
+    if source_crs.authid() != target_crs.authid():
+        transform = QgsCoordinateTransform(source_crs, target_crs, QgsProject.instance())
+        bbox = transform.transform(bbox)
+        # bottom_left = transform.transform(bbox.xMinimum(), bbox.yMinimum())
+        # top_right = transform.transform(bbox.xMaximum(), bbox.yMaximum())
+        # bbox = QgsRectangle(bottom_left, top_right)
+
+    return bbox
+
+
 def get_bounding_box_canvas():
     """Get bounding box from canvas."""
 
-    active_layer = iface.activeLayer()
-    if not active_layer:
-        raise DataNotFoundError(tr('Must have at least one active layer.'))
-
     bbox = iface.mapCanvas().extent()
 
-    source_crs = active_layer.crs()
-    target_crs = QgsProject.instance().crs()
-
-    if source_crs != target_crs:
-        crs_transform = QgsCoordinateReferenceSystem(target_crs)
-        transform = QgsCoordinateTransform(source_crs, crs_transform, QgsProject.instance())
-
-        bbox = transform.transform(bbox)
+    source_crs = iface.mapCanvas().mapSettings().destinationCrs()
+    api_crs = QgsCoordinateReferenceSystem(DEFAULT_TARGET_CRS)
+    bbox = get_bounding_box_transformed(bbox, source_crs, api_crs)
 
     x_min = bbox.xMinimum()
     y_min = bbox.yMinimum()
@@ -79,20 +77,17 @@ def get_selected_feature_bounding_box(layer_id, default_first=True):
     if selected_feature is None and default_first:
         selected_feature = next(layer.getFeatures())
 
+    if selected_feature:
         # select the first feature in the layer
+        iface.setActiveLayer(layer)
         layer.selectByIds([selected_feature.id()])
         zoom_selected_features(layer)
 
-    if selected_feature:
         bbox = selected_feature.geometry().boundingBox()
 
         source_crs = layer.crs()
-        target_crs = DEFAULT_TARGET_CRS  # QgsProject.instance().crs()
-
-        if source_crs.authid() != target_crs:
-            crs_transform = QgsCoordinateReferenceSystem(target_crs)
-            transform = QgsCoordinateTransform(source_crs, crs_transform, QgsProject.instance())
-            bbox = transform.transform(bbox)
+        api_crs = QgsCoordinateReferenceSystem(DEFAULT_TARGET_CRS)
+        bbox = get_bounding_box_transformed(bbox, source_crs, api_crs)
 
         x_min = bbox.xMinimum()
         y_min = bbox.yMinimum()
@@ -232,13 +227,12 @@ def get_or_create_footprints_layer(layer_name, group_name):
     """Get or create footprints layer."""
 
     layer_type = 'Polygon'
-    default_crs = QgsProject.instance().crs().authid()
     layers = QgsProject.instance().mapLayersByName(layer_name)
     if layers:
         footprints_layer = layers[0]
     else:
         results_group = get_or_create_group(group_name)
-        footprints_layer = QgsVectorLayer(f'{layer_type}?crs={default_crs}', layer_name, 'memory')
+        footprints_layer = QgsVectorLayer(f'{layer_type}?crs={DEFAULT_TARGET_CRS}', layer_name, 'memory')
 
         symbol = QgsFillSymbol.createSimple(
             {
@@ -265,16 +259,6 @@ def get_or_create_footprints_layer(layer_name, group_name):
 
 def add_feature_to_layer(coordinates, feature_id, layer):
     """Add feature to layer."""
-
-    # source_crs = QgsProject.instance().crs()
-    # target_crs = layer.crs()
-    # if source_crs != target_crs:
-    #     transform = QgsCoordinateTransform(source_crs, target_crs, QgsProject.instance())
-    #     points = [transform.transform(QgsPointXY(point[0], point[1])) for point in coordinates]
-    # else:
-    #     transform = QgsCoordinateTransform(source_crs, target_crs, QgsProject.instance())
-    #     points = [transform.transform(QgsPointXY(point[0], point[1])) for point in coordinates]
-    #     # points = coordinates
 
     points = [QgsPointXY(point[0], point[1]) for point in coordinates]
     polygon = QgsGeometry.fromPolygonXY([points])
@@ -340,9 +324,10 @@ def zoom_selected_features(layer):
     """Zoom to selected features in layer."""
 
     if layer is not None:
-        box = layer.boundingBoxOfSelected()
+        source_bbox = layer.boundingBoxOfSelected()
+        bbox = get_bounding_box_transformed(source_bbox, layer.crs(), QgsCoordinateReferenceSystem(DEFAULT_TARGET_CRS))
         margin = 1
-        box.scale(1 + margin)
+        bbox.scale(1 + margin)
         canvas = iface.mapCanvas()
-        canvas.setExtent(box)
+        canvas.setExtent(bbox)
         canvas.refresh()
