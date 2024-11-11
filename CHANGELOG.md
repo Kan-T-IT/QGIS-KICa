@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/Kan-T-IT/QGIS-KICa/tree/HEAD)
+
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v0.4.0...HEAD)
+
+- update changelog [\#33](https://github.com/Kan-T-IT/QGIS-KICa/pull/33) ([fgomezdev](https://github.com/fgomezdev))
+
 ## [v0.4.0](https://github.com/Kan-T-IT/QGIS-KICa/tree/v0.4.0) (2024-04-05)
 
 [Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v0.3.0...v0.4.0)

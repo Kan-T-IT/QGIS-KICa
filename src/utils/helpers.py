@@ -1,4 +1,4 @@
-""" Helper functions module. """
+"""Helper functions module."""
 
 import webbrowser
 from typing import Optional

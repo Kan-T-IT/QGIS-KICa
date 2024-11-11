@@ -25,16 +25,6 @@ def get_token(username: str, password: str) -> str:
 
     payload = f'grant_type=password&username={username}&password={password}'
 
-    # try:
-    #     json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
-    #     data = json_response.get('data')
-    #     if data:
-    #         return data.get('accessToken')
-
-    # except requests.exceptions.HTTPError as ex:
-    #     message = tr('There was an error getting the token.')
-    #     raise AuthorizationError(f'{message}\n{ex}') from ex
-
     try:
         json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
         token = json_response.get('access_token')
