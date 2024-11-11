@@ -1,4 +1,4 @@
-""" Custom widgets module. """
+"""Custom widgets module."""
 
 import os
 
@@ -72,9 +72,11 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         name = f'<b>{self.provider[0:4].upper()}</b> {collection_name}'
         self.lbl_item_name.setText(name)
         forms.set_elided_text_to_label(self.lbl_item_name, name)
-
         self.set_thumbnail(thumbnail)
         self.key = incidence_angle
+
+        # Temporal disable the download button for UP42
+        self.btn_download.setEnabled(self.provider.lower() != 'up42')
 
     @property
     def name(self):
@@ -109,8 +111,19 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
     def download_images(self):
         """Download image action."""
 
-        download_url = catalogs.get_download_url(self.provider)
-        open_url(download_url)
+        data = {
+            'provider': self.provider,
+            'host_name': self.host,
+            'image_id': self.image_id,
+            'feature_data': self.feature_data,
+            'image_name': self.name,
+            'acquisition_date': self.acquisition_date,
+            'incidence_angle': self.incidence_angle,
+            'cloud_coverage': self.cloud_coverage,
+        }
+
+        download_url, params = catalogs.get_download_url(**data)
+        open_url(download_url, params)
 
     def view_details(self):
         """View details action."""
@@ -156,8 +169,11 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         image_path = params.get('image_path')
         image_id = params.get('image_id')
         layer_name = params.get('layer_name')
+        new_layer = None
 
         try:
-            results.create_quicklook(image_path=image_path, image_id=image_id, layer_name=layer_name)
+            new_layer = results.create_quicklook(image_path=image_path, image_id=image_id, layer_name=layer_name)
         except PluginError as ex:
             self.thread_quicklooks.error_signal.emit(tr('Could not get a preview'), str(ex))
+
+        return new_layer

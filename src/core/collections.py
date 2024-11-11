@@ -1,5 +1,4 @@
-""" Collections module. """
-
+"""Collections module."""
 
 from core.settings import PluginSettings
 from services import element84, microsoft, sentinel_hub, up42
@@ -39,11 +38,15 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
 
         filtered_collections = []
         for collection in collections:
-            collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
-            collection['min_resolution'] = collection['resolutionValue'].get('minimum')
+            # Excluding collections containing 'DTM', 'DSM' or 'Elevation' in name
+            string_to_validate = f"{collection['name']}{collection['title']}".lower()
+            if any(excluded_collection in string_to_validate for excluded_collection in ['dtm', 'dsm', 'elevation']):
+                continue
 
             # Filtering collections by type
             if collection['isIntegrated'] and collection['type'] == 'ARCHIVE':
+                collection['sensor_type'] = 'Optical' if collection['isOptical'] else 'Non-Optical'
+                collection['min_resolution'] = collection['resolutionValue'].get('minimum')
                 filtered_collections.append(collection)
 
         return filtered_collections

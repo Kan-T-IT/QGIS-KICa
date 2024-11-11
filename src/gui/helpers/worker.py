@@ -1,4 +1,4 @@
-""" Worker thread class. """
+"""Worker thread class."""
 
 from PyQt5.QtCore import QThread, pyqtSignal
 

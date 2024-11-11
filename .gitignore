@@ -160,13 +160,11 @@ cython_debug/
 
 src/.coverage
 src/help
-src/test
+src/tests
 env
 .ruff_cache/
 .vscode
 interrogate_*
-samples.py
-README_new.md
 dist/
 docs/build/*
 !docs/build/html/

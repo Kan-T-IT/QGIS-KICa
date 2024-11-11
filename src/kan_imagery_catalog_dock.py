@@ -14,11 +14,11 @@
 # (at your option) any later version.
 
 
-""" KAN Imagery Catalog QGIS plugin dock widget module. """
+"""KAN Imagery Catalog QGIS plugin dock widget module."""
 
 import os
 
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.QtCore import QDate, QSize, Qt, QVariant, pyqtSignal
 from PyQt5.QtGui import QIcon, QIntValidator, QMovie
 from PyQt5.QtWidgets import QListWidgetItem
@@ -125,6 +125,11 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.thread_get_catalogs.error_signal.connect(self.show_error)
         self.thread_get_catalogs.warning_signal.connect(self.show_warning)
 
+        self.thread_get_thumbnails = WorkerThread()
+        self.thread_get_thumbnails.progress_updated.connect(self.update_progress)
+        self.thread_get_thumbnails.error_signal.connect(self.show_error)
+        self.thread_get_thumbnails.warning_signal.connect(self.show_warning)
+
         self.thread_load_collections_cache = WorkerThread()
         self.thread_load_collections_cache.started.connect(lambda: self.set_form_state(is_busy=True, show_spinner=True))
         self.thread_load_collections_cache.finished.connect(
@@ -137,6 +142,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         self.error_signal.connect(self.show_error)
         self.warning_signal.connect(self.show_warning)
         self.info_signal.connect(self.show_info)
+
+        self.show_ended_search_message = True
 
     def show_info(self, title, message):
         """Show info message."""
@@ -207,9 +214,15 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         layer_list = ['  -----  ']
         if not self.chk_search_by_dataframe.isChecked():
-            layer_list = qgis_helper.get_single_polygon_layers()
+            layer_list = qgis_helper.get_valid_project_layers_to_search()
 
-        self.cbo_layer.addItems(layer_list)
+        model = QtGui.QStandardItemModel(0, 1)
+        for key, value in layer_list:
+            item = QtGui.QStandardItem(value)
+            item.setData(key, Qt.UserRole)
+            model.appendRow(item)
+
+        self.cbo_layer.setModel(model)
 
     def btn_settings_clicked(self):
         """Event handler for button 'btn_settings'."""
@@ -230,12 +243,19 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
 
         for provider in self.settings.get_active_providers():
             try:
-                _ = get_collections(provider, {})
+                self.collections = get_collections(provider, {})
             except ProviderError as ex:
-                self.show_warning(tr('Warning'), f'{provider}: {ex.message}')
+                self.warning_signal.emit(tr('Warning'), f'{provider}: {ex.message}')
+            except (AuthorizationError, HostError) as ex:
+                self.warning_signal.emit(tr('Warning'), ex.message)
+            except Exception as ex:
+                self.warning_signal.emit(tr('Error'), f'{provider}: {ex}')
 
     def show_collections_form(self):
         """Show form to select collections."""
+
+        if not self.collections:
+            return
 
         self.set_form_state(is_busy=True)
         frm = FormDefaultCollections(parent=self, closing_plugin=self.closing_plugin)
@@ -303,7 +323,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         cloud_coverage = self.slider_cloud_coverage.value()
         date_from = self.dt_date_from.date()
         date_to = self.dt_date_to.date()
-        layer_name = '' if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentText()
+        layer_id = None if self.chk_search_by_dataframe.isChecked() else self.cbo_layer.currentData()
 
         try:
             max_catalog_results = int(self.txt_max_catalog_results.text().strip())
@@ -311,29 +331,42 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             max_catalog_results = self.settings.max_catalog_results
             self.txt_max_catalog_results.setText(str(max_catalog_results))
 
+        self.show_ended_search_message = True
+        dict_bbox = {}
+        try:
+            if layer_id:
+                dict_bbox = qgis_helper.get_selected_feature_bounding_box(layer_id)
+            else:
+                dict_bbox = qgis_helper.get_bounding_box_canvas()
+        except DataNotFoundError as ex:
+            self.show_ended_search_message = False
+            qgis_helper.warning_message(
+                tr('Information'),
+                tr(str(ex)),
+            )
+            return
+
         params = {
-            'layer_name': layer_name,
+            'bounding_box': dict_bbox,
             'cloud_coverage': cloud_coverage,
             'date_from': date_from,
             'date_to': date_to,
             'max_catalog_results': max_catalog_results,
         }
 
+        self.thread_get_thumbnails.requestInterruption()
         self.thread_get_catalogs.start(self.get_results, params)
 
     def get_data_finished(self):
         """Event handler for thread 'thread_get_catalogs' finished."""
 
         self.btn_get_data.setText(tr('Search'))
-        qgis_helper.success_message('', tr('The catalog search has ended.'))
 
-    def get_results(self, layer_name, cloud_coverage, date_from, date_to, max_catalog_results):
+        if self.show_ended_search_message:
+            qgis_helper.success_message('', tr('The catalog search has ended.'))
+
+    def get_results(self, bounding_box, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
-
-        if layer_name:
-            dict_bbox = qgis_helper.get_bounding_box_selected_feature(layer_name)
-        else:
-            dict_bbox = qgis_helper.get_bounding_box_canvas()
 
         catalogs = []
         limit_features = self.settings.max_features_results
@@ -348,6 +381,8 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         collection_aux = {}
 
         active_providers = self.settings.get_active_providers()
+
+        catalogs_data_result = []
 
         for collection in self.settings.selected_collections:
             if collection['provider'] not in active_providers:
@@ -371,7 +406,12 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             datetime_params = f"{date_from.toString('yyyy-MM-ddT00:00:00Z')}/{date_to.toString('yyyy-MM-ddT23:59:59Z')}"
             search_params = {
                 'collections': collections,
-                'bbox': [dict_bbox['x_min'], dict_bbox['y_min'], dict_bbox['x_max'], dict_bbox['y_max']],
+                'bbox': [
+                    bounding_box.get('x_min'),
+                    bounding_box.get('y_min'),
+                    bounding_box.get('x_max'),
+                    bounding_box.get('y_max'),
+                ],
                 'datetime': datetime_params,
                 'limit': limit_features,
             }
@@ -398,22 +438,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     break
 
                 thumbnail = None
-                try:
-                    thumbnail = get_thumbnail(
-                        provider=provider,
-                        host_name=host_name,
-                        collection_name=catalog['aux_collection_name'],
-                        image_id=catalog['aux_image_id'],
-                        feature_data=catalog,
-                    )
-                except DataNotFoundError as ex:
-                    self.info_signal.emit(tr('Info'), str(ex))
-
-                except (AuthorizationError, HostError) as ex:
-                    self.warning_signal.emit(tr('Warning'), str(ex))
-
-                except (ProviderError, Exception) as ex:
-                    self.error_signal.emit(tr('Error'), str(ex))
 
                 dic_result = {
                     'coordinates': catalog['aux_coordinates'],
@@ -429,31 +453,75 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     'thumbnail': thumbnail,
                 }
 
+                catalogs_data_result.append(
+                    {
+                        'provider': provider,
+                        'host_name': host_name,
+                        'collection_name': catalog['aux_collection_name'],
+                        'image_id': catalog['aux_image_id'],
+                        'feature_data': catalog,
+                        'catalog_result': dic_result,
+                    }
+                )
+
                 self.thread_get_catalogs.progress_updated.emit(dic_result)
                 features_counter += 1
 
             catalog_counter += 1
 
+        self.thread_get_thumbnails.start(
+            self.get_thumbnails_in_background,
+            {'catalogs_data': catalogs_data_result},
+        )
+
+    def get_thumbnails_in_background(
+        self,
+        catalogs_data: list,
+    ):
+        for data in catalogs_data:
+            if self.thread_get_thumbnails.isInterruptionRequested():
+                break
+
+            thumbnail = get_thumbnail(
+                provider=data['provider'],
+                host_name=data['host_name'],
+                collection_name=data['collection_name'],
+                image_id=data['image_id'],
+                feature_data=data['feature_data'],
+            )
+            catalog_result = data['catalog_result']
+            catalog_result['thumbnail'] = thumbnail
+            self.thread_get_catalogs.progress_updated.emit(catalog_result)
+
     def update_progress(self, progress_data):
         """Update thread results in Toc and DockWidget."""
 
-        self.add_feature_to_footprints_layer(
-            coordinates=progress_data['coordinates'],
-            footprint_id=progress_data['image_id'],
-        )
+        if 'thumbnail' in progress_data and progress_data['thumbnail'] is not None:
+            feature_index = progress_data['feature_index']
+            for i in range(self.lst_data.count()):
+                item = self.lst_data.item(i)
+                custom_item = item.data(Qt.UserRole)
+                if custom_item.feature_index == feature_index:
+                    custom_item.set_thumbnail(progress_data['thumbnail'])
+                    break
+        else:
+            self.add_feature_to_footprints_layer(
+                coordinates=progress_data['coordinates'],
+                footprint_id=progress_data['image_id'],
+            )
 
-        self.add_item_to_results(
-            provider_name=progress_data['provider_name'],
-            host_name=progress_data['host_name'],
-            collection_name=progress_data['collection_name'],
-            feature_data=progress_data['feature_data'],
-            acquisition_date=progress_data['acquisition_date'],
-            incidence_angle=progress_data['incidence_angle'],
-            cloud_coverage=progress_data['cloud_coverage'],
-            image_id=progress_data['image_id'],
-            feature_index=progress_data['feature_index'],
-            thumbnail=progress_data['thumbnail'],
-        )
+            self.add_item_to_results(
+                provider_name=progress_data['provider_name'],
+                host_name=progress_data['host_name'],
+                collection_name=progress_data['collection_name'],
+                feature_data=progress_data['feature_data'],
+                acquisition_date=progress_data['acquisition_date'],
+                incidence_angle=progress_data['incidence_angle'],
+                cloud_coverage=progress_data['cloud_coverage'],
+                image_id=progress_data['image_id'],
+                feature_index=progress_data['feature_index'],
+                thumbnail=progress_data['thumbnail'],
+            )
 
     def add_item_to_results(
         self,

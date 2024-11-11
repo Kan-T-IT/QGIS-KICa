@@ -1,4 +1,4 @@
-""" Catalogs module. """
+"""Catalogs module."""
 
 from time import sleep
 
@@ -229,13 +229,59 @@ def get_download(provider: str, host_name: str, search_params: dict) -> dict:
     raise ProviderError(tr('Provider not found.'))
 
 
-def get_download_url(provider: str):
+def get_download_url(**kwargs):
     """Get catalog download url from a specific provider."""
 
+    provider = kwargs.get('provider')
+    params = None
     if provider == 'up42':
-        return up42.DOWNLOAD_URL
+        catalog_view = 'overview'
+        product_type = None
+        str_bbox = None
+        collection_name = None
+        cloud_coverage = None
+        start_date = None
+        end_date = None
+
+        feature_data = kwargs.get('feature_data')
+        if feature_data:
+            str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
+
+            # date range
+            aux_date = feature_data.get('aux_date')
+            start_date = aux_date[:10]
+            end_date = aux_date[:10]
+
+            # Cloud coverage
+            try:
+                cloud_coverage = int(round(float(feature_data.get('aux_cloud_coverage', 0)) * 100))
+            except (TypeError, ValueError):
+                cloud_coverage = 0
+
+            if 'properties' in feature_data:
+                properties = feature_data['properties']
+                collection_name = properties.get('collection')
+                product_type = properties['providerProperties'].get('productType')
+
+        params = {
+            'productType': product_type,
+            'catalogView': catalog_view,
+            'bbox': str_bbox,
+            'collections': collection_name,
+            'cloudCoverage': cloud_coverage,
+            'startDate': start_date,
+            'endDate': end_date,
+        }
+
+        return up42.DOWNLOAD_URL, params
 
     if provider == 'sentinel_hub':
-        return sentinel_hub.DOWNLOAD_URL
+        return sentinel_hub.DOWNLOAD_URL, params
+
+    if provider == 'microsoft':
+        return microsoft.DOWNLOAD_URL, params
+
+    if provider == 'element84':
+        return element84.DOWNLOAD_URL, params
 
     raise ProviderError(tr('Provider not found.'))
