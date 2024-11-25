@@ -246,7 +246,7 @@ def get_or_create_footprints_layer(layer_name, group_name):
         pr = footprints_layer.dataProvider()
         # Add layer fields
         fields = QgsFields()
-        fields.append(QgsField('ID', QVariant.String))
+        fields.append(QgsField(name='ID', type=QVariant.String))
         pr.addAttributes(fields)
         footprints_layer.updateFields()
         footprints_layer.triggerRepaint()
