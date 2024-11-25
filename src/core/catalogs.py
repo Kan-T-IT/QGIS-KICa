@@ -1,5 +1,6 @@
 """Catalogs module."""
 
+from datetime import datetime, timedelta
 from time import sleep
 
 from core.settings import PluginSettings
@@ -252,6 +253,10 @@ def get_download_url(**kwargs):
             start_date = aux_date[:10]
             end_date = aux_date[:10]
 
+            # Add one day to the end date
+            end_date = datetime.strptime(end_date, '%Y-%m-%d') + timedelta(days=1)
+            end_date = str(end_date)[:10]
+
             # Cloud coverage
             try:
                 cloud_coverage = int(round(float(feature_data.get('aux_cloud_coverage', 0)) * 100))
@@ -261,10 +266,10 @@ def get_download_url(**kwargs):
             if 'properties' in feature_data:
                 properties = feature_data['properties']
                 collection_name = properties.get('collection')
-                product_type = properties['providerProperties'].get('productType')
+                # product_type = properties['providerProperties'].get('productType')
 
         params = {
-            'productType': product_type,
+            # 'productType': product_type,
             'catalogView': catalog_view,
             'bbox': str_bbox,
             'collections': collection_name,
@@ -272,7 +277,6 @@ def get_download_url(**kwargs):
             'startDate': start_date,
             'endDate': end_date,
         }
-
         return up42.DOWNLOAD_URL, params
 
     if provider == 'sentinel_hub':
