@@ -55,9 +55,7 @@ def http_get(url, host_name='', headers={}, result_type='json', raise_for_status
 
         error_details = {
             'url': url,
-            'headers': headers,
             'response_text': response.text,
-            'response_headers': response.headers,
         }
         print(f'404 Error Details: {error_details}')
         raise HostError(f'{message}{host_name}.\n {error_message}')
@@ -99,10 +97,8 @@ def http_post(url, host_name='', headers={}, payload={}, result_type='json', rai
             error_message = json_message['error']['message']
         error_details = {
             'url': url,
-            'headers': headers,
             'payload': payload,
             'response_text': response.text,
-            'response_headers': response.headers,
         }
         print(f'404 Error Details: {error_details}')
         raise HostError(f'{message}{host_name}.\n {error_message}')
