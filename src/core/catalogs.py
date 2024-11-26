@@ -246,7 +246,9 @@ def get_download_url(**kwargs):
 
         feature_data = kwargs.get('feature_data')
         if feature_data:
-            str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
+            inv_bbox = feature_data.get('bbox', [])[::-1]
+            str_bbox = ','.join(map(str, inv_bbox))
+            # str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
 
             # date range
             aux_date = feature_data.get('aux_date')
@@ -277,6 +279,7 @@ def get_download_url(**kwargs):
             'startDate': start_date,
             'endDate': end_date,
         }
+
         return up42.DOWNLOAD_URL, params
 
     if provider == 'sentinel_hub':
