@@ -261,9 +261,13 @@ def get_download_url(**kwargs):
 
             # Cloud coverage
             try:
-                cloud_coverage = int(round(float(feature_data.get('aux_cloud_coverage', 0)) * 100))
+                _cloud_coverage = float(feature_data.get('aux_cloud_coverage', 0))
+                if _cloud_coverage < 1:
+                    cloud_coverage = _cloud_coverage * 100
             except (TypeError, ValueError):
-                cloud_coverage = 0
+                _cloud_coverage = 0
+
+            cloud_coverage = int(_cloud_coverage)
 
             if 'properties' in feature_data:
                 properties = feature_data['properties']
