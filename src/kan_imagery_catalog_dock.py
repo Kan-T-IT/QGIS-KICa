@@ -411,34 +411,36 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 break
 
             datetime_params = f"{date_from.toString('yyyy-MM-ddT00:00:00Z')}/{date_to.toString('yyyy-MM-ddT23:59:59Z')}"
-            search_params = {
-                'collections': collections,
-                'bbox': [
-                    bounding_box.get('x_min'),
-                    bounding_box.get('y_min'),
-                    bounding_box.get('x_max'),
-                    bounding_box.get('y_max'),
-                ],
-                'datetime': datetime_params,
-                'limit': limit_features,
-            }
+            for collection_name in collections:
+                # FIXME: Search collection one by one to avoid errors in Up42 provider
+                search_params = {
+                    'collections': [collection_name],
+                    'bbox': [
+                        bounding_box.get('x_min'),
+                        bounding_box.get('y_min'),
+                        bounding_box.get('x_max'),
+                        bounding_box.get('y_max'),
+                    ],
+                    'datetime': datetime_params,
+                    'limit': limit_features,
+                }
 
-            try:
-                catalogs = get_catalog(
-                    provider=provider,
-                    host_name=_host_name,
-                    search_params=search_params,
-                    max_cloud_coverage=cloud_coverage,
-                    collection_names=collection_aux.get(provider, []),
-                )
+                try:
+                    _catalogs = get_catalog(
+                        provider=provider,
+                        host_name=_host_name,
+                        search_params=search_params,
+                        max_cloud_coverage=cloud_coverage,
+                        collection_names=collection_aux.get(provider, []),
+                    )
+                    catalogs += _catalogs
+                except AuthorizationError as ex:
+                    self.warning_signal.emit(tr('Warning'), str(ex))
+                    continue
 
-            except AuthorizationError as ex:
-                self.warning_signal.emit(tr('Warning'), str(ex))
-                continue
-
-            except (ProviderError, HostError) as ex:
-                self.error_signal.emit(tr('Error'), str(ex))
-                continue
+                except (ProviderError, HostError) as ex:
+                    self.error_signal.emit(tr('Error'), str(ex))
+                    continue
 
             features_counter = 0
             for catalog in catalogs:
