@@ -1,14 +1,12 @@
 """Module for MicrosoftPlanetary API calls"""
 
 import json
-from functools import lru_cache
 
 from services.utils import http_get, http_post
 
 DOWNLOAD_URL = 'https://planetarycomputer.microsoft.com/'
 
 
-@lru_cache(maxsize=None)
 def get_collections():
     """Get collections from MicrosoftPlanetary API"""
     url = 'https://planetarycomputer.microsoft.com/api/stac/v1/collections'

@@ -46,6 +46,9 @@ ZIP_PATH=${BASE_DIR}"/dist/"${PLUGIN_NAME}".zip"
 message "REMOVE 'resource_rc' FROM .ui FILES (FIX: resources_rc error)"
 python remove_resources_ui.py
 
+# Copy the license file to the plugin folder
+message "Copying the LICENSE file to the source directory to include in compilation"
+cp ${BASE_DIR}/LICENSE ${SOURCE_DIR}
 
 message "COMPILE UI FILES (only ui dir files)"
 _files=${SOURCE_DIR}"/ui/*.ui"
@@ -83,6 +86,11 @@ find ${PLUGIN_DIR} -iname ".git" -prune -exec rm -Rf {} \;
 message "CREATE ${PLUGIN_NAME}.zip"
 rm -f ${ZIP_PATH}
 cd ${PLUGIN_DIR}/..; zip -9r ${ZIP_PATH} ${PLUGIN_NAME}
+
+# Remove the license file from the source directory
+message "LICENSE removed from source directory"
+rm ${SOURCE_DIR}/LICENSE
+
 
 # Copy debug config to remote plugin folder
 message "COPY .vscode "

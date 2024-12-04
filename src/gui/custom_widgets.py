@@ -75,9 +75,6 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         self.set_thumbnail(thumbnail)
         self.key = incidence_angle
 
-        # Temporal disable the download button for UP42
-        self.btn_download.setEnabled(self.provider.lower() != 'up42')
-
     @property
     def name(self):
         return self._name

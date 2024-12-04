@@ -2,7 +2,6 @@
 
 import json
 import requests
-from functools import lru_cache
 
 from services.utils import http_get, http_post
 from utils.exceptions import AuthorizationError
@@ -37,7 +36,6 @@ def get_token(username: str, password: str) -> str:
         raise AuthorizationError(f'{tr("There was an error getting the token.")}\n{ex}') from ex
 
 
-@lru_cache(maxsize=None)
 def get_collections():
     """Get collections from UP42 API"""
     url = 'https://api.up42.com/collections'
@@ -60,7 +58,6 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     return http_post(url, headers=headers, host_name=f'UP42: {host_name}', payload=payload)
 
 
-# @lru_cache(maxsize=None)
 def get_thumbnail(token: str, host_name: str, image_id: str):
     """Get catalog thumbnail from UP42 API"""
 

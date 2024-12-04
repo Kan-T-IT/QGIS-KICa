@@ -1,14 +1,12 @@
 """Module for Element84 API calls"""
 
 import json
-from functools import lru_cache
 
 from services.utils import http_get, http_post
 
 DOWNLOAD_URL = 'https://element84.com/'
 
 
-@lru_cache(maxsize=None)
 def get_collections():
     """Get collections from Element84 API"""
     url = 'https://earth-search.aws.element84.com/v1/collections'
