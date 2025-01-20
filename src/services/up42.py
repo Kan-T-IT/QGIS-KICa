@@ -12,7 +12,8 @@ DOWNLOAD_URL = 'https://console.up42.com/catalog/new-order'
 
 def get_token(username: str, password: str) -> str:
     """Get token from UP42 API"""
-    url = 'https://api.up42.com/oauth/token'
+
+    url = 'https://auth.up42.com/realms/public/protocol/openid-connect/token'
 
     if not username or not password:
         raise AuthorizationError(tr('UP42 credentials have not been configured.'))
@@ -22,7 +23,7 @@ def get_token(username: str, password: str) -> str:
         'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    payload = f'grant_type=password&username={username}&password={password}'
+    payload = f'grant_type=password&client_id=up42-api&username={username}&password={password}'
 
     try:
         json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
