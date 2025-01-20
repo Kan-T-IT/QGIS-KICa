@@ -1,5 +1,5 @@
-:py:mod:`src.gui.helpers.forms`
-===============================
+src.gui.helpers.forms
+=====================
 
 .. py:module:: src.gui.helpers.forms
 
@@ -9,12 +9,8 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -28,6 +24,8 @@ Functions
    src.gui.helpers.forms.check_int_not_empty
 
 
+Module Contents
+---------------
 
 .. py:function:: load_combobox(obj_combobox, key_member, value_member, lst_data, block_signals=False)
 
@@ -67,3 +65,5 @@ Functions
 .. py:function:: check_int_not_empty(txt_widget)
 
    Check if the value is an integer and greater than 0 in a QLineEdit.
+
+

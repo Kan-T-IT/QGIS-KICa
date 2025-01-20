@@ -1,16 +1,18 @@
-:py:mod:`src.ui`
-================
+src.ui
+======
 
 .. py:module:: src.ui
 
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   custom_widget_list_item/index.rst
-   frm_catalog_info/index.rst
-   frm_default_collections/index.rst
-   frm_settings/index.rst
+   /autoapi/src/ui/custom_widget_list_item/index
+   /autoapi/src/ui/frm_catalog_info/index
+   /autoapi/src/ui/frm_default_collections/index
+   /autoapi/src/ui/frm_settings/index
+
+

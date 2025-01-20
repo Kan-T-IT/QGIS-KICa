@@ -1,34 +1,32 @@
-:py:mod:`src.ui.custom_widget_list_item`
-========================================
+src.ui.custom_widget_list_item
+==============================
 
 .. py:module:: src.ui.custom_widget_list_item
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   src.ui.custom_widget_list_item.Ui_CustomWidgetListItem
-
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
    src.ui.custom_widget_list_item.app
 
 
+Classes
+-------
+
+.. autoapisummary::
+
+   src.ui.custom_widget_list_item.Ui_CustomWidgetListItem
+
+
+Module Contents
+---------------
+
 .. py:class:: Ui_CustomWidgetListItem
 
-
    Bases: :py:obj:`object`
+
 
    .. py:method:: setupUi(CustomWidgetListItem)
 
@@ -36,5 +34,5 @@ Attributes
    .. py:method:: retranslateUi(CustomWidgetListItem)
 
 
-
 .. py:data:: app
+

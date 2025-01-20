@@ -1,25 +1,11 @@
-:py:mod:`src.resources`
-=======================
+src.resources
+=============
 
 .. py:module:: src.resources
 
 
-Module Contents
----------------
-
-
-Functions
-~~~~~~~~~
-
-.. autoapisummary::
-
-   src.resources.qInitResources
-   src.resources.qCleanupResources
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
@@ -31,36 +17,41 @@ Attributes
    src.resources.rcc_version
 
 
+Functions
+---------
+
+.. autoapisummary::
+
+   src.resources.qInitResources
+   src.resources.qCleanupResources
+
+
+Module Contents
+---------------
+
 .. py:data:: qt_resource_data
    :value: b'\x00\x00\x16\x8b\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00...
-
 
 
 .. py:data:: qt_resource_name
    :value: b'\x00\x08\naZ\xa7\x00i\x00c\x00o\x00n\x00.\x00p\x00n\x00g\x00\t\nlxC\x00r\x00e\x00s\x00o\x00u\x0...
 
 
-
 .. py:data:: qt_resource_struct_v1
    :value: b'\x00\x00\x00\x00\x00\x02\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0...
-
 
 
 .. py:data:: qt_resource_struct_v2
    :value: b'\x00\x00\x00\x00\x00\x02\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0...
 
 
-
 .. py:data:: qt_version
-
-
 
 .. py:data:: rcc_version
    :value: 1
 
 
-
 .. py:function:: qInitResources()
 
-
 .. py:function:: qCleanupResources()
+

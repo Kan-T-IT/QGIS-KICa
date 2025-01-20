@@ -1,26 +1,20 @@
-:py:mod:`src.gui`
-=================
+src.gui
+=======
 
 .. py:module:: src.gui
 
 
-Subpackages
------------
-.. toctree::
-   :titlesonly:
-   :maxdepth: 3
-
-   helpers/index.rst
-
-
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   custom_widgets/index.rst
-   form_base/index.rst
-   form_catalog_info/index.rst
-   form_default_collections/index.rst
-   form_settings/index.rst
+   /autoapi/src/gui/custom_widgets/index
+   /autoapi/src/gui/form_base/index
+   /autoapi/src/gui/form_catalog_info/index
+   /autoapi/src/gui/form_default_collections/index
+   /autoapi/src/gui/form_settings/index
+   /autoapi/src/gui/helpers/index
+
+

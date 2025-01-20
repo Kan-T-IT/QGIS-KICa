@@ -1,0 +1,57 @@
+src.gui.helpers.worker
+======================
+
+.. py:module:: src.gui.helpers.worker
+
+.. autoapi-nested-parse::
+
+   Worker thread class.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.gui.helpers.worker.WorkerThread
+
+
+Module Contents
+---------------
+
+.. py:class:: WorkerThread
+
+   Bases: :py:obj:`PyQt5.QtCore.QThread`
+
+
+   Worker thread class.
+
+
+   .. py:attribute:: finished
+
+
+   .. py:attribute:: progress_updated
+
+
+   .. py:attribute:: error_signal
+
+
+   .. py:attribute:: warning_signal
+
+
+   .. py:attribute:: info_signal
+
+
+   .. py:method:: start(process, dict_params)
+
+      Start thread.
+
+
+
+   .. py:method:: run()
+
+      Run thread.
+
+
+

@@ -1,5 +1,5 @@
-:py:mod:`src.utils.exceptions`
-==============================
+src.utils.exceptions
+====================
 
 .. py:module:: src.utils.exceptions
 
@@ -9,52 +9,75 @@
 
 
 
+Exceptions
+----------
+
+.. autoapisummary::
+
+   src.utils.exceptions.PluginError
+   src.utils.exceptions.ProviderError
+   src.utils.exceptions.HostError
+   src.utils.exceptions.AuthorizationError
+   src.utils.exceptions.SettingsError
+   src.utils.exceptions.DataNotFoundError
+
+
 Module Contents
 ---------------
 
 .. py:exception:: PluginError(message='', message_type=MessageType.CRITICAL)
 
-
    Bases: :py:obj:`Exception`
+
 
    Base class for custom exceptions.
 
 
-.. py:exception:: ProviderError(message='Error to get results from provider.')
+   .. py:attribute:: message_type
 
+
+   .. py:attribute:: message
+      :value: ''
+
+
+
+.. py:exception:: ProviderError(message=tr('Error to get results from provider.'))
 
    Bases: :py:obj:`PluginError`
+
 
    Custom exception for provider related errors.
 
 
-.. py:exception:: HostError(message='Error to get results from host.')
-
+.. py:exception:: HostError(message=tr('Error to get results from host.'))
 
    Bases: :py:obj:`PluginError`
+
 
    Custom exception for host related errors.
 
 
-.. py:exception:: AuthorizationError(message='Error to get results from authorization.')
-
+.. py:exception:: AuthorizationError(message=tr('Error to get results from authorization.'))
 
    Bases: :py:obj:`PluginError`
+
 
    Custom exception for authorization related errors.
 
 
-.. py:exception:: SettingsError(message='Please check the plugin settings.')
-
+.. py:exception:: SettingsError(message=tr('Please check the plugin settings.'))
 
    Bases: :py:obj:`PluginError`
+
 
    Custom exception for settings related errors.
 
 
-.. py:exception:: DataNotFoundError(message='No data found.')
-
+.. py:exception:: DataNotFoundError(message=tr('No data found.'))
 
    Bases: :py:obj:`PluginError`
 
+
    Custom exception for data related errors.
+
+

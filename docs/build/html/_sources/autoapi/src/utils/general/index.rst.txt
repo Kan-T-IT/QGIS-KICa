@@ -1,5 +1,5 @@
-:py:mod:`src.utils.general`
-===========================
+src.utils.general
+=================
 
 .. py:module:: src.utils.general
 
@@ -9,12 +9,16 @@
 
 
 
-Module Contents
----------------
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.utils.general.PLUGIN_NAME
 
 
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -23,14 +27,8 @@ Functions
    src.utils.general.clean_temporary_files
 
 
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   src.utils.general.PLUGIN_NAME
-
+Module Contents
+---------------
 
 .. py:function:: _get_plugin_name(missing='KAN Imagery Catalog')
 
@@ -43,7 +41,11 @@ Attributes
 
 
 .. py:data:: PLUGIN_NAME
-
+   :value: 'KAN Imagery Catalog'
 
 
 .. py:function:: clean_temporary_files()
+
+   Clean temporary files
+
+

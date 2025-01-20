@@ -1,5 +1,5 @@
-:py:mod:`src`
-=============
+src
+===
 
 .. py:module:: src
 
@@ -9,44 +9,33 @@
 
 
 
-Subpackages
------------
-.. toctree::
-   :titlesonly:
-   :maxdepth: 3
-
-   core/index.rst
-   gui/index.rst
-   services/index.rst
-   test/index.rst
-   ui/index.rst
-   utils/index.rst
-
-
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   kan_imagery_catalog/index.rst
-   kan_imagery_catalog_dock/index.rst
-   plugin_upload/index.rst
-   resources/index.rst
-
-
-Package Contents
-----------------
+   /autoapi/src/core/index
+   /autoapi/src/gui/index
+   /autoapi/src/kan_imagery_catalog/index
+   /autoapi/src/kan_imagery_catalog_dock/index
+   /autoapi/src/plugin_upload/index
+   /autoapi/src/resources/index
+   /autoapi/src/services/index
+   /autoapi/src/ui/index
+   /autoapi/src/utils/index
 
 
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    src.classFactory
 
 
+Package Contents
+----------------
 
 .. py:function:: classFactory(iface)
 
@@ -54,3 +43,5 @@ Functions
 
    :param iface: A QGIS interface instance.
    :type iface: QgsInterface
+
+

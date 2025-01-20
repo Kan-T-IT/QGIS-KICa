@@ -1,20 +1,27 @@
-:py:mod:`src.utils.debug`
-=========================
+src.utils.debug
+===============
 
 .. py:module:: src.utils.debug
 
+.. autoapi-nested-parse::
 
-Module Contents
----------------
+   Debugging utilities module.
+
 
 
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    src.utils.debug.pyqt_set_trace
 
 
+Module Contents
+---------------
 
 .. py:function:: pyqt_set_trace()
+
+   Set a tracepoint in the Python debugger that works with Qt.
+
+

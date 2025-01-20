@@ -1,15 +1,19 @@
-:py:mod:`src.services`
-======================
+src.services
+============
 
 .. py:module:: src.services
 
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   sentinel_hub/index.rst
-   up42/index.rst
-   utils/index.rst
+   /autoapi/src/services/element84/index
+   /autoapi/src/services/microsoft/index
+   /autoapi/src/services/sentinel_hub/index
+   /autoapi/src/services/up42/index
+   /autoapi/src/services/utils/index
+
+

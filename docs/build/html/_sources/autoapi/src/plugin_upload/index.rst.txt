@@ -1,5 +1,5 @@
-:py:mod:`src.plugin_upload`
-===========================
+src.plugin_upload
+=================
 
 .. py:module:: src.plugin_upload
 
@@ -11,22 +11,8 @@
 
 
 
-Module Contents
----------------
-
-
-Functions
-~~~~~~~~~
-
-.. autoapisummary::
-
-   src.plugin_upload.main
-   src.plugin_upload.hide_password
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
@@ -38,29 +24,36 @@ Attributes
    src.plugin_upload.parser
 
 
+Functions
+---------
+
+.. autoapisummary::
+
+   src.plugin_upload.main
+   src.plugin_upload.hide_password
+
+
+Module Contents
+---------------
+
 .. py:data:: PROTOCOL
    :value: 'https'
-
 
 
 .. py:data:: SERVER
    :value: 'plugins.qgis.org'
 
 
-
 .. py:data:: PORT
    :value: '443'
-
 
 
 .. py:data:: ENDPOINT
    :value: '/plugins/RPC2/'
 
 
-
 .. py:data:: VERBOSE
    :value: False
-
 
 
 .. py:function:: main(parameters, arguments)
@@ -83,3 +76,4 @@ Attributes
 
 
 .. py:data:: parser
+

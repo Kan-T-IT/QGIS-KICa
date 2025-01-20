@@ -1,5 +1,5 @@
-:py:mod:`src.services.up42`
-===========================
+src.services.up42
+=================
 
 .. py:module:: src.services.up42
 
@@ -9,12 +9,16 @@
 
 
 
-Module Contents
----------------
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.services.up42.DOWNLOAD_URL
 
 
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -25,27 +29,14 @@ Functions
    src.services.up42.get_quicklook
 
 
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   src.services.up42.REQUEST_TIMEOUT
-   src.services.up42.DOWNLOAD_URL
-
-
-.. py:data:: REQUEST_TIMEOUT
-   :value: 120
-
-
+Module Contents
+---------------
 
 .. py:data:: DOWNLOAD_URL
    :value: 'https://console.up42.com/catalog/new-order'
 
 
-
-.. py:function:: get_token(project_id: str, api_key: str) -> str
+.. py:function:: get_token(username: str, password: str) -> str
 
    Get token from UP42 API
 
@@ -68,3 +59,5 @@ Attributes
 .. py:function:: get_quicklook(token: str, host_name: str, image_id: str)
 
    Get catalog quicklook from UP42 API
+
+

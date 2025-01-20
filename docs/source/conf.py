@@ -28,11 +28,11 @@ def setup(app):
 # -- Project information -----------------------------------------------------
 
 project = 'KAN Imagery Catalog'
-copyright = '2023'
-author = 'Fernando D. Gómez :: Kan Territory & IT'
+copyright = '2025'
+author = 'Kan Territory & IT'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.1.4'
+release = 'v1.6.1'
 
 
 # -- General configuration ---------------------------------------------------

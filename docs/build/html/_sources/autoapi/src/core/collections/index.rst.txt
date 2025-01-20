@@ -1,5 +1,5 @@
-:py:mod:`src.core.collections`
-==============================
+src.core.collections
+====================
 
 .. py:module:: src.core.collections
 
@@ -9,19 +9,19 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    src.core.collections.get_collections
 
 
+Module Contents
+---------------
 
 .. py:function:: get_collections(provider: str, search_params: dict = None) -> dict
 
    Get collections from a specific provider.
+
+

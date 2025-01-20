@@ -1,5 +1,5 @@
-:py:mod:`src.services.sentinel_hub`
-===================================
+src.services.sentinel_hub
+=========================
 
 .. py:module:: src.services.sentinel_hub
 
@@ -9,18 +9,31 @@
 
 
 
-Module Contents
----------------
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.services.sentinel_hub.DOWNLOAD_URL
 
 
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    src.services.sentinel_hub.get_token
-   src.services.sentinel_hub.get_token_info
+   src.services.sentinel_hub.get_collections
+   src.services.sentinel_hub.get_catalog
+   src.services.sentinel_hub.get_thumbnail
+   src.services.sentinel_hub.get_quicklook
 
+
+Module Contents
+---------------
+
+.. py:data:: DOWNLOAD_URL
+   :value: 'https://www.sentinel-hub.com/'
 
 
 .. py:function:: get_token(client_id, client_secret)
@@ -28,6 +41,23 @@ Functions
    Get token from Sentinel Hub API
 
 
-.. py:function:: get_token_info(client_id)
+.. py:function:: get_collections(token)
 
-   Get token info from Sentinel Hub API
+   Get collections from Sentinel Hub API
+
+
+.. py:function:: get_catalog(token: str, host_name: str, search_params: dict) -> dict
+
+   Get catalog data from Sentinel Hub API
+
+
+.. py:function:: get_thumbnail(token: str, host_name: str, image_id: str)
+
+   Get catalog thumbnail from Sentinel Hub API
+
+
+.. py:function:: get_quicklook(token: str, host_name: str, image_id: str)
+
+   Get catalog quicklook from Sentinel Hub API
+
+
