@@ -1,9 +1,29 @@
 # Changelog
 
-## [Unreleased](https://github.com/Kan-T-IT/QGIS-KICa/tree/HEAD)
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.6.1...HEAD)
 
-[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v0.4.0...HEAD)
+- Update UP42 authentication mechanism [\#42](https://github.com/Kan-T-IT/QGIS-KICa/issues/42)
+- Python Error on Date Format When Accessing UP42 Console [\#38](https://github.com/Kan-T-IT/QGIS-KICa/issues/38)
 
+## [v1.6.1](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.6.1) (2025-01-22)
+
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.03...v1.6.1)
+
+- Version of Plug-In naming does not fit technical version [\#40](https://github.com/Kan-T-IT/QGIS-KICa/issues/40)
+- Version of the Plug-In is not the same as naming [\#39](https://github.com/Kan-T-IT/QGIS-KICa/issues/39)
+- Open console of UP42 with scene selected  [\#28](https://github.com/Kan-T-IT/QGIS-KICa/issues/28)
+
+- v1.6.1 [\#36](https://github.com/Kan-T-IT/QGIS-KICa/pull/36) ([fgomezdev](https://github.com/fgomezdev))
+
+## [v1.03](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.03) (2024-11-11)
+
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.06...v1.03)
+
+## [v1.06](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.06) (2024-11-11)
+
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v0.4.0...v1.06)
+
+- v1.03 [\#35](https://github.com/Kan-T-IT/QGIS-KICa/pull/35) ([fgomezdev](https://github.com/fgomezdev))
 - update changelog [\#33](https://github.com/Kan-T-IT/QGIS-KICa/pull/33) ([fgomezdev](https://github.com/fgomezdev))
 
 ## [v0.4.0](https://github.com/Kan-T-IT/QGIS-KICa/tree/v0.4.0) (2024-04-05)
