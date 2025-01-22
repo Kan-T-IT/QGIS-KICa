@@ -1,14 +1,28 @@
-:py:mod:`src.utils.constants`
-=============================
+src.utils.constants
+===================
 
 .. py:module:: src.utils.constants
 
+.. autoapi-nested-parse::
 
-Module Contents
----------------
+   Constants module.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.utils.constants.RESULTS_GROUP_NAME
+   src.utils.constants.RESULTS_LAYER_NAME
+   src.utils.constants.DEFAULT_MESSAGE_DURATION
+   src.utils.constants.DEFAULT_SOURCE_CRS
+   src.utils.constants.DEFAULT_TARGET_CRS
+
 
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
@@ -17,78 +31,70 @@ Classes
    src.utils.constants.MessageType
 
 
-
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   src.utils.constants.DEBUG_MODE
-   src.utils.constants.RESULTS_GROUP_NAME
-   src.utils.constants.RESULTS_LAYER_NAME
-
-
-.. py:data:: DEBUG_MODE
-   :value: True
-
-
+Module Contents
+---------------
 
 .. py:data:: RESULTS_GROUP_NAME
    :value: 'kan_imagery_catalog_preview'
-
 
 
 .. py:data:: RESULTS_LAYER_NAME
    :value: 'kan_imagery_catalog_footprints'
 
 
+.. py:data:: DEFAULT_MESSAGE_DURATION
+   :value: 5
+
+
+.. py:data:: DEFAULT_SOURCE_CRS
+   :value: 'EPSG:3857'
+
+
+.. py:data:: DEFAULT_TARGET_CRS
+   :value: 'EPSG:4326'
+
 
 .. py:class:: CustomEnum
 
-
    Bases: :py:obj:`enum.Enum`
 
-   Generic enumeration.
 
-   Derive from this class to define new enumerations.
+   Custom Enum class.
+
 
    .. py:method:: __repr__() -> str
 
-      Return repr(self).
+      Override the default repr behavior.
+
 
 
    .. py:method:: __str__() -> str
 
-      Return str(self).
+      Override the default str behavior.
+
 
 
    .. py:method:: __eq__(other)
 
-      Return self==value.
+      Override the default eq behavior.
 
-
-   .. py:method:: listar()
-      :classmethod:
 
 
    .. py:method:: to_dict() -> dict
       :classmethod:
 
 
-   .. py:method:: to_key_value_list() -> list
-      :classmethod:
+      Convert enum to dict.
 
 
 
 .. py:class:: StyleVariables
 
-
    Bases: :py:obj:`CustomEnum`
 
-   Generic enumeration.
 
-   Derive from this class to define new enumerations.
+   Style variables for qss stylesheet.
+
 
    .. py:attribute:: FONT_SIZE_DEFAULT
       :value: '12px'
@@ -125,8 +131,9 @@ Attributes
 
 
 
-
 .. py:class:: MessageType
+
+   Qgis Message types.
 
 
    .. py:attribute:: INFO
@@ -146,3 +153,6 @@ Attributes
 
    .. py:attribute:: SUCCESS
       :value: 3
+
+
+

@@ -368,7 +368,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
     def get_results(self, bounding_box, cloud_coverage, date_from, date_to, max_catalog_results):
         """Get results from selected catalogs with selected filters."""
 
-        catalogs = []
         limit_features = self.settings.max_features_results
 
         if not (isinstance(self.settings.selected_collections, list)) or len(self.settings.selected_collections) == 0:
@@ -385,18 +384,26 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
         catalogs_data_result = []
 
         for collection in self.settings.selected_collections:
-            if collection['provider'] not in active_providers:
+            col_provider = collection['provider']
+
+            if col_provider not in active_providers:
                 continue
 
             # Save collection name and title to use in results list
-            collection_aux[collection['name']] = collection['title']
+            if col_provider not in collection_aux:
+                collection_aux[col_provider] = {}
+
+            if collection['name'] not in collection_aux[col_provider]:
+                collection_aux[col_provider][collection['name']] = collection['title']
+
             host_name = collection['hostName']
             if host_name not in dict_collections:
-                dict_collections[host_name] = {'provider': collection['provider'], 'collections': []}
+                dict_collections[host_name] = {'provider': col_provider, 'collections': []}
 
             dict_collections[host_name]['collections'].append(collection['name'])
 
-        for host, values in dict_collections.items():
+        for _host_name, values in dict_collections.items():
+            catalogs = []
             provider = values['provider']
             collections = values['collections']
 
@@ -404,33 +411,36 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 break
 
             datetime_params = f"{date_from.toString('yyyy-MM-ddT00:00:00Z')}/{date_to.toString('yyyy-MM-ddT23:59:59Z')}"
-            search_params = {
-                'collections': collections,
-                'bbox': [
-                    bounding_box.get('x_min'),
-                    bounding_box.get('y_min'),
-                    bounding_box.get('x_max'),
-                    bounding_box.get('y_max'),
-                ],
-                'datetime': datetime_params,
-                'limit': limit_features,
-            }
+            for collection_name in collections:
+                # FIXME: Search collection one by one to avoid errors in Up42 provider
+                search_params = {
+                    'collections': [collection_name],
+                    'bbox': [
+                        bounding_box.get('x_min'),
+                        bounding_box.get('y_min'),
+                        bounding_box.get('x_max'),
+                        bounding_box.get('y_max'),
+                    ],
+                    'datetime': datetime_params,
+                    'limit': limit_features,
+                }
 
-            try:
-                catalogs = get_catalog(
-                    provider=provider,
-                    host_name=host,
-                    search_params=search_params,
-                    max_cloud_coverage=cloud_coverage,
-                    collection_names=collection_aux,
-                )
-            except AuthorizationError as ex:
-                self.warning_signal.emit(tr('Warning'), str(ex))
-                continue
+                try:
+                    _catalogs = get_catalog(
+                        provider=provider,
+                        host_name=_host_name,
+                        search_params=search_params,
+                        max_cloud_coverage=cloud_coverage,
+                        collection_names=collection_aux.get(provider, []),
+                    )
+                    catalogs += _catalogs
+                except AuthorizationError as ex:
+                    self.warning_signal.emit(tr('Warning'), str(ex))
+                    continue
 
-            except (ProviderError, HostError) as ex:
-                self.error_signal.emit(tr('Error'), str(ex))
-                continue
+                except (ProviderError, HostError) as ex:
+                    self.error_signal.emit(tr('Error'), str(ex))
+                    continue
 
             features_counter = 0
             for catalog in catalogs:
@@ -442,7 +452,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 dic_result = {
                     'coordinates': catalog['aux_coordinates'],
                     'provider_name': provider,
-                    'host_name': host,
+                    'host_name': _host_name,
                     'collection_name': catalog['aux_collection_name'],
                     'feature_data': catalog,
                     'acquisition_date': catalog['aux_date'],
@@ -456,7 +466,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                 catalogs_data_result.append(
                     {
                         'provider': provider,
-                        'host_name': host_name,
+                        'host_name': _host_name,
                         'collection_name': catalog['aux_collection_name'],
                         'image_id': catalog['aux_image_id'],
                         'feature_data': catalog,

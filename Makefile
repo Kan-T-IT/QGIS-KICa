@@ -5,8 +5,7 @@
 #							 -------------------
 #		begin				: 2023-07-14
 #		git sha				: $Format:%H$
-#		copyright			: (C) 2023 by Fernando D. Gómez :: KAN Territory & IT
-#		email				: fgomezdev@gmail.com
+#		copyright			: (C) 2025 by KAN Territory & IT
 # ***************************************************************************/
 #
 #/***************************************************************************

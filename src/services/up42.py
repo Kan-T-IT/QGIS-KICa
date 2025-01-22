@@ -2,7 +2,6 @@
 
 import json
 import requests
-from functools import lru_cache
 
 from services.utils import http_get, http_post
 from utils.exceptions import AuthorizationError
@@ -13,7 +12,8 @@ DOWNLOAD_URL = 'https://console.up42.com/catalog/new-order'
 
 def get_token(username: str, password: str) -> str:
     """Get token from UP42 API"""
-    url = 'https://api.up42.com/oauth/token'
+
+    url = 'https://auth.up42.com/realms/public/protocol/openid-connect/token'
 
     if not username or not password:
         raise AuthorizationError(tr('UP42 credentials have not been configured.'))
@@ -23,7 +23,7 @@ def get_token(username: str, password: str) -> str:
         'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    payload = f'grant_type=password&username={username}&password={password}'
+    payload = f'grant_type=password&client_id=up42-api&username={username}&password={password}'
 
     try:
         json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
@@ -37,7 +37,6 @@ def get_token(username: str, password: str) -> str:
         raise AuthorizationError(f'{tr("There was an error getting the token.")}\n{ex}') from ex
 
 
-@lru_cache(maxsize=None)
 def get_collections():
     """Get collections from UP42 API"""
     url = 'https://api.up42.com/collections'
@@ -60,7 +59,6 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     return http_post(url, headers=headers, host_name=f'UP42: {host_name}', payload=payload)
 
 
-# @lru_cache(maxsize=None)
 def get_thumbnail(token: str, host_name: str, image_id: str):
     """Get catalog thumbnail from UP42 API"""
 

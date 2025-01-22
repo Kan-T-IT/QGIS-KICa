@@ -1,5 +1,5 @@
-:py:mod:`src.core.settings`
-===========================
+src.core.settings
+=================
 
 .. py:module:: src.core.settings
 
@@ -9,84 +9,71 @@
 
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    src.core.settings.PluginSettings
 
 
-
+Module Contents
+---------------
 
 .. py:class:: PluginSettings
 
-
    PluginSettings class.
-
-   .. py:property:: provider_settings
-      :type: dict
-
-
-   .. py:property:: selected_collections
-      :type: list
-
-
-   .. py:property:: last_cleaning_date
-      :type: datetime.datetime
 
 
    .. py:attribute:: language
-      :type: str
+      :type:  str
       :value: 'english'
 
 
 
    .. py:attribute:: back_days
-      :type: int
+      :type:  int
       :value: 20
 
 
 
    .. py:attribute:: cloud_coverage
-      :type: int
+      :type:  int
       :value: 10
 
 
 
    .. py:attribute:: max_catalog_results
-      :type: int
+      :type:  int
       :value: 10
 
 
 
    .. py:attribute:: max_features_results
-      :type: int
+      :type:  int
       :value: 5
 
 
 
    .. py:attribute:: download_path
-      :type: str
+      :type:  str
       :value: './downloads'
 
 
 
    .. py:attribute:: _last_cleaning_date
-      :type: Optional[str]
+      :type:  Optional[str]
+      :value: None
 
 
 
    .. py:attribute:: _provider_settings
-      :type: dict
-
+      :type:  dict
 
 
    .. py:attribute:: _selected_collections
-      :type: list
+      :type:  list
+      :value: []
 
 
 
@@ -95,9 +82,11 @@ Classes
       Init settings.
 
 
+
    .. py:method:: save()
 
       Save settings.
+
 
 
    .. py:method:: clean_temporary_files_if_needed()
@@ -106,6 +95,31 @@ Classes
       the days before the last activity date and delete files.
 
 
+
    .. py:method:: update_last_cleaning_date()
 
       Update last activity date.
+
+
+
+   .. py:method:: get_active_providers() -> list
+
+      Get active providers.
+
+
+
+   .. py:property:: provider_settings
+      :type: dict
+
+
+
+   .. py:property:: selected_collections
+      :type: list
+
+
+
+   .. py:property:: last_cleaning_date
+      :type: datetime.datetime
+
+
+

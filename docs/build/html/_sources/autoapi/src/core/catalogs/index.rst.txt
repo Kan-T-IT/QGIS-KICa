@@ -1,5 +1,5 @@
-:py:mod:`src.core.catalogs`
-===========================
+src.core.catalogs
+=================
 
 .. py:module:: src.core.catalogs
 
@@ -9,15 +9,12 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
+   src.core.catalogs.get_custom_query
    src.core.catalogs.get_catalog
    src.core.catalogs.get_catalogs_from_collection
    src.core.catalogs.get_thumbnail
@@ -26,8 +23,15 @@ Functions
    src.core.catalogs.get_download_url
 
 
+Module Contents
+---------------
 
-.. py:function:: get_catalog(provider: str, host_name: str, search_params: dict) -> dict
+.. py:function:: get_custom_query(provider: str, max_cloud_coverage: int) -> dict
+
+   Get custom query for a specific provider.
+
+
+.. py:function:: get_catalog(provider: str, host_name: str, search_params: dict, max_cloud_coverage: int, collection_names: list) -> dict
 
    Get catalog data from a specific provider.
 
@@ -37,12 +41,12 @@ Functions
    Get catalog list from a specific provider.
 
 
-.. py:function:: get_thumbnail(provider: str, host_name: str, image_id: str) -> dict
+.. py:function:: get_thumbnail(provider: str, collection_name: str, host_name: str, image_id: str, feature_data: dict) -> dict
 
    Get catalog thumbnail from a specific provider.
 
 
-.. py:function:: get_quicklook(provider: str, host_name: str, image_id: str) -> dict
+.. py:function:: get_quicklook(provider: str, host_name: str, image_id: str, feature_data: dict) -> dict
 
    Get catalog quicklook from a specific provider.
 
@@ -52,6 +56,8 @@ Functions
    Get catalog download from a specific provider.
 
 
-.. py:function:: get_download_url(provider: str)
+.. py:function:: get_download_url(**kwargs)
 
    Get catalog download url from a specific provider.
+
+

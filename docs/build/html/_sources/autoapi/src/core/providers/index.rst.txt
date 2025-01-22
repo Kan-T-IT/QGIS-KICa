@@ -1,5 +1,5 @@
-:py:mod:`src.core.providers`
-============================
+src.core.providers
+==================
 
 .. py:module:: src.core.providers
 
@@ -9,19 +9,19 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
    src.core.providers.check_credentials
 
 
+Module Contents
+---------------
 
 .. py:function:: check_credentials(provider: str, credentials: dict) -> bool
 
    Check credentials from a specific provider.
+
+

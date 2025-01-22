@@ -1,7 +1,6 @@
 """Module for Sentinel Hub API calls"""
 
 import requests
-from functools import lru_cache
 
 from services.utils import http_get, http_post
 from utils.exceptions import AuthorizationError
@@ -39,7 +38,6 @@ def get_token(client_id, client_secret):
         raise AuthorizationError(f'{message}\n{ex}') from ex
 
 
-@lru_cache(maxsize=None)
 def get_collections(token):
     """Get collections from Sentinel Hub API"""
 

@@ -1,5 +1,5 @@
-:py:mod:`src.core.results`
-==========================
+src.core.results
+================
 
 .. py:module:: src.core.results
 
@@ -9,25 +9,19 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
-   src.core.results.create_results_layers
    src.core.results.create_quicklook
 
 
+Module Contents
+---------------
 
-.. py:function:: create_results_layers(provider_name, host, feature_data, layer_name, group_name, footprints_layer)
-
-   Create results layers.
-
-
-.. py:function:: create_quicklook(provider_name, host, image_id, layer_name)
+.. py:function:: create_quicklook(image_path, image_id, layer_name)
 
    Create results layers.
+
+

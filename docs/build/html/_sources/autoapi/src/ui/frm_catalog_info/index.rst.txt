@@ -1,34 +1,32 @@
-:py:mod:`src.ui.frm_catalog_info`
-=================================
+src.ui.frm_catalog_info
+=======================
 
 .. py:module:: src.ui.frm_catalog_info
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   src.ui.frm_catalog_info.Ui_frm_catalog_info
-
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
    src.ui.frm_catalog_info.app
 
 
+Classes
+-------
+
+.. autoapisummary::
+
+   src.ui.frm_catalog_info.Ui_frm_catalog_info
+
+
+Module Contents
+---------------
+
 .. py:class:: Ui_frm_catalog_info
 
-
    Bases: :py:obj:`object`
+
 
    .. py:method:: setupUi(frm_catalog_info)
 
@@ -36,5 +34,5 @@ Attributes
    .. py:method:: retranslateUi(frm_catalog_info)
 
 
-
 .. py:data:: app
+

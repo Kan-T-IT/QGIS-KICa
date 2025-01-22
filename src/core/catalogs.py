@@ -1,5 +1,6 @@
 """Catalogs module."""
 
+from datetime import datetime, timedelta
 from time import sleep
 
 from core.settings import PluginSettings
@@ -112,7 +113,13 @@ def get_catalog(
 
         col_catalogs = sentinel_hub.get_catalog(token=token, host_name=host_name, search_params=search_params)
         for catalog in col_catalogs['features']:
+            # Get date from properties
             catalog['aux_date'] = catalog['properties']['datetime']
+            if not catalog['aux_date']:
+                catalog['aux_date'] = catalog['properties']['start_datetime']
+            if not catalog['aux_date']:
+                catalog['aux_date'] = catalog['properties']['end_datetime']
+
             catalog['aux_angle'] = None
             catalog['aux_cloud_coverage'] = catalog['properties'].get('eo:cloud_cover')
             catalog['aux_collection_name'] = catalog['collection']
@@ -245,26 +252,40 @@ def get_download_url(**kwargs):
 
         feature_data = kwargs.get('feature_data')
         if feature_data:
-            str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
+            inv_bbox = feature_data.get('bbox', [])[::-1]
+            str_bbox = ','.join(map(str, inv_bbox))
+            # str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
 
             # date range
             aux_date = feature_data.get('aux_date')
-            start_date = aux_date[:10]
-            end_date = aux_date[:10]
+
+            start_date = None
+            end_date = None
+            if aux_date:
+                # Subtract one day from the start date
+                str_start_date = aux_date[:10]
+                start_date = datetime.strptime(str_start_date, '%Y-%m-%d') - timedelta(days=1)
+
+                str_end_date = aux_date[:10]
+                end_date = datetime.strptime(str_end_date, '%Y-%m-%d')
 
             # Cloud coverage
             try:
-                cloud_coverage = int(round(float(feature_data.get('aux_cloud_coverage', 0)) * 100))
+                _cloud_coverage = float(feature_data.get('aux_cloud_coverage', 0))
+                if _cloud_coverage < 1:
+                    cloud_coverage = _cloud_coverage * 100
             except (TypeError, ValueError):
-                cloud_coverage = 0
+                _cloud_coverage = 0
+
+            cloud_coverage = int(_cloud_coverage)
 
             if 'properties' in feature_data:
                 properties = feature_data['properties']
                 collection_name = properties.get('collection')
-                product_type = properties['providerProperties'].get('productType')
+                # product_type = properties['providerProperties'].get('productType')
 
         params = {
-            'productType': product_type,
+            # 'productType': product_type,
             'catalogView': catalog_view,
             'bbox': str_bbox,
             'collections': collection_name,
@@ -273,6 +294,7 @@ def get_download_url(**kwargs):
             'endDate': end_date,
         }
 
+        # print(f'UP42: download_url -> {up42.DOWNLOAD_URL} params: {params}')
         return up42.DOWNLOAD_URL, params
 
     if provider == 'sentinel_hub':

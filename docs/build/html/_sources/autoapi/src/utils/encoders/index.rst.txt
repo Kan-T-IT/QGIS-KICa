@@ -1,5 +1,5 @@
-:py:mod:`src.utils.encoders`
-============================
+src.utils.encoders
+==================
 
 .. py:module:: src.utils.encoders
 
@@ -9,26 +9,28 @@
 
 
 
-Module Contents
----------------
-
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    src.utils.encoders.CustomJsonDecimalEncoder
 
 
-
+Module Contents
+---------------
 
 .. py:class:: CustomJsonDecimalEncoder(*, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, sort_keys=False, indent=None, separators=None, default=None)
 
-
    Bases: :py:obj:`json.JSONEncoder`
 
+
    Custom JSON encoder for Decimal objects.
+
 
    .. py:method:: default(o)
 
       Encode Decimal objects as float.
+
+
+
