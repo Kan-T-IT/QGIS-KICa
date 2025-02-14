@@ -59,8 +59,7 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         self._incidence_angle = incidence_angle
         self._cloud_coverage = cloud_coverage
 
-        str_acquisition_date = str(acquisition_date[0:10]) if acquisition_date else '---'
-        self.lbl_date_text.setText(str_acquisition_date)
+        self.lbl_date_text.setText(self.get_date_for_label())
 
         str_incidence_angle = f'{round(incidence_angle or 0.0, 2)}°' if incidence_angle is not None else '---'
         self.lbl_angle_text.setText(str_incidence_angle)
@@ -90,6 +89,22 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
     @property
     def cloud_coverage(self):
         return self._cloud_coverage
+
+    def get_date_for_label(self):
+        properties = self.feature_data.get('properties', {})
+        start_datetime = properties.get('start_datetime')
+        end_datetime = properties.get('end_datetime')
+        start_date = start_datetime[:10] if start_datetime else None
+        end_date = end_datetime[:10] if end_datetime else None
+
+        if start_date and start_date != end_date:
+            str_date_info = f'{start_date}/{end_date}'
+        elif self._acquisition_date:
+            str_date_info = str(self._acquisition_date[:10])
+        else:
+            str_date_info = '---'
+
+        return str_date_info
 
     def set_thumbnail(self, image_bytes):
         """Set thumbnail image in label."""
