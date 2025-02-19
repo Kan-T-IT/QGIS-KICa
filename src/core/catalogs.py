@@ -262,12 +262,12 @@ def get_download_url(**kwargs):
             start_date = None
             end_date = None
             if aux_date:
-                # Subtract one day from the start date
                 str_start_date = aux_date[:10]
-                start_date = datetime.strptime(str_start_date, '%Y-%m-%d') - timedelta(days=1)
+                start_date = datetime.strptime(str_start_date, '%Y-%m-%d')
 
+                # Adds one day from the start date to complete the range required by the API
                 str_end_date = aux_date[:10]
-                end_date = datetime.strptime(str_end_date, '%Y-%m-%d')
+                end_date = datetime.strptime(str_end_date, '%Y-%m-%d') + timedelta(days=1)
 
             # Cloud coverage
             try:
