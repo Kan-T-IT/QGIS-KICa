@@ -2,6 +2,7 @@
 
 import json
 import requests
+from urllib.parse import urlencode
 
 from services.utils import http_get, http_post
 from utils.exceptions import AuthorizationError
@@ -24,6 +25,16 @@ def get_token(username: str, password: str) -> str:
     }
 
     payload = f'grant_type=password&client_id=up42-api&username={username}&password={password}'
+
+    # Codifica correctamente el payload
+    data = {
+        'grant_type': 'password',
+        'client_id': 'up42-api',
+        'username': username,
+        'password': password,
+    }
+
+    payload = urlencode(data)
 
     try:
         json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
