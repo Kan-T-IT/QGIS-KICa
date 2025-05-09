@@ -1,7 +1,8 @@
 """Catalogs module."""
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from time import sleep
+import math
 
 from core.settings import PluginSettings
 from services import element84, microsoft, sentinel_hub, up42
@@ -262,18 +263,22 @@ def get_download_url(**kwargs):
             start_date = None
             end_date = None
             if aux_date:
-                str_start_date = aux_date[:10]
-                start_date = datetime.strptime(str_start_date, '%Y-%m-%d')
+                str_date = aux_date[:10]
+                start_date = datetime.strptime(str_date, '%Y-%m-%d').date()
 
                 # Adds one day from the start date to complete the range required by the API
-                str_end_date = aux_date[:10]
-                end_date = datetime.strptime(str_end_date, '%Y-%m-%d') + timedelta(days=1)
+                end_date = datetime.strptime(str_date, '%Y-%m-%d') + timedelta(days=1)
+                end_date = end_date.date()
 
             # Cloud coverage
             try:
                 _cloud_coverage = float(feature_data.get('aux_cloud_coverage', 0))
                 if _cloud_coverage < 1:
-                    cloud_coverage = _cloud_coverage * 100
+                    _cloud_coverage = _cloud_coverage * 100
+
+                # cloud_coverage is rounded up to the upper value.
+                _cloud_coverage = math.ceil(_cloud_coverage or 0)
+
             except (TypeError, ValueError):
                 _cloud_coverage = 0
 
@@ -291,8 +296,10 @@ def get_download_url(**kwargs):
             'collections': collection_name,
             'cloudCoverage': cloud_coverage,
             'startDate': start_date,
-            'endDate': end_date,
         }
+
+        if end_date > start_date and end_date < date.today():
+            params['endDate'] = end_date
 
         # print(f'UP42: download_url -> {up42.DOWNLOAD_URL} params: {params}')
         return up42.DOWNLOAD_URL, params

@@ -1,6 +1,7 @@
 """Custom widgets module."""
 
 import os
+import math
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
@@ -57,14 +58,16 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         self._name = f'{self.provider}_{collection_name}'
         self._acquisition_date = acquisition_date
         self._incidence_angle = incidence_angle
-        self._cloud_coverage = cloud_coverage
+
+        # cloud_coverage is rounded up to the upper value.
+        self._cloud_coverage = int(math.ceil(cloud_coverage or 0))
 
         self.lbl_date_text.setText(self.get_date_for_label())
 
         str_incidence_angle = f'{round(incidence_angle or 0.0, 2)}°' if incidence_angle is not None else '---'
         self.lbl_angle_text.setText(str_incidence_angle)
 
-        str_cloud_coverage = f'{int(cloud_coverage or 0)}%' if cloud_coverage is not None else '---'
+        str_cloud_coverage = f'{self._cloud_coverage}%' if self._cloud_coverage is not None else '---'
         self.lbl_cloud_coverage_text.setText(str_cloud_coverage)
 
         # set name in label
