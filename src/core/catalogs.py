@@ -1,8 +1,8 @@
 """Catalogs module."""
 
-from datetime import datetime, timedelta, date
-from time import sleep
 import math
+from datetime import date, datetime, timedelta
+from time import sleep
 
 from core.settings import PluginSettings
 from services import element84, microsoft, sentinel_hub, up42
@@ -253,9 +253,7 @@ def get_download_url(**kwargs):
 
         feature_data = kwargs.get('feature_data')
         if feature_data:
-            inv_bbox = feature_data.get('bbox', [])[::-1]
-            str_bbox = ','.join(map(str, inv_bbox))
-            # str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
+            bbox = feature_data.get('bbox', [])  # [::-1]
 
             # date range
             aux_date = feature_data.get('aux_date')
@@ -289,6 +287,12 @@ def get_download_url(**kwargs):
                 collection_name = properties.get('collection')
                 # product_type = properties['providerProperties'].get('productType')
 
+        x_min, ymin, xmax, ymax = map(float, bbox)
+        x_center = round((x_min + xmax) / 2, 5)
+        y_center = round((ymin + ymax) / 2, 5)
+        center = f'{x_center},{y_center}'
+        str_bbox = ','.join(map(str, bbox))
+
         params = {
             # 'productType': product_type,
             'catalogView': catalog_view,
@@ -296,6 +300,8 @@ def get_download_url(**kwargs):
             'collections': collection_name,
             'cloudCoverage': cloud_coverage,
             'startDate': start_date,
+            'center': center,
+            'z': 10,
         }
 
         if end_date > start_date and end_date < date.today():
