@@ -1,9 +1,16 @@
 # Changelog
 
-[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.6.1...HEAD)
+## [v1.6.5](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.6.5) (2025-06-27)
+
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.6.2...v1.6.5)
+
+## [v1.6.2](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.6.2) (2025-02-19)
+
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.6.1...v1.6.2)
 
 - Update UP42 authentication mechanism [\#42](https://github.com/Kan-T-IT/QGIS-KICa/issues/42)
-- Python Error on Date Format When Accessing UP42 Console [\#38](https://github.com/Kan-T-IT/QGIS-KICa/issues/38)
+
+- v1.6.2 [\#45](https://github.com/Kan-T-IT/QGIS-KICa/pull/45) ([fgomezdev](https://github.com/fgomezdev))
 
 ## [v1.6.1](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.6.1) (2025-01-22)
 
