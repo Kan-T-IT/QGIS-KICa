@@ -1,6 +1,7 @@
 """Module for Sentinel Hub API calls"""
 
 import requests
+from urllib.parse import urlencode
 
 from services.utils import http_get, http_post
 from utils.exceptions import AuthorizationError
@@ -26,6 +27,8 @@ def get_token(client_id, client_secret):
         'client_id': client_id,
         'client_secret': client_secret,
     }
+
+    payload = urlencode(data)
 
     try:
         headers = {}

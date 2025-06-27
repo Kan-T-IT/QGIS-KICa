@@ -410,7 +410,7 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             if catalog_counter >= max_catalog_results:
                 break
 
-            datetime_params = f"{date_from.toString('yyyy-MM-ddT00:00:00Z')}/{date_to.toString('yyyy-MM-ddT23:59:59Z')}"
+            datetime_params = f'{date_from.toString("yyyy-MM-ddT00:00:00Z")}/{date_to.toString("yyyy-MM-ddT23:59:59Z")}'
             for collection_name in collections:
                 # FIXME: Search collection one by one to avoid errors in Up42 provider
                 search_params = {
@@ -448,7 +448,6 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
                     break
 
                 thumbnail = None
-
                 dic_result = {
                     'coordinates': catalog['aux_coordinates'],
                     'provider_name': provider,

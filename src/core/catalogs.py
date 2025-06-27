@@ -1,6 +1,7 @@
 """Catalogs module."""
 
-from datetime import datetime, timedelta
+import math
+from datetime import date, datetime, timedelta
 from time import sleep
 
 from core.settings import PluginSettings
@@ -252,9 +253,7 @@ def get_download_url(**kwargs):
 
         feature_data = kwargs.get('feature_data')
         if feature_data:
-            inv_bbox = feature_data.get('bbox', [])[::-1]
-            str_bbox = ','.join(map(str, inv_bbox))
-            # str_bbox = ','.join(map(str, feature_data.get('bbox', [])))
+            bbox = feature_data.get('bbox', [])  # [::-1]
 
             # date range
             aux_date = feature_data.get('aux_date')
@@ -262,18 +261,22 @@ def get_download_url(**kwargs):
             start_date = None
             end_date = None
             if aux_date:
-                # Subtract one day from the start date
-                str_start_date = aux_date[:10]
-                start_date = datetime.strptime(str_start_date, '%Y-%m-%d') - timedelta(days=1)
+                str_date = aux_date[:10]
+                start_date = datetime.strptime(str_date, '%Y-%m-%d').date()
 
-                str_end_date = aux_date[:10]
-                end_date = datetime.strptime(str_end_date, '%Y-%m-%d')
+                # Adds one day from the start date to complete the range required by the API
+                end_date = datetime.strptime(str_date, '%Y-%m-%d') + timedelta(days=1)
+                end_date = end_date.date()
 
             # Cloud coverage
             try:
                 _cloud_coverage = float(feature_data.get('aux_cloud_coverage', 0))
                 if _cloud_coverage < 1:
-                    cloud_coverage = _cloud_coverage * 100
+                    _cloud_coverage = _cloud_coverage * 100
+
+                # cloud_coverage is rounded up to the upper value.
+                _cloud_coverage = math.ceil(_cloud_coverage or 0)
+
             except (TypeError, ValueError):
                 _cloud_coverage = 0
 
@@ -284,6 +287,12 @@ def get_download_url(**kwargs):
                 collection_name = properties.get('collection')
                 # product_type = properties['providerProperties'].get('productType')
 
+        x_min, ymin, xmax, ymax = map(float, bbox)
+        x_center = round((x_min + xmax) / 2, 5)
+        y_center = round((ymin + ymax) / 2, 5)
+        center = f'{x_center},{y_center}'
+        str_bbox = ','.join(map(str, bbox))
+
         params = {
             # 'productType': product_type,
             'catalogView': catalog_view,
@@ -291,8 +300,12 @@ def get_download_url(**kwargs):
             'collections': collection_name,
             'cloudCoverage': cloud_coverage,
             'startDate': start_date,
-            'endDate': end_date,
+            'center': center,
+            'z': 10,
         }
+
+        if end_date > start_date and end_date < date.today():
+            params['endDate'] = end_date
 
         # print(f'UP42: download_url -> {up42.DOWNLOAD_URL} params: {params}')
         return up42.DOWNLOAD_URL, params
