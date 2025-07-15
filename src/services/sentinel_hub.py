@@ -22,7 +22,7 @@ def get_token(client_id, client_secret):
         'content-type': 'application/x-www-form-urlencoded',
     }
 
-    payload = {
+    data = {
         'grant_type': 'client_credentials',
         'client_id': client_id,
         'client_secret': client_secret,
