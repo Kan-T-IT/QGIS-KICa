@@ -165,6 +165,6 @@ env
 .ruff_cache/
 .vscode
 interrogate_*
-dist/
+dist/*
 docs/build/*
 !docs/build/html/
