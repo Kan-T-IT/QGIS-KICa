@@ -1,0 +1,51 @@
+src.services.utils
+==================
+
+.. py:module:: src.services.utils
+
+.. autoapi-nested-parse::
+
+   Module for API auxiliary functions
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.services.utils.REQUEST_TIMEOUT
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.services.utils.encode_base64
+   src.services.utils.http_get
+   src.services.utils.http_post
+
+
+Module Contents
+---------------
+
+.. py:data:: REQUEST_TIMEOUT
+   :value: 120
+
+
+.. py:function:: encode_base64(text_to_encode: str) -> str
+
+   Encode a string to Base64
+
+
+.. py:function:: http_get(url, host_name='', headers={}, result_type='json', raise_for_status=False)
+
+   Make a GET request to the specified URL.
+
+
+.. py:function:: http_post(url, host_name='', headers={}, payload={}, result_type='json', raise_for_status=False)
+
+   Make a POST request to the specified URL.
+
+

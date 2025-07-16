@@ -1,0 +1,39 @@
+src.utils.helpers
+=================
+
+.. py:module:: src.utils.helpers
+
+.. autoapi-nested-parse::
+
+   Helper functions module.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.utils.helpers.open_url
+   src.utils.helpers.tr
+   src.utils.helpers.normalize_text
+
+
+Module Contents
+---------------
+
+.. py:function:: open_url(url: str, params: Optional[dict] = None) -> bool
+
+   Open a URL in the browser.
+
+
+.. py:function:: tr(message)
+
+   Get the translation for a string using Qt translation API.
+
+
+.. py:function:: normalize_text(text)
+
+   Remove accents from text.
+
+

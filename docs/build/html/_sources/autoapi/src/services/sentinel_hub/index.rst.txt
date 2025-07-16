@@ -1,0 +1,63 @@
+src.services.sentinel_hub
+=========================
+
+.. py:module:: src.services.sentinel_hub
+
+.. autoapi-nested-parse::
+
+   Module for Sentinel Hub API calls
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.services.sentinel_hub.DOWNLOAD_URL
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.services.sentinel_hub.get_token
+   src.services.sentinel_hub.get_collections
+   src.services.sentinel_hub.get_catalog
+   src.services.sentinel_hub.get_thumbnail
+   src.services.sentinel_hub.get_quicklook
+
+
+Module Contents
+---------------
+
+.. py:data:: DOWNLOAD_URL
+   :value: 'https://www.sentinel-hub.com/'
+
+
+.. py:function:: get_token(client_id, client_secret)
+
+   Get token from Sentinel Hub API
+
+
+.. py:function:: get_collections(token)
+
+   Get collections from Sentinel Hub API
+
+
+.. py:function:: get_catalog(token: str, host_name: str, search_params: dict) -> dict
+
+   Get catalog data from Sentinel Hub API
+
+
+.. py:function:: get_thumbnail(token: str, host_name: str, image_id: str)
+
+   Get catalog thumbnail from Sentinel Hub API
+
+
+.. py:function:: get_quicklook(token: str, host_name: str, image_id: str)
+
+   Get catalog quicklook from Sentinel Hub API
+
+

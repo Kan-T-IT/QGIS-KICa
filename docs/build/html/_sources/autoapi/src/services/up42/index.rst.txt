@@ -1,0 +1,63 @@
+src.services.up42
+=================
+
+.. py:module:: src.services.up42
+
+.. autoapi-nested-parse::
+
+   Module for Up42 API calls
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.services.up42.DOWNLOAD_URL
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.services.up42.get_token
+   src.services.up42.get_collections
+   src.services.up42.get_catalog
+   src.services.up42.get_thumbnail
+   src.services.up42.get_quicklook
+
+
+Module Contents
+---------------
+
+.. py:data:: DOWNLOAD_URL
+   :value: 'https://console.up42.com/catalog/new-order'
+
+
+.. py:function:: get_token(username: str, password: str) -> str
+
+   Get token from UP42 API
+
+
+.. py:function:: get_collections()
+
+   Get collections from UP42 API
+
+
+.. py:function:: get_catalog(token: str, host_name: str, search_params: dict) -> dict
+
+   Get catalog data from UP42 API
+
+
+.. py:function:: get_thumbnail(token: str, host_name: str, image_id: str)
+
+   Get catalog thumbnail from UP42 API
+
+
+.. py:function:: get_quicklook(token: str, host_name: str, image_id: str)
+
+   Get catalog quicklook from UP42 API
+
+

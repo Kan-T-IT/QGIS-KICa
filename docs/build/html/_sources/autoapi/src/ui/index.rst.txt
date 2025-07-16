@@ -1,0 +1,18 @@
+src.ui
+======
+
+.. py:module:: src.ui
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/ui/custom_widget_list_item/index
+   /autoapi/src/ui/frm_catalog_info/index
+   /autoapi/src/ui/frm_default_collections/index
+   /autoapi/src/ui/frm_settings/index
+
+

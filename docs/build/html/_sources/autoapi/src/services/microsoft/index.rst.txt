@@ -1,0 +1,57 @@
+src.services.microsoft
+======================
+
+.. py:module:: src.services.microsoft
+
+.. autoapi-nested-parse::
+
+   Module for MicrosoftPlanetary API calls
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.services.microsoft.DOWNLOAD_URL
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.services.microsoft.get_collections
+   src.services.microsoft.get_catalog
+   src.services.microsoft.get_thumbnail
+   src.services.microsoft.get_quicklook
+
+
+Module Contents
+---------------
+
+.. py:data:: DOWNLOAD_URL
+   :value: 'https://planetarycomputer.microsoft.com/'
+
+
+.. py:function:: get_collections()
+
+   Get collections from MicrosoftPlanetary API
+
+
+.. py:function:: get_catalog(search_params: dict) -> dict
+
+   Get catalog data from MicrosoftPlanetary API
+
+
+.. py:function:: get_thumbnail(collection_name: str, feature_data: dict)
+
+   Get catalog thumbnail from MicrosoftPlanetary API
+
+
+.. py:function:: get_quicklook(host_name: str, image_id: str, feature_data: dict)
+
+   Get catalog quicklook from MicrosoftPlanetary API
+
+

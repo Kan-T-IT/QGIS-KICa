@@ -1,0 +1,145 @@
+src.utils.qgis_helper
+=====================
+
+.. py:module:: src.utils.qgis_helper
+
+.. autoapi-nested-parse::
+
+   QGIS helper functions module.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.utils.qgis_helper.message
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.utils.qgis_helper.get_bounding_box_transformed
+   src.utils.qgis_helper.get_bounding_box_canvas
+   src.utils.qgis_helper.get_selected_feature_bounding_box
+   src.utils.qgis_helper.get_valid_project_layers_to_search
+   src.utils.qgis_helper.save_setting
+   src.utils.qgis_helper.read_setting
+   src.utils.qgis_helper.save_json_setting
+   src.utils.qgis_helper.read_json_setting
+   src.utils.qgis_helper.error_message
+   src.utils.qgis_helper.warning_message
+   src.utils.qgis_helper.info_message
+   src.utils.qgis_helper.success_message
+   src.utils.qgis_helper.get_or_create_group
+   src.utils.qgis_helper.get_layer_by_name
+   src.utils.qgis_helper.get_or_create_footprints_layer
+   src.utils.qgis_helper.add_feature_to_layer
+   src.utils.qgis_helper.get_georeferenced_image
+   src.utils.qgis_helper.create_quicklook_layer
+   src.utils.qgis_helper.zoom_selected_features
+
+
+Module Contents
+---------------
+
+.. py:data:: message
+
+.. py:function:: get_bounding_box_transformed(bbox, source_crs, target_crs)
+
+   Get bounding box from canvas and transform it if necessary to the default target CRS.
+
+
+.. py:function:: get_bounding_box_canvas()
+
+   Get bounding box from canvas.
+
+
+.. py:function:: get_selected_feature_bounding_box(layer_id, default_first=True)
+
+   Get bounding box from feature. By default, the first feature in the array is used if no feature is selected.
+
+
+.. py:function:: get_valid_project_layers_to_search()
+
+   Get vector layers names from current project excluding the ones in the results group.
+
+
+.. py:function:: save_setting(setting_name, value)
+
+   Save setting.
+
+
+.. py:function:: read_setting(setting_name, default_value=None)
+
+   Read setting.
+
+
+.. py:function:: save_json_setting(setting_name, value)
+
+   Save json setting.
+
+
+.. py:function:: read_json_setting(setting_name, default_value=None)
+
+   Read json setting.
+
+
+.. py:function:: error_message(title, text)
+
+   Show error message.
+
+
+.. py:function:: warning_message(title, text)
+
+   Show warning message.
+
+
+.. py:function:: info_message(title, text)
+
+   Show info message.
+
+
+.. py:function:: success_message(title, text)
+
+   Show success message.
+
+
+.. py:function:: get_or_create_group(group_name)
+
+   Get or create group.
+
+
+.. py:function:: get_layer_by_name(layer_name)
+
+   Get layer by name.
+
+
+.. py:function:: get_or_create_footprints_layer(layer_name, group_name)
+
+   Get or create footprints layer.
+
+
+.. py:function:: add_feature_to_layer(coordinates, feature_id, layer)
+
+   Add feature to layer.
+
+
+.. py:function:: get_georeferenced_image(feature, image_path)
+
+   Get georeferenced image from feature and image path.
+
+
+.. py:function:: create_quicklook_layer(footprints_crs, layer_name, group_name, feature, image_path=None)
+
+   Create a layer with a quicklook image.
+
+
+.. py:function:: zoom_selected_features(layer)
+
+   Zoom to selected features in layer.
+
+

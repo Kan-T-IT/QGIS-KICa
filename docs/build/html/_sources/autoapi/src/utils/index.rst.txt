@@ -1,0 +1,21 @@
+src.utils
+=========
+
+.. py:module:: src.utils
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/utils/constants/index
+   /autoapi/src/utils/debug/index
+   /autoapi/src/utils/encoders/index
+   /autoapi/src/utils/exceptions/index
+   /autoapi/src/utils/general/index
+   /autoapi/src/utils/helpers/index
+   /autoapi/src/utils/qgis_helper/index
+
+

@@ -1,0 +1,19 @@
+src.services
+============
+
+.. py:module:: src.services
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/services/element84/index
+   /autoapi/src/services/microsoft/index
+   /autoapi/src/services/sentinel_hub/index
+   /autoapi/src/services/up42/index
+   /autoapi/src/services/utils/index
+
+

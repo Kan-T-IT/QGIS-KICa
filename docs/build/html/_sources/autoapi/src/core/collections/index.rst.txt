@@ -1,0 +1,27 @@
+src.core.collections
+====================
+
+.. py:module:: src.core.collections
+
+.. autoapi-nested-parse::
+
+   Collections module.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.core.collections.get_collections
+
+
+Module Contents
+---------------
+
+.. py:function:: get_collections(provider: str, search_params: dict = None) -> dict
+
+   Get collections from a specific provider.
+
+

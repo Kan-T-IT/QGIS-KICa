@@ -1,0 +1,47 @@
+src
+===
+
+.. py:module:: src
+
+.. autoapi-nested-parse::
+
+   This script initializes the plugin, making it known to QGIS.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/core/index
+   /autoapi/src/gui/index
+   /autoapi/src/kan_imagery_catalog/index
+   /autoapi/src/kan_imagery_catalog_dock/index
+   /autoapi/src/plugin_upload/index
+   /autoapi/src/resources/index
+   /autoapi/src/services/index
+   /autoapi/src/ui/index
+   /autoapi/src/utils/index
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.classFactory
+
+
+Package Contents
+----------------
+
+.. py:function:: classFactory(iface)
+
+   Load KANImageryCatalog class from file KANImageryCatalog.
+
+   :param iface: A QGIS interface instance.
+   :type iface: QgsInterface
+
+

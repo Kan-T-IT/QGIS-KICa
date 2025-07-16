@@ -1,0 +1,19 @@
+src.core
+========
+
+.. py:module:: src.core
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/core/catalogs/index
+   /autoapi/src/core/collections/index
+   /autoapi/src/core/providers/index
+   /autoapi/src/core/results/index
+   /autoapi/src/core/settings/index
+
+
