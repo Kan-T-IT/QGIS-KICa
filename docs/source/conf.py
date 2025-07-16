@@ -32,7 +32,7 @@ copyright = '2025'
 author = 'Kan Territory & IT'
 
 # The full version, including alpha/beta/rc tags
-release = 'v1.6.1'
+release = 'v1.6.5'
 
 
 # -- General configuration ---------------------------------------------------
@@ -47,7 +47,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.doctest',
     'sphinx.ext.viewcode',
-    'docxsphinx',
+    'sphinx_rtd_theme',
 ]
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 
@@ -55,7 +55,7 @@ autoapi_dirs = [
     '../../src',
 ]
 autoapi_ignore = [
-    '**/test',
+    '**/tests',
     '**/docs',
     '**/conf.py',
     '**/test_up42.py',
@@ -75,12 +75,11 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['**/test']
+exclude_patterns = ['**/tests']
 
 
 # -- Options for HTML output -------------------------------------------------
-html_theme = 'renku'
-
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
