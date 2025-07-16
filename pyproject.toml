@@ -37,7 +37,7 @@ quote-style = "single"
 indent-style = "space"
 # magic-trailing-comma = "preview"
 line-ending = "auto"
-exclude = ["*/ui/*"]
+exclude = ["*/ui/*", "*.ui"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["core", "gui", "services", "ui", "utils"]
