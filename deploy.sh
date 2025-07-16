@@ -92,9 +92,5 @@ message "LICENSE removed from source directory"
 rm ${SOURCE_DIR}/LICENSE
 
 
-# Copy debug config to remote plugin folder
-message "COPY .vscode "
-cp -r ${BASE_DIR}/.vscode ${PLUGIN_DIR}/
-
 now="$(date)"
 message "PROCESS ENDED!   $now" "SUCCESS"
