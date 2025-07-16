@@ -166,5 +166,6 @@ env
 .vscode
 interrogate_*
 dist/*
-docs/build/*
+docs/build
+#docs/build/*
 #!docs/build/html/
