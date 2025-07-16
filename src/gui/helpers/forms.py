@@ -1,4 +1,4 @@
-""" Form helpers functions module."""
+"""Form helpers functions module."""
 
 import decimal
 import os

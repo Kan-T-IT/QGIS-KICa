@@ -1,4 +1,4 @@
-""" Form settings module. """
+"""Form settings module."""
 
 from PyQt5.QtGui import QIntValidator
 

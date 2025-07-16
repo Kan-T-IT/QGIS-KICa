@@ -1,7 +1,7 @@
 """Custom widgets module."""
 
-import os
 import math
+import os
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
@@ -94,6 +94,8 @@ class CustomWidgetListItem(QWidget, Ui_CustomWidgetListItem):
         return self._cloud_coverage
 
     def get_date_for_label(self):
+        """Get date for label display."""
+
         properties = self.feature_data.get('properties', {})
         start_datetime = properties.get('start_datetime')
         end_datetime = properties.get('end_datetime')

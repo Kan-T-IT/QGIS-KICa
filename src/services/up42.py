@@ -24,9 +24,6 @@ def get_token(username: str, password: str) -> str:
         'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    payload = f'grant_type=password&client_id=up42-api&username={username}&password={password}'
-
-    # Codifica correctamente el payload
     data = {
         'grant_type': 'password',
         'client_id': 'up42-api',

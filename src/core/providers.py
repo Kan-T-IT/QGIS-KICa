@@ -1,4 +1,4 @@
-""" Providers module. """
+"""Providers module."""
 
 from services import sentinel_hub, up42
 from utils.exceptions import AuthorizationError

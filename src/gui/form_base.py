@@ -1,4 +1,4 @@
-""" Base form module for all forms in the plugin. """
+"""Base form module for all forms in the plugin."""
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import (

@@ -18,7 +18,6 @@
 This script initializes the plugin, making it known to QGIS.
 """
 
-
 import sys
 from pathlib import Path
 

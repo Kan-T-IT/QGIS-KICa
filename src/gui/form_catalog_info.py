@@ -1,4 +1,4 @@
-""" Form Catalog Info Module. """
+"""Form Catalog Info Module."""
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QTableWidget

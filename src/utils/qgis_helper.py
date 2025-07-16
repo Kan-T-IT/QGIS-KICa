@@ -6,7 +6,7 @@ import os
 from osgeo import gdal
 from PyQt5.QtCore import QVariant
 
-from utils.constants import DEFAULT_MESSAGE_DURATION, DEFAULT_SOURCE_CRS, DEFAULT_TARGET_CRS
+from utils.constants import DEFAULT_MESSAGE_DURATION, DEFAULT_TARGET_CRS
 from utils.exceptions import DataNotFoundError
 from utils.general import PLUGIN_NAME
 from utils.helpers import tr
@@ -26,7 +26,6 @@ try:
         QgsPointXY,
         QgsProject,
         QgsRasterLayer,
-        QgsRectangle,
         QgsSettings,
         QgsVectorLayer,
     )
@@ -103,6 +102,8 @@ def get_valid_project_layers_to_search():
     """Get vector layers names from current project excluding the ones in the results group."""
 
     def is_in_group(project, layer, group_name):
+        """Check if layer is included in a group with the specified name."""
+
         layer_tree_layer = project.layerTreeRoot().findLayer(layer.id())
         parent = layer_tree_layer.parent() if layer_tree_layer else None
 

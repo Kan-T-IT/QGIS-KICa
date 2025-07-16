@@ -39,7 +39,7 @@ def get_collections(provider: str, search_params: dict = None) -> dict:
         filtered_collections = []
         for collection in collections:
             # Excluding collections containing 'DTM', 'DSM' or 'Elevation' in name
-            string_to_validate = f"{collection['name']}{collection['title']}".lower()
+            string_to_validate = f'{collection["name"]}{collection["title"]}'.lower()
             if any(excluded_collection in string_to_validate for excluded_collection in ['dtm', 'dsm', 'elevation']):
                 continue
 
