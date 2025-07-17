@@ -161,3 +161,117 @@ make -B docs
 ### PDF Documentation
 
 The PDF version of the documentation is located at the root of the project after building.
+
+---
+
+## Guide to Adding New Providers to the QGIS-KICa Plugin
+### **Basic Structure of a Provider**
+A provider in the QGIS-KICa plugin must meet the following requirements:
+
+#### **Service Module:**
+Create a file in the `services` directory that implements the necessary functions to interact with the provider (e.g., authentication, catalog retrieval, thumbnails, etc.).
+
+#### **Configuration**:
+Define the provider's credentials and specific parameters in the plugin's configuration file (`settings.py`).
+
+#### **Core Integration**:
+Modify the main modules (`catalogs.py`, `collections.py`, `providers.py`) to include logic specific to the new provider.
+
+### **Steps to Integrate a New Provider**
+
+1. **Create the Provider Module**:
+
+    **Location:** `src/services/<provider_name>.py`
+
+    Implement functions such as:
+    - `get_token`: For authentication.
+    - `get_catalog`: To retrieve catalog data.
+    - `get_thumbnail`: To fetch preview images.
+    - `get_quicklook`: To fetch quicklook images.
+    - `get_collections`: To list available collections.
+
+2. **Register the Provider in Configuration**:
+
+    In `settings.py`, add the necessary credentials and parameters in `provider_settings`.
+
+      Example:
+
+      ```python
+      default_provider_settings = {
+          ...
+          'new_provider': {'valid': False, 'api_key': '', 'username': '', 'password': ''}
+      }
+      ```
+
+3. **Modify Core Modules**:
+
+   - In `catalogs.py`, add logic to handle the new provider in functions like `get_catalog`, `get_thumbnail`, `get_quicklook`, etc.
+   - In `collections.py`, include logic to retrieve collections from the new provider.
+   - In `providers.py`, implement credential validation for the new provider.
+
+4. **Update the GUI**:
+   - In `form_settings.py`, add fields for the new provider's credentials and logic to validate them.
+
+### **Practical Example: Adding the "NewProvider"**
+1. **Create the Module `new_provider.py`**:
+
+    /src/services/new_provider.py
+
+    ```
+    """NewProvider service module."""
+
+    def get_token(username: str, password: str) -> str:
+        # Implement authentication logic
+        return "token"
+
+    def get_catalog(token: str, search_params: dict) -> dict:
+        # Implement logic to retrieve catalog data
+        return {"features": []}
+
+    def get_thumbnail(token: str, image_id: str) -> str:
+        # Implement logic to fetch thumbnails
+        return "thumbnail_url"
+
+    def get_quicklook(token: str, image_id: str) -> str:
+        # Implement logic to fetch quicklooks
+        return "quicklook_url"
+    ```
+
+2. **Register in Configuration**:
+   Modify `settings.py`:
+
+   /src/core/settings.py
+
+    ```python
+    default_provider_settings = {
+        ...
+        'new_provider': {'valid': False, 'api_key': '', 'username': '', 'password': ''}
+    }
+    ```
+
+3. **Modify Core Modules**:
+   In `catalogs.py`, add logic to handle "NewProvider":
+
+    src/core/catalogs.py
+
+    ``` python
+    if provider == 'new_provider':
+        token = new_provider.get_token(
+            username=provider_settings['username'],
+            password=provider_settings['password'],
+        )
+        catalogs = new_provider.get_catalog(token=token, search_params=search_params)
+    ```
+
+4. **Update the GUI**:
+   In `form_settings.py`, add fields for the credentials:
+
+    src/gui/form_settings.py
+
+    ```python
+    self.new_provider_settings = self.settings.provider_settings.get('new_provider', {})
+    self.new_provider_is_valid = self.new_provider_settings.get('valid', False)
+    self.txt_new_provider_username.setText(self.new_provider_settings.get('username'))
+    self.txt_new_provider_password.setText(self.new_provider_settings.get('password'))
+    self.lbl_new_provider_check_credentials.setText('')
+    ```
