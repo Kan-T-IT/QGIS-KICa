@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/Kan-T-IT/QGIS-KICa/tree/HEAD)
+## [v1.6.6](https://github.com/Kan-T-IT/QGIS-KICa/tree/v1.6.6) (2025-07-18)
 
-[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.6.5...HEAD)
+[Full Changelog](https://github.com/Kan-T-IT/QGIS-KICa/compare/v1.6.5...v1.6.6)
 
 - v1.6.6 [\#48](https://github.com/Kan-T-IT/QGIS-KICa/pull/48) ([fgomezdev](https://github.com/fgomezdev))
 
