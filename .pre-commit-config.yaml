@@ -3,9 +3,11 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-yaml
+        exclude: (^docs/|pyproject\.toml|^src/resources\.py|\.ui$)
       - id: end-of-file-fixer
+        exclude: (^docs/|pyproject\.toml|^src/resources\.py|\.ui$)
       - id: trailing-whitespace
-        exclude: pyproject.toml
+        exclude: (^docs/|pyproject\.toml|src/resources\.py|\.ui$)
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.12.3

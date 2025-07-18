@@ -12,9 +12,10 @@ exclude = [
     "build",
     "dist",
     "env",
-    "src/ui",
+    "src/ui/*",
     "**/pyptoject.toml",
-    '**/docs/*',
+    "docs/*",
+    "src/resources.py",
 ]
 
 line-length = 120
@@ -38,7 +39,7 @@ quote-style = "single"
 indent-style = "space"
 # magic-trailing-comma = "preview"
 line-ending = "auto"
-exclude = ["*/ui/*", "*.ui"]
+exclude = ["*/ui/*", "*.ui", "**/docs/*"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["core", "gui", "services", "ui", "utils"]
