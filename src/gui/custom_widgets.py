@@ -2,6 +2,7 @@
 
 import math
 import os
+import math
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap

@@ -33,6 +33,16 @@ def get_token(username: str, password: str) -> str:
 
     payload = urlencode(data)
 
+    # Codifica correctamente el payload
+    data = {
+        'grant_type': 'password',
+        'client_id': 'up42-api',
+        'username': username,
+        'password': password,
+    }
+
+    payload = urlencode(data)
+
     try:
         json_response = http_post(url, host_name='UP42', headers=headers, payload=payload, raise_for_status=True)
         token = json_response.get('access_token')
