@@ -14,6 +14,7 @@ exclude = [
     "env",
     "src/ui",
     "**/pyptoject.toml",
+    '**/docs/*',
 ]
 
 line-length = 120
