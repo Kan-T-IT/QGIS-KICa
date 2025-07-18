@@ -21,6 +21,8 @@ def encode_base64(text_to_encode: str) -> str:
 
 
 def http_get(url, host_name='', headers={}, result_type='json', raise_for_status=False):
+    """Make a GET request to the specified URL."""
+
     try:
         response = requests.request('GET', url, headers=headers, timeout=REQUEST_TIMEOUT)
     except requests.exceptions.RequestException as e:
@@ -65,6 +67,8 @@ def http_get(url, host_name='', headers={}, result_type='json', raise_for_status
 
 
 def http_post(url, host_name='', headers={}, payload={}, result_type='json', raise_for_status=False):
+    """Make a POST request to the specified URL."""
+
     try:
         response = requests.request('POST', url, headers=headers, data=payload, timeout=REQUEST_TIMEOUT)
     except requests.exceptions.RequestException as e:

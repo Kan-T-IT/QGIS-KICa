@@ -1,5 +1,6 @@
 """Module for Sentinel Hub API calls"""
 
+import json
 import requests
 from urllib.parse import urlencode
 
@@ -16,26 +17,27 @@ def get_token(client_id, client_secret):
     if not client_id or not client_secret:
         raise AuthorizationError(tr('SentinelHub credentials have not been configured.'))
 
-    url = 'https://services.sentinel-hub.com/oauth/token'
+    url = 'https://services.sentinel-hub.com/auth/realms/main/protocol/openid-connect/token'
 
     headers = {
+        'Accept': '*/*',
         'content-type': 'application/x-www-form-urlencoded',
     }
 
-    payload = {
+    data = {
         'grant_type': 'client_credentials',
         'client_id': client_id,
         'client_secret': client_secret,
     }
 
     payload = urlencode(data)
-
     try:
-        headers = {}
         data = http_post(url, host_name='SentinelHub', headers=headers, payload=payload, raise_for_status=True)
         if data:
-            return data.get('access_token')
-
+            token = data.get('access_token')
+            if not token:
+                raise AuthorizationError(tr('There was an error getting the token.'))
+        return token
     except requests.exceptions.HTTPError as ex:
         message = tr('There was an error getting the token.')
         raise AuthorizationError(f'{message}\n{ex}') from ex
@@ -63,9 +65,14 @@ def get_catalog(token: str, host_name: str, search_params: dict) -> dict:
     """Get catalog data from Sentinel Hub API"""
 
     url = 'https://services.sentinel-hub.com/api/v1/catalog/1.0.0/search'
-    headers = {'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'}
+    headers = {
+        'accept': 'application/json, text/plain, */*',
+        'authorization': f'Bearer {token}',
+        'content-type': 'application/json',
+    }
 
-    return http_post(url, host_name='SentinelHub', headers=headers, payload=search_params)
+    payload = json.dumps(search_params)
+    return http_post(url, host_name='SentinelHub', headers=headers, payload=payload)
 
 
 def get_thumbnail(token: str, host_name: str, image_id: str):

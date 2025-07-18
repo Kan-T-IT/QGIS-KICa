@@ -12,9 +12,11 @@ exclude = [
     "build",
     "dist",
     "env",
-    "src/ui",
+    "src/ui/*",
     "**/pyptoject.toml",
-    ]
+    "docs/*",
+    "src/resources.py",
+]
 
 line-length = 120
 indent-width = 4
@@ -37,9 +39,9 @@ quote-style = "single"
 indent-style = "space"
 # magic-trailing-comma = "preview"
 line-ending = "auto"
-exclude = ["*/ui/*"]
+exclude = ["*/ui/*", "*.ui", "**/docs/*"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["core", "gui", "services", "ui", "utils"]
 known-third-party = []
 known-local-folder = []
@@ -51,7 +53,7 @@ order-by-type = true
 mypy_path = "src"
 python_version = "3.9"
 ignore_missing_imports = true
-exclude = [ '^env\.']
+exclude = ['^env\.']
 
 [tool.flake8]
 max-line-length = 120
@@ -69,7 +71,7 @@ addopts = "--strict-markers --capture=tee-sys --cov --cov-config=.coveragerc --c
 
 testpaths = "test/unit"
 python_classes = "test_*"
-xfail_strict=true
+xfail_strict = true
 markers = ["slow", "timeout", "instances"]
 
 pythonpath = ["."]
@@ -86,7 +88,7 @@ ignore-nested-functions = false
 ignore-nested-classes = true
 ignore-setters = true
 fail-under = 100
-exclude = ["env", "docs", "*/test/*", "*/help/*", "*/ui/*", "src/resources.py"]
+exclude = ["env", "docs", "*/tests/*", "*/help/*", "*/ui/*", "src/resources.py"]
 ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 verbose = 1
 quiet = false

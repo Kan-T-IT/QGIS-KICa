@@ -54,7 +54,7 @@ Module Contents
    :value: 'EPSG:4326'
 
 
-.. py:class:: CustomEnum
+.. py:class:: CustomEnum(*args, **kwds)
 
    Bases: :py:obj:`enum.Enum`
 
@@ -88,7 +88,7 @@ Module Contents
 
 
 
-.. py:class:: StyleVariables
+.. py:class:: StyleVariables(*args, **kwds)
 
    Bases: :py:obj:`CustomEnum`
 

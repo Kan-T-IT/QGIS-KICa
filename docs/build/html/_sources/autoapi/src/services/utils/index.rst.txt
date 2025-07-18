@@ -41,5 +41,11 @@ Module Contents
 
 .. py:function:: http_get(url, host_name='', headers={}, result_type='json', raise_for_status=False)
 
+   Make a GET request to the specified URL.
+
+
 .. py:function:: http_post(url, host_name='', headers={}, payload={}, result_type='json', raise_for_status=False)
+
+   Make a POST request to the specified URL.
+
 

@@ -1,4 +1,4 @@
-""" Debugging utilities module. """
+"""Debugging utilities module."""
 
 
 def pyqt_set_trace():

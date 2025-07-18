@@ -244,7 +244,7 @@ def get_download_url(**kwargs):
     params = None
     if provider == 'up42':
         catalog_view = 'overview'
-        product_type = None
+        # product_type = None
         str_bbox = None
         collection_name = None
         cloud_coverage = None

@@ -1,4 +1,4 @@
-""" Custom JSON encoders for the application. """
+"""Custom JSON encoders for the application."""
 
 import json
 from decimal import Decimal

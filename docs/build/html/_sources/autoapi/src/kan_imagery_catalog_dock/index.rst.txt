@@ -197,6 +197,9 @@ Module Contents
 
    .. py:method:: get_thumbnails_in_background(catalogs_data: list)
 
+      Get thumbnails in background thread.
+
+
 
    .. py:method:: update_progress(progress_data)
 

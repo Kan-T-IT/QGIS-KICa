@@ -87,8 +87,6 @@ Module Contents
 
 
    .. py:attribute:: _cloud_coverage
-      :value: None
-
 
 
    .. py:attribute:: key
@@ -106,6 +104,12 @@ Module Contents
 
 
    .. py:property:: cloud_coverage
+
+
+   .. py:method:: get_date_for_label()
+
+      Get date for label display.
+
 
 
    .. py:method:: set_thumbnail(image_bytes)

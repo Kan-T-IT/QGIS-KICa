@@ -1,4 +1,5 @@
-""" Auxiliar module for update QtDesigner templates """
+"""Auxiliar module for update QtDesigner templates"""
+
 import glob
 from xml.etree.ElementTree import ElementTree
 

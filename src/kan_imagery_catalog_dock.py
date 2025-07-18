@@ -483,10 +483,9 @@ class KANImageryCatalogDock(QtWidgets.QDockWidget, FORM_CLASS):
             {'catalogs_data': catalogs_data_result},
         )
 
-    def get_thumbnails_in_background(
-        self,
-        catalogs_data: list,
-    ):
+    def get_thumbnails_in_background(self, catalogs_data: list):
+        """Get thumbnails in background thread."""
+
         for data in catalogs_data:
             if self.thread_get_thumbnails.isInterruptionRequested():
                 break
